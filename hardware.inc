@@ -20,6 +20,7 @@
 ;* Rev 2.3 -           : Fixed incorrect _HRAM equate
 ;* Rev 2.4 - 27-Apr-13 : Added some cart defines (AntonioND)
 ;* Rev 2.5 - 03-May-15 : Fixed format (AntonioND)
+;* Rev 2.6 - 04-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 
 ; If all of these are already defined, don't do it again.
 
@@ -29,17 +30,18 @@ HARDWARE_INC SET 1
 rev_Check_hardware_inc : MACRO
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 2.5 ;PUT REVISION NUMBER HERE
+    IF  \1 > 2.6 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
 
 _HW          EQU $FF00
 
-_VRAM        EQU $8000 ; $8000->$A000
+_VRAM        EQU $8000 ; $8000->$9FFF
 _SCRN0       EQU $9800 ; $9800->$9BFF
 _SCRN1       EQU $9C00 ; $9C00->$9FFF
-_RAM         EQU $C000 ; $C000->$E000
+_SRAM        EQU $A000 ; $A000->$BFFF
+_RAM         EQU $C000 ; $C000->$DFFF
 _OAMRAM      EQU $FE00 ; $FE00->$FE9F
 _AUD3WAVERAM EQU $FF30 ; $FF30->$FF3F
 _HRAM        EQU $FF80 ; $FF80->$FFFE
@@ -48,19 +50,22 @@ _HRAM        EQU $FF80 ; $FF80->$FFFE
 
 rRAMG        EQU $0000 ; $0000->$1fff
 rROMB0       EQU $2000 ; $2000->$2fff
-rROMB1       EQU $3000 ; $3000->$3fff
-rRAMB        EQU $4000 ; $4000->$5fff
+rROMB1       EQU $3000 ; $3000->$3fff - If more than 256 ROM banks are present.
+rRAMB        EQU $4000 ; $4000->$5fff - Bit 3 enables rumble (if present)
 
 
 ; --
 ; -- OAM flags
 ; --
 
-OAMF_PRI   EQU %10000000 ; Priority
-OAMF_YFLIP EQU %01000000 ; Y flip
-OAMF_XFLIP EQU %00100000 ; X flip
-OAMF_PAL0  EQU %00000000 ; Palette number; 0,1
-OAMF_PAL1  EQU %00010000 ; Palette number; 0,1
+OAMF_PRI        EQU %10000000 ; Priority
+OAMF_YFLIP      EQU %01000000 ; Y flip
+OAMF_XFLIP      EQU %00100000 ; X flip
+OAMF_PAL0       EQU %00000000 ; Palette number; 0,1 (DMG)
+OAMF_PAL1       EQU %00010000 ; Palette number; 0,1 (DMG)
+OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
+OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
+OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
 
 
 ;***************************************************************************
@@ -645,6 +650,10 @@ rAUD4GO EQU rNR44 ; silly name!
 ;*
 ;***************************************************************************
 
+CART_COMPATIBLE_DMG     EQU $00
+CART_COMPATIBLE_DMG_GBC EQU $80
+CART_COMPATIBLE_GBC     EQU $C0
+
 CART_ROM                     EQU $00
 CART_ROM_MBC1                EQU $01
 CART_ROM_MBC1_RAM            EQU $02
@@ -667,20 +676,21 @@ CART_ROM_MBC5_RAM_BAT_RUMBLE EQU $1E
 CART_ROM_MBC7_RAM_BAT_GYRO   EQU $22
 CART_ROM_POCKET_CAMERA       EQU $FC
 
-CART_ROM_256K EQU 0
-CART_ROM_512K EQU 1
-CART_ROM_1M   EQU 2
-CART_ROM_2M   EQU 3
-CART_ROM_4M   EQU 4
-CART_ROM_8M   EQU 5
-CART_ROM_16M  EQU 6
-CART_ROM_32M  EQU 7
-CART_ROM_64M  EQU 8
+CART_ROM_256K EQU 0 ; 2 banks
+CART_ROM_512K EQU 1 ; 4 banks
+CART_ROM_1M   EQU 2 ; 8 banks
+CART_ROM_2M   EQU 3 ; 16 banks
+CART_ROM_4M   EQU 4 ; 32 banks
+CART_ROM_8M   EQU 5 ; 64 banks
+CART_ROM_16M  EQU 6 ; 128 banks
+CART_ROM_32M  EQU 7 ; 256 banks
+CART_ROM_64M  EQU 8 ; 512 banks
 
 CART_RAM_NONE EQU 0
-CART_RAM_16K  EQU 1
-CART_RAM_64K  EQU 2
-CART_RAM_256K EQU 3
+CART_RAM_16K  EQU 1 ; 1 incomplete bank
+CART_RAM_64K  EQU 2 ; 1 bank
+CART_RAM_256K EQU 3 ; 4 banks
+CART_RAM_1M   EQU 4 ; 16 banks
 
 CART_RAM_ENABLE  EQU $0A
 CART_RAM_DISABLE EQU $00
