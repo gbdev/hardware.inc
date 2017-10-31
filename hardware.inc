@@ -20,7 +20,7 @@
 ;* Rev 2.3 -           : Fixed incorrect _HRAM equate
 ;* Rev 2.4 - 27-Apr-13 : Added some cart defines (AntonioND)
 ;* Rev 2.5 - 03-May-15 : Fixed format (AntonioND)
-;* Rev 2.6 - 04-Apr-16 : Added GBC OAM and cart defines (AntonioND)
+;* Rev 2.6 - 09-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 
 ; If all of these are already defined, don't do it again.
 
@@ -65,7 +65,14 @@ OAMF_PAL0       EQU %00000000 ; Palette number; 0,1 (DMG)
 OAMF_PAL1       EQU %00010000 ; Palette number; 0,1 (DMG)
 OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
 OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
+
 OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
+
+OAMB_PRI        EQU 7 ; Priority 
+OAMB_YFLIP      EQU 6 ; Y flip 
+OAMB_XFLIP      EQU 5 ; X flip 
+OAMB_PAL1       EQU 4 ; Palette number; 0,1 (DMG) 
+OAMB_BANK1      EQU 3 ; Bank number; 0,1 (GBC) 
 
 
 ;***************************************************************************
