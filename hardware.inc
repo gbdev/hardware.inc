@@ -22,7 +22,7 @@
 ;* Rev 2.5 - 03-May-15 : Fixed format (AntonioND)
 ;* Rev 2.6 - 09-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
-
+;* Rev 2.8 - 25-Feb-19 : Added defines for RAM sizes (Epsilon)
 ; If all of these are already defined, don't do it again.
 
     IF !DEF(HARDWARE_INC)
@@ -46,6 +46,12 @@ _RAM         EQU $C000 ; $C000->$DFFF
 _OAMRAM      EQU $FE00 ; $FE00->$FE9F
 _AUD3WAVERAM EQU $FF30 ; $FF30->$FF3F
 _HRAM        EQU $FF80 ; $FF80->$FFFE
+
+_VRAM_SIZE   EQU $A000-$8000 ; 8192 Bytes
+_SRAM_SIZE   EQU $C000-$A000 ; 8192 Bytes
+_RAM_SIZE    EQU $E000-$C000 ; 8192 Bytes
+_OAMRAM_SIZE EQU $FEA0-$FE00 ;  160 Bytes
+_HRAM_SIZE   EQU $FFFF-$FF80 ;  127 Bytes
 
 ; *** MBC5 Equates ***
 
