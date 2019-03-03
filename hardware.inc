@@ -22,6 +22,7 @@
 ;* Rev 2.5 - 03-May-15 : Fixed format (AntonioND)
 ;* Rev 2.6 - 09-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
+;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
 
 ; If all of these are already defined, don't do it again.
 
@@ -31,7 +32,7 @@ HARDWARE_INC SET 1
 rev_Check_hardware_inc : MACRO
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 2.7 ;PUT REVISION NUMBER HERE
+    IF  \1 > 2.8 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
@@ -402,6 +403,9 @@ IEF_VBLANK EQU %00000001 ; V-Blank
 rNR50 EQU $FF24
 rAUDVOL EQU rNR50
 
+AUDVOL_VIN_LEFT  EQU %10000000 ; SO2
+AUDVOL_VIN_RIGHT EQU %00001000 ; SO1
+
 
 ; --
 ; -- AUDTERM/NR51 ($FF25)
@@ -419,6 +423,17 @@ rAUDVOL EQU rNR50
 rNR51 EQU $FF25
 rAUDTERM EQU rNR51
 
+; SO2
+AUDTERM_4_LEFT  EQU %10000000
+AUDTERM_3_LEFT  EQU %01000000
+AUDTERM_2_LEFT  EQU %00100000
+AUDTERM_1_LEFT  EQU %00010000
+; SO1
+AUDTERM_4_RIGHT EQU %00001000
+AUDTERM_3_RIGHT EQU %00000100
+AUDTERM_2_RIGHT EQU %00000010
+AUDTERM_1_RIGHT EQU %00000001
+
 
 ; --
 ; -- AUDENA/NR52 ($FF26)
@@ -432,6 +447,9 @@ rAUDTERM EQU rNR51
 ; --
 rNR52 EQU $FF26
 rAUDENA EQU rNR52
+
+AUDENA_ON    EQU %10000000
+AUDENA_OFF   EQU %00000000  ; sets all audio regs to 0!
 
 
 ;***************************************************************************
@@ -453,6 +471,9 @@ rAUDENA EQU rNR52
 ; --
 rNR10 EQU $FF10
 rAUD1SWEEP EQU rNR10
+
+AUD1SWEEP_UP   EQU %00000000
+AUD1SWEEP_DOWN EQU %00001000
 
 
 ; --
@@ -671,6 +692,47 @@ rPCM12 EQU $FF76
 ; -- Bit 3-0 - Copy of sound channel 3's PCM amplitude
 ; --
 rPCM34 EQU $FF77
+
+
+;***************************************************************************
+;*
+;* Flags common to multiple sound channels
+;*
+;***************************************************************************
+
+; --
+; -- Square wave duty cycle
+; --
+; -- Can be used with AUD1LEN and AUD2LEN
+; -- See AUD1LEN for more info
+; --
+AUDLEN_DUTY_12_5    EQU %00000000 ; 12.5%
+AUDLEN_DUTY_25      EQU %01000000 ; 25%
+AUDLEN_DUTY_50      EQU %10000000 ; 50%
+AUDLEN_DUTY_75      EQU %11000000 ; 75%
+
+
+; --
+; -- Audio envelope flags
+; --
+; -- Can be used with AUD1ENV, AUD2ENV, AUD4ENV
+; -- See AUD1ENV for more info
+; --
+AUDENV_UP           EQU %00001000
+AUDENV_DOWN         EQU %00000000
+
+
+; --
+; -- Audio trigger flags
+; --
+; -- Can be used with AUD1HIGH, AUD2HIGH, AUD3HIGH
+; -- See AUD1HIGH for more info
+; --
+
+AUDHIGH_RESTART     EQU %10000000
+AUDHIGH_LENGTH_ON   EQU %01000000
+AUDHIGH_LENGTH_OFF  EQU %00000000
+
 
 ;***************************************************************************
 ;*
