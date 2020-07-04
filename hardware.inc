@@ -24,7 +24,7 @@
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
 ;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
-;* Rev 3.0 - 04-Jul-20 : Register ordering, byte-based sizes, general cleanup (Blitter Object)
+;* Rev 3.0 - 04-Jul-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 
 ; If all of these are already defined, don't do it again.
 
@@ -58,27 +58,6 @@ rRAMG        EQU $0000 ; $0000->$1fff
 rROMB0       EQU $2000 ; $2000->$2fff
 rROMB1       EQU $3000 ; $3000->$3fff - If more than 256 ROM banks are present.
 rRAMB        EQU $4000 ; $4000->$5fff - Bit 3 enables rumble (if present)
-
-
-; --
-; -- OAM flags
-; --
-
-OAMF_PRI        EQU %10000000 ; Priority
-OAMF_YFLIP      EQU %01000000 ; Y flip
-OAMF_XFLIP      EQU %00100000 ; X flip
-OAMF_PAL0       EQU %00000000 ; Palette number; 0,1 (DMG)
-OAMF_PAL1       EQU %00010000 ; Palette number; 0,1 (DMG)
-OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
-OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
-
-OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
-
-OAMB_PRI        EQU 7 ; Priority 
-OAMB_YFLIP      EQU 6 ; Y flip 
-OAMB_XFLIP      EQU 5 ; X flip 
-OAMB_PAL1       EQU 4 ; Palette number; 0,1 (DMG) 
-OAMB_BANK1      EQU 3 ; Bank number; 0,1 (GBC) 
 
 
 ;***************************************************************************
@@ -727,13 +706,18 @@ AUDHIGH_LENGTH_OFF  EQU %00000000
 
 ;***************************************************************************
 ;*
-;* CPU value on bootup (a=type)
+;* CPU values on bootup (a=type, b=qualifier)
 ;*
 ;***************************************************************************
 
-BOOTUP_DMG  EQU $01 ; Dot Matrix Game
-BOOTUP_CGB  EQU $11 ; Color GameBoy
-BOOTUP_MGB  EQU $FF ; Mini GameBoy (Pocket GameBoy)
+BOOTUP_A_DMG    EQU $01 ; Dot Matrix Game
+BOOTUP_A_CGB    EQU $11 ; Color GameBoy
+BOOTUP_A_MGB    EQU $FF ; Mini GameBoy (Pocket GameBoy)
+
+; if a=BOOTUP_A_CGB, bit 0 in b can be checked to determine if real CGB or
+; other system running in GBC mode
+BOOTUP_B_CGB    EQU %00000000
+BOOTUP_B_OTHER  EQU %00000001   ; GBA, GBA SP, Game Boy Player, or New GBA SP
 
 
 ;***************************************************************************
@@ -851,6 +835,42 @@ SCRN_VX   EQU 256 ; Virtual width of screen in pixels
 SCRN_VY   EQU 256 ; Virtual height of screen in pixels
 SCRN_VX_B EQU 32  ; Virtual width of screen in bytes
 SCRN_VY_B EQU 32  ; Virtual height of screen in bytes
+
+
+;***************************************************************************
+;*
+;* OAM related
+;*
+;***************************************************************************
+
+; OAM attributes
+; each entry in OAM RAM is 4 bytes (sizeof_OAM_ATTRS)
+RSRESET
+OAMA_Y              RB  1   ; y pos
+OAMA_X              RB  1   ; x pos
+OAMA_TILEID         RB  1   ; tile id
+OAMA_FLAGS          RB  1   ; flags (see below)
+sizeof_OAM_ATTRS    RB  0
+
+OAM_COUNT           EQU 40  ; number of OAM entries in OAM RAM
+
+; flags
+OAMF_PRI        EQU %10000000 ; Priority
+OAMF_YFLIP      EQU %01000000 ; Y flip
+OAMF_XFLIP      EQU %00100000 ; X flip
+OAMF_PAL0       EQU %00000000 ; Palette number; 0,1 (DMG)
+OAMF_PAL1       EQU %00010000 ; Palette number; 0,1 (DMG)
+OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
+OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
+
+OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
+
+OAMB_PRI        EQU 7 ; Priority
+OAMB_YFLIP      EQU 6 ; Y flip
+OAMB_XFLIP      EQU 5 ; X flip
+OAMB_PAL1       EQU 4 ; Palette number; 0,1 (DMG)
+OAMB_BANK1      EQU 3 ; Bank number; 0,1 (GBC)
+
 
 ;*
 ;* Nintendo scrolling logo
