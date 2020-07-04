@@ -1,5 +1,5 @@
-# Gameboy Hardware definitions – `hardware.inc`
-
+# `hardware.inc`
+### Gameboy Hardware definitions
 `hardware.inc` has been the standard include file containing Game Boy hardware definitions for use in [rgbds](https://github.com/rednex/rgbds) projects for over 20 years.
 
 This repo is an attempt at version control. This is simply a kind of git mirror of the various flatfiles out there. I haven't written any of the actual code myself.

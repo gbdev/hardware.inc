@@ -23,7 +23,7 @@
 ;* Rev 2.6 - 09-Apr-16 : Added GBC OAM and cart defines (AntonioND)
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
 ;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
-;* Rev 2.9 - 20-Apr-19 : Added offsets for the registers, register ordering, cleanup (Blitter Object)
+;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 
 ; If all of these are already defined, don't do it again.
 
@@ -91,13 +91,16 @@ OAMB_BANK1      EQU 3 ; Bank number; 0,1 (GBC)
 oP1 EQU $00
 rP1 EQU (_HW + oP1)
 
-P1F_5 EQU %00100000 ; P15 out port
-P1F_4 EQU %00010000 ; P14 out port
+P1F_5 EQU %00100000 ; P15 out port, set to 0 to get buttons
+P1F_4 EQU %00010000 ; P14 out port, set to 0 to get dpad
 P1F_3 EQU %00001000 ; P13 in port
 P1F_2 EQU %00000100 ; P12 in port
 P1F_1 EQU %00000010 ; P11 in port
 P1F_0 EQU %00000001 ; P10 in port
 
+P1F_GET_DPAD EQU P1F_5
+P1F_GET_BTN  EQU P1F_4
+P1F_GET_NONE EQU P1F_4 | P1F_5
 
 ; --
 ; -- SB ($FF01)
