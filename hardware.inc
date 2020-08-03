@@ -445,10 +445,10 @@ AUDTERM_1_RIGHT EQU %00000001
 ; -- Sound on/off (R/W)
 ; --
 ; -- Bit 7   - All sound on/off (sets all audio regs to 0!)
-; -- Bit 3   - Sound 4 ON flag (doesn't work!)
-; -- Bit 2   - Sound 3 ON flag (doesn't work!)
-; -- Bit 1   - Sound 2 ON flag (doesn't work!)
-; -- Bit 0   - Sound 1 ON flag (doesn't work!)
+; -- Bit 3   - Sound 4 ON flag (read only)
+; -- Bit 2   - Sound 3 ON flag (read only)
+; -- Bit 1   - Sound 2 ON flag (read only)
+; -- Bit 0   - Sound 1 ON flag (read only)
 ; --
 rNR52 EQU $FF26
 rAUDENA EQU rNR52
