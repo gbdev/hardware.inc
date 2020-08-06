@@ -40,6 +40,7 @@ rev_Check_hardware_inc : MACRO
 ENDM
 
 _VRAM        EQU $8000 ; $8000->$9FFF
+_VRAM8000    EQU _VRAM
 _VRAM8800    EQU $8800
 _VRAM9000    EQU $9000
 _SCRN0       EQU $9800 ; $9800->$9BFF
@@ -68,7 +69,7 @@ rRAMB        EQU $4000 ; $4000->$5fff - Bit 3 enables rumble (if present)
 
 ; --
 ; -- P1 ($FF00)
-; -- Register for reading joy pad info.    (R/W)
+; -- Register for reading joy pad info. (R/W)
 ; --
 rP1 EQU $FF00
 
@@ -185,7 +186,7 @@ rAUD1ENV EQU rNR12
 
 ; --
 ; -- AUD1LOW/NR13 ($FF13)
-; -- Frequency lo (W)
+; -- Frequency low byte (W)
 ; --
 rNR13 EQU $FF13
 rAUD1LOW EQU rNR13
@@ -193,7 +194,7 @@ rAUD1LOW EQU rNR13
 
 ; --
 ; -- AUD1HIGH/NR14 ($FF14)
-; -- Frequency hi (W)
+; -- Frequency high byte (W)
 ; --
 ; -- Bit 7   - Initial (when set, sound restarts)
 ; -- Bit 6   - Counter/consecutive selection
@@ -225,7 +226,7 @@ rAUD2ENV EQU rNR22
 
 ; --
 ; -- AUD2LOW/NR23 ($FF18)
-; -- Frequency lo (W)
+; -- Frequency low byte (W)
 ; --
 rNR23 EQU $FF18
 rAUD2LOW EQU rNR23
@@ -233,7 +234,7 @@ rAUD2LOW EQU rNR23
 
 ; --
 ; -- AUD2HIGH/NR24 ($FF19)
-; -- Frequency hi (W)
+; -- Frequency high byte (W)
 ; --
 ; -- see AUD1HIGH for info
 ; --
@@ -277,7 +278,7 @@ rAUD3LEVEL EQU rNR32
 
 ; --
 ; -- AUD3LOW/NR33 ($FF1D)
-; -- Frequency lo (W)
+; -- Frequency low byte (W)
 ; --
 ; -- see AUD1LOW for info
 ; --
@@ -287,7 +288,7 @@ rAUD3LOW EQU rNR33
 
 ; --
 ; -- AUD3HIGH/NR34 ($FF1E)
-; -- Frequency hi (W)
+; -- Frequency high byte (W)
 ; --
 ; -- see AUD1HIGH for info
 ; --
@@ -335,13 +336,12 @@ rAUD4POLY EQU rNR43
 
 ; --
 ; -- AUD4GO/NR44 ($FF23)
-; -- (has wrong name and value (ff30) in Dr.Pan's doc!)
 ; --
 ; -- Bit 7 -   Inital
 ; -- Bit 6 -   Counter/consecutive selection
 ; --
 rNR44 EQU $FF23
-rAUD4GO EQU rNR44 ; silly name!
+rAUD4GO EQU rNR44
 
 
 ; --
@@ -441,8 +441,8 @@ STATF_MODE10  EQU  %00100000 ; Mode 10
 STATF_MODE01  EQU  %00010000 ; Mode 01 (V-Blank)
 STATF_MODE00  EQU  %00001000 ; Mode 00 (H-Blank)
 STATF_LYCF    EQU  %00000100 ; Coincidence Flag
-STATF_HB      EQU  %00000000 ; H-Blank
-STATF_VB      EQU  %00000001 ; V-Blank
+STATF_HBL     EQU  %00000000 ; H-Blank
+STATF_VBL     EQU  %00000001 ; V-Blank
 STATF_OAM     EQU  %00000010 ; OAM-RAM is used by system
 STATF_LCD     EQU  %00000011 ; Both OAM and VRAM used by system
 STATF_BUSY    EQU  %00000010 ; When set, VRAM access is unsafe
@@ -522,6 +522,7 @@ rOBP1 EQU $FF49
 ; -- Window Y Position (R/W)
 ; --
 ; -- 0 <= WY <= 143
+; -- When WY = 0, the window is displayed from the top edge of the LCD screen.
 ; --
 rWY EQU $FF4A
 
@@ -531,15 +532,20 @@ rWY EQU $FF4A
 ; -- Window X Position (R/W)
 ; --
 ; -- 7 <= WX <= 166
+; -- When WX = 7, the window is displayed from the left edge of the LCD screen.
+; -- Values of 0-6 and 166 are unreliable due to hardware bugs.
 ; --
 rWX EQU $FF4B
 
 
 ; --
-; -- KEY 1 ($FF4D)
+; -- SPEED ($FF4D)
 ; -- Select CPU Speed (R/W)
 ; --
-rKEY1 EQU $FF4D
+rSPD EQU $FF4D
+
+SPDF_DBLSPEED EQU %10000000 ; 0=Normal Speed, 1=Double Speed (R)
+SPDF_PREPARE  EQU %00000001 ; 0=No, 1=Prepare (R/W)
 
 
 ; --
@@ -553,37 +559,48 @@ rVBK EQU $FF4F
 
 ; --
 ; -- HDMA1 ($FF51)
-; -- Horizontal Blanking, General Purpose DMA (W)
+; -- High byte for Horizontal Blanking/General Purpose DMA source address (W)
+; -- CGB Mode Only
 ; --
 rHDMA1 EQU $FF51
 
 
 ; --
 ; -- HDMA2 ($FF52)
-; -- Horizontal Blanking, General Purpose DMA (W)
+; -- Low byte for Horizontal Blanking/General Purpose DMA source address (W)
+; -- CGB Mode Only
 ; --
 rHDMA2 EQU $FF52
 
 
 ; --
 ; -- HDMA3 ($FF53)
-; -- Horizontal Blanking, General Purpose DMA (W)
+; -- High byte for Horizontal Blanking/General Purpose DMA destination address (W)
+; -- CGB Mode Only
 ; --
 rHDMA3 EQU $FF53
 
 
 ; --
 ; -- HDMA4 ($FF54)
-; -- Horizontal Blanking, General Purpose DMA (W)
+; -- Low byte for Horizontal Blanking/General Purpose DMA destination address (W)
+; -- CGB Mode Only
 ; --
 rHDMA4 EQU $FF54
 
 
 ; --
 ; -- HDMA5 ($FF55)
-; -- Horizontal Blanking, General Purpose DMA (R/W)
+; -- Transfer length (in bytes)/mode/start for Horizontal Blanking, General Purpose DMA (R/W)
+; -- CGB Mode Only
 ; --
 rHDMA5 EQU $FF55
+
+HDMA5F_MODE_GP  EQU %00000000 ; General Purpose DMA (W)
+HDMA5F_MODE_HBL EQU %10000000 ; HBlank DMA (W)
+
+; -- Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
+HDMA5F_BUSY EQU %10000000 ; 0=DMA complete, 1=Busy (DMA still in progress) (R)
 
 
 ; --
@@ -599,6 +616,8 @@ rRP EQU $FF56
 ; --
 rBCPS EQU $FF68
 
+BCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
+
 
 ; --
 ; -- BCPD ($FF69)
@@ -608,14 +627,16 @@ rBCPD EQU $FF69
 
 
 ; --
-; -- BCPS ($FF6A)
+; -- OCPS ($FF6A)
 ; -- Object Color Palette Specification (R/W)
 ; --
 rOCPS EQU $FF6A
 
+OCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
+
 
 ; --
-; -- BCPD ($FF6B)
+; -- OCPD ($FF6B)
 ; -- Object Color Palette Data (R/W)
 ; --
 rOCPD EQU $FF6B
