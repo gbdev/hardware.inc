@@ -542,10 +542,11 @@ rWX EQU $FF4B
 ; -- SPEED ($FF4D)
 ; -- Select CPU Speed (R/W)
 ; --
-rSPD EQU $FF4D
+rKEY1 EQU $FF4D
+rSPD  EQU rKEY1
 
-SPDF_DBLSPEED EQU %10000000 ; 0=Normal Speed, 1=Double Speed (R)
-SPDF_PREPARE  EQU %00000001 ; 0=No, 1=Prepare (R/W)
+KEY1F_DBLSPEED EQU %10000000 ; 0=Normal Speed, 1=Double Speed (R)
+KEY1F_PREPARE  EQU %00000001 ; 0=No, 1=Prepare (R/W)
 
 
 ; --
@@ -591,7 +592,7 @@ rHDMA4 EQU $FF54
 
 ; --
 ; -- HDMA5 ($FF55)
-; -- Transfer length (in bytes)/mode/start for Horizontal Blanking, General Purpose DMA (R/W)
+; -- Transfer length (in tiles minus 1)/mode/start for Horizontal Blanking, General Purpose DMA (R/W)
 ; -- CGB Mode Only
 ; --
 rHDMA5 EQU $FF55
