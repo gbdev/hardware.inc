@@ -24,7 +24,7 @@
 ;* Rev 2.7 - 19-Jan-19 : Added rPCMXX (ISSOtm)
 ;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
-;* Rev 3.0 - 04-Jul-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
+;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 
 ; If all of these are already defined, don't do it again.
 
@@ -739,7 +739,7 @@ BOOTUP_A_MGB    EQU $FF ; Mini GameBoy (Pocket GameBoy)
 ; if a=BOOTUP_A_CGB, bit 0 in b can be checked to determine if real CGB or
 ; other system running in GBC mode
 BOOTUP_B_CGB    EQU %00000000
-BOOTUP_B_OTHER  EQU %00000001   ; GBA, GBA SP, Game Boy Player, or New GBA SP
+BOOTUP_B_AGB    EQU %00000001   ; AGB, AGB SP, Game Boy Player, or New AGB SP
 
 
 ;***************************************************************************
