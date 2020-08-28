@@ -601,7 +601,7 @@ HDMA5F_MODE_GP  EQU %00000000 ; General Purpose DMA (W)
 HDMA5F_MODE_HBL EQU %10000000 ; HBlank DMA (W)
 
 ; -- Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
-HDMA5F_BUSY EQU %10000000 ; 0=DMA complete, 1=Busy (DMA still in progress) (R)
+HDMA5F_BUSY EQU %10000000 ; 0=Busy (DMA still in progress), 1=Transfer complete (R)
 
 
 ; --
