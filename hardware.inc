@@ -739,7 +739,7 @@ BOOTUP_A_MGB    EQU $FF ; Mini GameBoy (Pocket GameBoy)
 ; if a=BOOTUP_A_CGB, bit 0 in b can be checked to determine if real CGB or
 ; other system running in GBC mode
 BOOTUP_B_CGB    EQU %00000000
-BOOTUP_B_AGB    EQU %00000001   ; AGB, AGB SP, Game Boy Player, or New AGB SP
+BOOTUP_B_AGB    EQU %00000001   ; GBA, GBA SP, Game Boy Player, or New GBA SP
 
 
 ;***************************************************************************
