@@ -456,7 +456,7 @@ rSCY EQU $FF42
 
 
 ; --
-; -- SCY ($FF43)
+; -- SCX ($FF43)
 ; -- Scroll X (R/W)
 ; --
 rSCX EQU $FF43
