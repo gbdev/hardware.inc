@@ -25,7 +25,7 @@
 ;* Rev 2.8 - 03-Feb-19 : Added audio registers flags (Álvaro Cuesta)
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
-;* Rev 4.0 - 03-May-21 : Updated all constants to use RGBDS 0.5.0's `DEF` (Eievui)
+;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
 
 ; If all of these are already defined, don't do it again.
 
@@ -689,7 +689,7 @@ DEF rIE EQU $FFFF
 DEF IEF_HILO   EQU %00010000 ; Transition from High to Low of Pin number P10-P13
 DEF IEF_SERIAL EQU %00001000 ; Serial I/O transfer end
 DEF IEF_TIMER  EQU %00000100 ; Timer Overflow
-DEF IEF_LCDC   EQU %00000010 ; LCDC (see STAT)
+DEF IEF_STAT   EQU %00000010 ; STAT
 DEF IEF_VBLANK EQU %00000001 ; V-Blank
 
 
@@ -910,5 +910,9 @@ MACRO NINTENDO_LOGO
     DB  $00,$08,$11,$1F,$88,$89,$00,$0E,$DC,$CC,$6E,$E6,$DD,$DD,$D9,$99
     DB  $BB,$BB,$67,$63,$6E,$0E,$EC,$CC,$DD,$DC,$99,$9F,$BB,$B9,$33,$3E
 ENDM
+
+; Deprecated constants. Please avoid using.
+
+DEF IEF_LCDC   EQU %00000010 ; LCDC (see STAT)
 
     ENDC ;HARDWARE_INC
