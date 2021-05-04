@@ -27,6 +27,10 @@
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
 
+IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
+    FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
+ENDC
+
 ; If all of these are already defined, don't do it again.
 
     IF !DEF(HARDWARE_INC)
