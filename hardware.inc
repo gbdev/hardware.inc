@@ -26,6 +26,7 @@
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
+;* Rev 4.1 - 10-May-21 : Added OAM GBC palette flag constants (Eievui)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -897,6 +898,15 @@ DEF OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
 DEF OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
 
 DEF OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
+
+DEF OAMF_GBCPAL0    EQU %00000000 ; Palette (GBC)
+DEF OAMF_GBCPAL1    EQU %00000001 ; Palette (GBC)
+DEF OAMF_GBCPAL2    EQU %00000010 ; Palette (GBC)
+DEF OAMF_GBCPAL3    EQU %00000011 ; Palette (GBC)
+DEF OAMF_GBCPAL4    EQU %00000100 ; Palette (GBC)
+DEF OAMF_GBCPAL5    EQU %00000101 ; Palette (GBC)
+DEF OAMF_GBCPAL6    EQU %00000110 ; Palette (GBC)
+DEF OAMF_GBCPAL7    EQU %00000111 ; Palette (GBC)
 
 DEF OAMB_PRI        EQU 7 ; Priority
 DEF OAMB_YFLIP      EQU 6 ; Y flip
