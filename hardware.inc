@@ -103,6 +103,13 @@ DEF rSB EQU $FF01
 ; --
 DEF rSC EQU $FF02
 
+DEF SCF_START  EQU %10000000 ;Transfer Start Flag (1=Transfer in progress, or requested)
+DEF SCF_SPEED  EQU %00000010 ;Clock Speed (0=Normal, 1=Fast) ** CGB Mode Only **
+DEF SCF_SOURCE EQU %00000001 ;Shift Clock (0=External Clock, 1=Internal Clock)
+
+DEF SCB_START  EQU $7
+DEF SCB_SPEED  EQU $1
+DEF SCB_SOURCE EQU $0
 
 ; --
 ; -- DIV ($FF04)
@@ -144,6 +151,18 @@ DEF TACF_262KHZ EQU %00000001
 ; -- Interrupt Flag (R/W)
 ; --
 DEF rIF EQU $FF0F
+
+DEF IFF_HILO   EQU %00010000 ; Transition from High to Low of Pin number P10-P13
+DEF IFF_SERIAL EQU %00001000 ; Serial I/O transfer end
+DEF IFF_TIMER  EQU %00000100 ; Timer Overflow
+DEF IFF_STAT   EQU %00000010 ; STAT
+DEF IFF_VBLANK EQU %00000001 ; V-Blank
+
+DEF IFB_HILO   EQU $4
+DEF IFB_SERIAL EQU $3
+DEF IFB_TIMER  EQU $2
+DEF IFB_STAT   EQU $1
+DEF IFB_VBLANK EQU $0
 
 
 ; --
@@ -547,6 +566,7 @@ DEF rWY EQU $FF4A
 ; -- Values of 0-6 and 166 are unreliable due to hardware bugs.
 ; --
 DEF rWX EQU $FF4B
+DEF WX_OFFSET EQU 7 ; add this to a screen position to get a WX position
 
 
 ; --
