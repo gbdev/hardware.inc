@@ -452,6 +452,12 @@ DEF STATF_OAM     EQU  %00000010 ; OAM-RAM is used by system
 DEF STATF_LCD     EQU  %00000011 ; Both OAM and VRAM used by system
 DEF STATF_BUSY    EQU  %00000010 ; When set, VRAM access is unsafe
 
+DEF STATB_LYC     EQU  $6
+DEF STATB_MODE10  EQU  $5
+DEF STATB_MODE01  EQU  $4
+DEF STATB_MODE00  EQU  $3
+DEF STATB_LYCF    EQU  $2
+DEF STATB_BUSY    EQU  $1
 
 ; --
 ; -- SCY ($FF42)
