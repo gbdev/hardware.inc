@@ -26,6 +26,7 @@
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
+;* Rev 4.1 - 16-Aug-21 : Added more flag and bit number defines, added WX_OFFSET (rondnelson99)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -39,7 +40,7 @@ DEF HARDWARE_INC EQU 1
 MACRO rev_Check_hardware_inc
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 4.0 ;PUT REVISION NUMBER HERE
+    IF  \1 > 4.1 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
