@@ -900,11 +900,14 @@ DEF SCRN_VY_B EQU 32  ; Virtual height of screen in bytes
 ; OAM attributes
 ; each entry in OAM RAM is 4 bytes (sizeof_OAM_ATTRS)
 RSRESET
-DEF OAMA_Y              RB  1   ; y pos
-DEF OAMA_X              RB  1   ; x pos
+DEF OAMA_Y              RB  1   ; y pos plus 16
+DEF OAMA_X              RB  1   ; x pos plus 8
 DEF OAMA_TILEID         RB  1   ; tile id
 DEF OAMA_FLAGS          RB  1   ; flags (see below)
 DEF sizeof_OAM_ATTRS    RB  0
+
+DEF OAMA_Y_OFFSET EQU 16 ; add this to a screen position to get an OAM Y position
+DEF OAMA_X_OFFSET EQU 8  ; add this to a screen position to get an OAM X position
 
 DEF OAM_COUNT           EQU 40  ; number of OAM entries in OAM RAM
 
