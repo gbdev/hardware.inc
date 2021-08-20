@@ -555,7 +555,8 @@ DEF rWY EQU $FF4A
 ; -- Values of 0-6 and 166 are unreliable due to hardware bugs.
 ; --
 DEF rWX EQU $FF4B
-DEF WX_OFFSET EQU 7 ; add this to a screen position to get a WX position
+
+DEF WX_OFS EQU 7 ; add this to a screen position to get a WX position
 
 
 ; --
