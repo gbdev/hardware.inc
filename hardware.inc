@@ -908,7 +908,7 @@ DEF OAMA_FLAGS          RB  1   ; flags (see below)
 DEF sizeof_OAM_ATTRS    RB  0
 
 DEF OAM_Y_OFS EQU 16 ; add this to a screen-relative Y position to get an OAM Y position
-DEF OAMA_X_OFFSET EQU 8  ; add this to a screen position to get an OAM X position
+DEF OAM_X_OFS EQU 8  ; add this to a screen-relative X position to get an OAM X position
 
 DEF OAM_COUNT           EQU 40  ; number of OAM entries in OAM RAM
 
