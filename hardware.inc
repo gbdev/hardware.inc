@@ -907,7 +907,7 @@ DEF OAMA_TILEID         RB  1   ; tile id
 DEF OAMA_FLAGS          RB  1   ; flags (see below)
 DEF sizeof_OAM_ATTRS    RB  0
 
-DEF OAMA_Y_OFFSET EQU 16 ; add this to a screen position to get an OAM Y position
+DEF OAM_Y_OFS EQU 16 ; add this to a screen-relative Y position to get an OAM Y position
 DEF OAMA_X_OFFSET EQU 8  ; add this to a screen position to get an OAM X position
 
 DEF OAM_COUNT           EQU 40  ; number of OAM entries in OAM RAM
