@@ -26,7 +26,7 @@
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
-;* Rev 4.1 - 16-Aug-21 : Added more flag and bit number defines, added WX_OFFSET (rondnelson99)
+;* Rev 4.1 - 16-Aug-21 : Added more flags, bit number defines, and offset constants for OAM and window positions (rondnelson99)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
