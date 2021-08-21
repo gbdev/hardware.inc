@@ -26,6 +26,7 @@
 ;* Rev 2.9 - 28-Feb-20 : Added utility rP1 constants
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
+;* Rev 4.1 - 16-Aug-21 : Added more flags, bit number defines, and offset constants for OAM and window positions (rondnelson99)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -39,7 +40,7 @@ DEF HARDWARE_INC EQU 1
 MACRO rev_Check_hardware_inc
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 4.0 ;PUT REVISION NUMBER HERE
+    IF  \1 > 4.1 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
@@ -103,6 +104,13 @@ DEF rSB EQU $FF01
 ; --
 DEF rSC EQU $FF02
 
+DEF SCF_START  EQU %10000000 ;Transfer Start Flag (1=Transfer in progress, or requested)
+DEF SCF_SPEED  EQU %00000010 ;Clock Speed (0=Normal, 1=Fast) ** CGB Mode Only **
+DEF SCF_SOURCE EQU %00000001 ;Shift Clock (0=External Clock, 1=Internal Clock)
+
+DEF SCB_START  EQU 7
+DEF SCB_SPEED  EQU 1
+DEF SCB_SOURCE EQU 0
 
 ; --
 ; -- DIV ($FF04)
@@ -452,6 +460,12 @@ DEF STATF_OAM     EQU  %00000010 ; OAM-RAM is used by system
 DEF STATF_LCD     EQU  %00000011 ; Both OAM and VRAM used by system
 DEF STATF_BUSY    EQU  %00000010 ; When set, VRAM access is unsafe
 
+DEF STATB_LYC     EQU  6
+DEF STATB_MODE10  EQU  5
+DEF STATB_MODE01  EQU  4
+DEF STATB_MODE00  EQU  3
+DEF STATB_LYCF    EQU  2
+DEF STATB_BUSY    EQU  1
 
 ; --
 ; -- SCY ($FF42)
@@ -541,6 +555,8 @@ DEF rWY EQU $FF4A
 ; -- Values of 0-6 and 166 are unreliable due to hardware bugs.
 ; --
 DEF rWX EQU $FF4B
+
+DEF WX_OFS EQU 7 ; add this to a screen position to get a WX position
 
 
 ; --
@@ -695,6 +711,12 @@ DEF IEF_SERIAL EQU %00001000 ; Serial I/O transfer end
 DEF IEF_TIMER  EQU %00000100 ; Timer Overflow
 DEF IEF_STAT   EQU %00000010 ; STAT
 DEF IEF_VBLANK EQU %00000001 ; V-Blank
+
+DEF IEB_HILO   EQU 4
+DEF IEB_SERIAL EQU 3
+DEF IEB_TIMER  EQU 2
+DEF IEB_STAT   EQU 1
+DEF IEB_VBLANK EQU 0
 
 
 ;***************************************************************************
@@ -879,11 +901,14 @@ DEF SCRN_VY_B EQU 32  ; Virtual height of screen in bytes
 ; OAM attributes
 ; each entry in OAM RAM is 4 bytes (sizeof_OAM_ATTRS)
 RSRESET
-DEF OAMA_Y              RB  1   ; y pos
-DEF OAMA_X              RB  1   ; x pos
+DEF OAMA_Y              RB  1   ; y pos plus 16
+DEF OAMA_X              RB  1   ; x pos plus 8
 DEF OAMA_TILEID         RB  1   ; tile id
 DEF OAMA_FLAGS          RB  1   ; flags (see below)
 DEF sizeof_OAM_ATTRS    RB  0
+
+DEF OAM_Y_OFS EQU 16 ; add this to a screen-relative Y position to get an OAM Y position
+DEF OAM_X_OFS EQU 8  ; add this to a screen-relative X position to get an OAM X position
 
 DEF OAM_COUNT           EQU 40  ; number of OAM entries in OAM RAM
 
