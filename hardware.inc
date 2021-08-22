@@ -350,7 +350,7 @@ DEF rAUD4POLY EQU rNR43
 ; --
 ; -- AUD4GO/NR44 ($FF23)
 ; --
-; -- Bit 7 -   Inital
+; -- Bit 7 -   Initial (when set, sound restarts)
 ; -- Bit 6 -   Counter/consecutive selection
 ; --
 DEF rNR44 EQU $FF23
@@ -384,7 +384,7 @@ DEF AUDVOL_VIN_RIGHT EQU %00001000 ; SO1
 ; -- Bit 3   - Output sound 4 to SO1 terminal
 ; -- Bit 2   - Output sound 3 to SO1 terminal
 ; -- Bit 1   - Output sound 2 to SO1 terminal
-; -- Bit 0   - Output sound 0 to SO1 terminal
+; -- Bit 0   - Output sound 1 to SO1 terminal
 ; --
 DEF rNR51 EQU $FF25
 DEF rAUDTERM EQU rNR51
