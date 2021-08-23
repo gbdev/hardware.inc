@@ -362,9 +362,9 @@ DEF rAUD4GO EQU rNR44
 ; -- Channel control / ON-OFF / Volume (R/W)
 ; --
 ; -- Bit 7   - Vin->SO2 ON/OFF (left)
-; -- Bit 6-4 - SO2 output level (left volume) (# 0-7)
+; -- Bit 6-4 - SO2 output level (left speaker) (# 0-7)
 ; -- Bit 3   - Vin->SO1 ON/OFF (right)
-; -- Bit 2-0 - SO1 output level (right volume) (# 0-7)
+; -- Bit 2-0 - SO1 output level (right speaker) (# 0-7)
 ; --
 DEF rNR50 EQU $FF24
 DEF rAUDVOL EQU rNR50
