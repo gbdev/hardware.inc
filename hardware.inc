@@ -350,7 +350,7 @@ DEF rAUD4POLY EQU rNR43
 ; --
 ; -- AUD4GO/NR44 ($FF23)
 ; --
-; -- Bit 7 -   Inital
+; -- Bit 7 -   Initial (when set, sound restarts)
 ; -- Bit 6 -   Counter/consecutive selection
 ; --
 DEF rNR44 EQU $FF23
@@ -361,10 +361,10 @@ DEF rAUD4GO EQU rNR44
 ; -- AUDVOL/NR50 ($FF24)
 ; -- Channel control / ON-OFF / Volume (R/W)
 ; --
-; -- Bit 7   - Vin->SO2 ON/OFF (Vin??)
-; -- Bit 6-4 - SO2 output level (volume) (# 0-7)
-; -- Bit 3   - Vin->SO1 ON/OFF (Vin??)
-; -- Bit 2-0 - SO1 output level (volume) (# 0-7)
+; -- Bit 7   - Vin->SO2 ON/OFF (left)
+; -- Bit 6-4 - SO2 output level (left speaker) (# 0-7)
+; -- Bit 3   - Vin->SO1 ON/OFF (right)
+; -- Bit 2-0 - SO1 output level (right speaker) (# 0-7)
 ; --
 DEF rNR50 EQU $FF24
 DEF rAUDVOL EQU rNR50
@@ -377,14 +377,14 @@ DEF AUDVOL_VIN_RIGHT EQU %00001000 ; SO1
 ; -- AUDTERM/NR51 ($FF25)
 ; -- Selection of Sound output terminal (R/W)
 ; --
-; -- Bit 7   - Output sound 4 to SO2 terminal
-; -- Bit 6   - Output sound 3 to SO2 terminal
-; -- Bit 5   - Output sound 2 to SO2 terminal
-; -- Bit 4   - Output sound 1 to SO2 terminal
-; -- Bit 3   - Output sound 4 to SO1 terminal
-; -- Bit 2   - Output sound 3 to SO1 terminal
-; -- Bit 1   - Output sound 2 to SO1 terminal
-; -- Bit 0   - Output sound 0 to SO1 terminal
+; -- Bit 7   - Output channel 4 to SO2 terminal (left)
+; -- Bit 6   - Output channel 3 to SO2 terminal (left)
+; -- Bit 5   - Output channel 2 to SO2 terminal (left)
+; -- Bit 4   - Output channel 1 to SO2 terminal (left)
+; -- Bit 3   - Output channel 4 to SO1 terminal (right)
+; -- Bit 2   - Output channel 3 to SO1 terminal (right)
+; -- Bit 1   - Output channel 2 to SO1 terminal (right)
+; -- Bit 0   - Output channel 1 to SO1 terminal (right)
 ; --
 DEF rNR51 EQU $FF25
 DEF rAUDTERM EQU rNR51
