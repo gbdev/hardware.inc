@@ -27,6 +27,7 @@
 ;* Rev 3.0 - 27-Aug-20 : Register ordering, byte-based sizes, OAM additions, general cleanup (Blitter Object)
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
 ;* Rev 4.1 - 16-Aug-21 : Added more flags, bit number defines, and offset constants for OAM and window positions (rondnelson99)
+;* Rev 4.2 - 04-Sep-21 : Added CH3- and CH4-specific audio registers flags (ISSOtm)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -40,7 +41,7 @@ DEF HARDWARE_INC EQU 1
 MACRO rev_Check_hardware_inc
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 4.1 ;PUT REVISION NUMBER HERE
+    IF  \1 > 4.2 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
@@ -264,6 +265,9 @@ DEF rAUD2HIGH EQU rNR24
 DEF rNR30 EQU $FF1A
 DEF rAUD3ENA EQU rNR30
 
+DEF AUD3ENA_OFF EQU %00000000
+DEF AUD3ENA_ON  EQU %10000000
+
 
 ; --
 ; -- AUD3LEN/NR31 ($FF1B)
@@ -287,6 +291,11 @@ DEF rAUD3LEN EQU rNR31
 ; --
 DEF rNR32 EQU $FF1C
 DEF rAUD3LEVEL EQU rNR32
+
+DEF AUD3LEVEL_MUTE EQU %00000000
+DEF AUD3LEVEL_100  EQU %00100000
+DEF AUD3LEVEL_50   EQU %01000000
+DEF AUD3LEVEL_25   EQU %01100000
 
 
 ; --
@@ -345,6 +354,9 @@ DEF rAUD4ENV EQU rNR42
 ; --
 DEF rNR43 EQU $FF22
 DEF rAUD4POLY EQU rNR43
+
+DEF AUD4POLY_15STEP EQU %00000000
+DEF AUD4POLY_7STEP  EQU %00001000
 
 
 ; --
