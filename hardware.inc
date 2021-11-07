@@ -28,6 +28,7 @@
 ;* Rev 4.0 - 03-May-21 : Updated to use RGBDS 0.5.0 syntax, changed IEF_LCDC to IEF_STAT (Eievui)
 ;* Rev 4.1 - 16-Aug-21 : Added more flags, bit number defines, and offset constants for OAM and window positions (rondnelson99)
 ;* Rev 4.2 - 04-Sep-21 : Added CH3- and CH4-specific audio registers flags (ISSOtm)
+;* Rev 4.3 - 07-Nov-21 : Deprecate VRAM address constants (Eievui)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -47,9 +48,6 @@ MACRO rev_Check_hardware_inc
 ENDM
 
 DEF _VRAM        EQU $8000 ; $8000->$9FFF
-DEF _VRAM8000    EQU _VRAM
-DEF _VRAM8800    EQU _VRAM+$800
-DEF _VRAM9000    EQU _VRAM+$1000
 DEF _SCRN0       EQU $9800 ; $9800->$9BFF
 DEF _SCRN1       EQU $9C00 ; $9C00->$9FFF
 DEF _SRAM        EQU $A000 ; $A000->$BFFF
@@ -955,5 +953,8 @@ ENDM
 ; Deprecated constants. Please avoid using.
 
 DEF IEF_LCDC   EQU %00000010 ; LCDC (see STAT)
+DEF _VRAM8000  EQU _VRAM
+DEF _VRAM8800  EQU _VRAM+$800
+DEF _VRAM9000  EQU _VRAM+$1000
 
     ENDC ;HARDWARE_INC
