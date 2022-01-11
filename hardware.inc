@@ -29,6 +29,7 @@
 ;* Rev 4.1 - 16-Aug-21 : Added more flags, bit number defines, and offset constants for OAM and window positions (rondnelson99)
 ;* Rev 4.2 - 04-Sep-21 : Added CH3- and CH4-specific audio registers flags (ISSOtm)
 ;* Rev 4.3 - 07-Nov-21 : Deprecate VRAM address constants (Eievui)
+;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -847,7 +848,6 @@ DEF CART_ROM_1536KB EQU $54 ; 96 banks
 ; $0149 SRAM size
 ; these are kilobytes
 DEF CART_SRAM_NONE  EQU 0
-DEF CART_SRAM_2KB   EQU 1 ; 1 incomplete bank
 DEF CART_SRAM_8KB   EQU 2 ; 1 bank
 DEF CART_SRAM_32KB  EQU 3 ; 4 banks
 DEF CART_SRAM_128KB EQU 4 ; 16 banks
@@ -956,5 +956,7 @@ DEF IEF_LCDC   EQU %00000010 ; LCDC (see STAT)
 DEF _VRAM8000  EQU _VRAM
 DEF _VRAM8800  EQU _VRAM+$800
 DEF _VRAM9000  EQU _VRAM+$1000
+DEF CART_SRAM_2KB   EQU 1 ; 1 incomplete bank
+
 
     ENDC ;HARDWARE_INC
