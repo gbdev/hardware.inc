@@ -643,7 +643,6 @@ DEF rHDMA5 EQU $FF55
 
 DEF HDMA5F_MODE_GP  EQU %00000000 ; General Purpose DMA (W)
 DEF HDMA5F_MODE_HBL EQU %10000000 ; HBlank DMA (W)
-
 DEF HDMA5B_MODE EQU 7 ; DMA mode select (W)
 
 ; -- Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
