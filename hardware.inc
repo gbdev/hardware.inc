@@ -30,6 +30,7 @@
 ;* Rev 4.2 - 04-Sep-21 : Added CH3- and CH4-specific audio registers flags (ISSOtm)
 ;* Rev 4.3 - 07-Nov-21 : Deprecate VRAM address constants (Eievui)
 ;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
+;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -145,6 +146,8 @@ DEF TACF_4KHZ   EQU %00000000
 DEF TACF_16KHZ  EQU %00000011
 DEF TACF_65KHZ  EQU %00000010
 DEF TACF_262KHZ EQU %00000001
+
+DEF TACB_START  EQU 2
 
 
 ; --
@@ -451,6 +454,15 @@ DEF LCDCF_OBJOFF  EQU %00000000 ; OBJ Display
 DEF LCDCF_OBJON   EQU %00000010 ; OBJ Display
 DEF LCDCF_BGOFF   EQU %00000000 ; BG Display
 DEF LCDCF_BGON    EQU %00000001 ; BG Display
+
+DEF LCDCB_ON      EQU 7 ; LCD Control Operation
+DEF LCDCB_WIN9C00 EQU 6 ; Window Tile Map Display Select
+DEF LCDCB_WINON   EQU 5 ; Window Display
+DEF LCDCB_BG8000  EQU 4 ; BG & Window Tile Data Select
+DEF LCDCB_BG9C00  EQU 3 ; BG Tile Map Display Select
+DEF LCDCB_OBJ16   EQU 2 ; OBJ Construction
+DEF LCDCB_OBJON   EQU 1 ; OBJ Display
+DEF LCDCF_BGON    EQU 0 ; BG Display
 ; "Window Character Data Select" follows BG
 
 
@@ -631,6 +643,7 @@ DEF rHDMA5 EQU $FF55
 
 DEF HDMA5F_MODE_GP  EQU %00000000 ; General Purpose DMA (W)
 DEF HDMA5F_MODE_HBL EQU %10000000 ; HBlank DMA (W)
+DEF HDMA5B_MODE EQU 7 ; DMA mode select (W)
 
 ; -- Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
 DEF HDMA5F_BUSY EQU %10000000 ; 0=Busy (DMA still in progress), 1=Transfer complete (R)
@@ -656,6 +669,7 @@ DEF RPF_WRITE_LO EQU %00000000
 DEF rBCPS EQU $FF68
 
 DEF BCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
+DEF BCPSB_AUTOINC EQU 7
 
 
 ; --
@@ -672,6 +686,7 @@ DEF rBCPD EQU $FF69
 DEF rOCPS EQU $FF6A
 
 DEF OCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
+DEF OCPSB_AUTOINC EQU 7
 
 
 ; --
