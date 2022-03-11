@@ -462,7 +462,7 @@ DEF LCDCB_BG8000  EQU 4 ; BG & Window Tile Data Select
 DEF LCDCB_BG9C00  EQU 3 ; BG Tile Map Display Select
 DEF LCDCB_OBJ16   EQU 2 ; OBJ Construction
 DEF LCDCB_OBJON   EQU 1 ; OBJ Display
-DEF LCDCF_BGON    EQU 0 ; BG Display
+DEF LCDCB_BGON    EQU 0 ; BG Display
 ; "Window Character Data Select" follows BG
 
 
