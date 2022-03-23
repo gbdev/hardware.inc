@@ -4,20 +4,30 @@ on:
   - pull_request
  
 jobs:
-  testing:
-    runs-on: ubuntu-latest
+  macos-testing:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install RGBDS deps
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get install -yq bison libpng-dev pkg-config
       - name: Install RGBDS
         run: |
-          git clone --single-branch --branch release https://github.com/gbdev/rgbds.git
-          cd rgbds
-          make -j
-          sudo make install -j
+          brew install rgbds
       - name: Run rgbasm on hardware.inc
         run: |
           rgbasm hardware.inc
+  
+  windows-testing:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install RGBDS
+        run: |
+          # Find the URL of the latest Win64 release with the GitHub API
+          $githubLatestReleasesAPI = "https://api.github.com/repos/gbdev/rgbds/releases/latest"
+          $githubReleaseURLs = ((Invoke-WebRequest $githubLatestReleasesAPI) | ConvertFrom-Json).assets.browser_download_url
+          $githubWinReleaseURL = ($githubReleaseURLs | Select-String "win64").ToString()
+          # Download latest release
+          Invoke-WebRequest $githubWinReleaseURL -OutFile rgbds.zip
+          Expand-Archive rgbds.zip
+      - name: Run rgbasm on hardware.inc
+        run: |
+          rgbds/rgbasm.exe hardware.inc
