@@ -32,6 +32,7 @@
 ;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
+;* Rev 4.7 - 16-Jun-22 : Added definitions for all registers
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -45,7 +46,7 @@ DEF HARDWARE_INC EQU 1
 MACRO rev_Check_hardware_inc
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 4.6 ;PUT REVISION NUMBER HERE
+    IF  \1 > 4.7 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
@@ -57,16 +58,16 @@ ENDM
 ;*
 ;***************************************************************************
 
-DEF _VRAM        EQU $8000 ; $8000->$9FFF, VRAM address space (bank switchable to banks 0/1 in CGB mode)
-DEF _SCRN0       EQU $9800 ; $9800->$9BFF, VRAM bank 0
-DEF _SCRN1       EQU $9C00 ; $9C00->$9FFF, VRAM bank 1
-DEF _SRAM        EQU $A000 ; $A000->$BFFF, SRAM address space (bank switchable)
-DEF _RAM         EQU $C000 ; $C000->$CFFF / $C000->$DFFF, RAM address space
-DEF _RAMBANK     EQU $D000 ; $D000->$DFFF, RAM bank 1 (bank switchable to banks 1-7 in CGB mode)
-DEF _OAMRAM      EQU $FE00 ; $FE00->$FE9F, OAM address space/sprite attribute table
-DEF _IO          EQU $FF00 ; $FF00->$FF7F,$FFFF, I/O address space (I/O registers)
-DEF _AUD3WAVERAM EQU $FF30 ; $FF30->$FF3F, Wave channel address space
-DEF _HRAM        EQU $FF80 ; $FF80->$FFFE, HRAM address space
+DEF _VRAM        EQU $8000 ; $8000->$9FFF
+DEF _SCRN0       EQU $9800 ; $9800->$9BFF
+DEF _SCRN1       EQU $9C00 ; $9C00->$9FFF
+DEF _SRAM        EQU $A000 ; $A000->$BFFF
+DEF _RAM         EQU $C000 ; $C000->$CFFF / $C000->$DFFF
+DEF _RAMBANK     EQU $D000 ; $D000->$DFFF
+DEF _OAMRAM      EQU $FE00 ; $FE00->$FE9F
+DEF _IO          EQU $FF00 ; $FF00->$FF7F,$FFFF
+DEF _AUD3WAVERAM EQU $FF30 ; $FF30->$FF3F
+DEF _HRAM        EQU $FF80 ; $FF80->$FFFE
 
 
 ;***************************************************************************
@@ -732,6 +733,10 @@ DEF RPF_DATAIN   EQU %00000010 ; 0=Receiving IR Signal, 1=Normal
 DEF RPF_WRITE_HI EQU %00000001
 DEF RPF_WRITE_LO EQU %00000000
 
+DEF RPB_ENREAD2         EQU 7
+DEF RPB_ENREAD1         EQU 6
+DEF RPB_DATAIN          EQU 1
+DEF RPB_WRITE_HI_OR_LO  EQU 0
 
 ; --
 ; -- BCPS ($FF68)
