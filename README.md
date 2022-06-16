@@ -6,7 +6,7 @@ The file was originally created by Jeff Frohwein in 1997, who still hosts [his l
 
 Although Jeff tried to version control the file with a rudimentary change log at the top of the file, people have added small changes throughout the years, often without bumping the version number.
 
-This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND) fork as baseline.
+This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND)'s fork as the baseline. Breaking changes usually warrant a major revision, while smaller changes (such as typo fixes) warrant a minor revision.
 
 ## Contributors
 
