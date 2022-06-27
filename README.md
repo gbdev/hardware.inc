@@ -1,14 +1,22 @@
 # `hardware.inc`
 ### Gameboy Hardware definitions
-`hardware.inc` has been the standard include file containing Game Boy hardware definitions for use in [rgbds](https://github.com/gbdev/rgbds) projects for over 20 years. Our intent here at gbdev is to continue to use `hardware.inc` as the standard as it has been for all these years.
+`hardware.inc` has been the standard include file containing Game Boy hardware definitions for use in [RGBDS](https://rgbds.gbdev.io) projects for over 20 years.
 
 The file was originally created by Jeff Frohwein in 1997, who still hosts [his latest version (2.3)](http://www.devrs.com/gb/files/hardware.zip) on his great [Dev'rs](http://devrs.com) website.
 
 Although Jeff tried to version control the file with a rudimentary change log at the top of the file, people have added small changes throughout the years, often without bumping the version number.
 
-This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND)'s fork as the baseline.
+This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND)'s fork as the baseline. It has become the new official reference for documentation of the Game Boy and the underlying hardware.
 
-Breaking changes, like those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2) receive a major version bump, while smaller changes which add new features but do not make any breaking changes receive a minor version bump.
+## Contributing
+
+This repository's `master` branch should be considered production.
+That is, each commit represents a new release, which thus needs the embedded version number bumped (and an entry added to the changelog at the beginning of the file).
+
+We follow [semantic versioning](https://semver.org).
+That is, breaking changes (such as those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2)) increase the major version, backwards-compatible changes (typically additions) only increase the minor version, and bugfixes only increase the patch level.
+
+Changes to the comments should be considered a bugfix.
 
 ## Contributors
 
