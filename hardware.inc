@@ -747,7 +747,8 @@ DEF RPB_DATAIN   EQU 1
 
 ; --
 ; -- BCPS/BGPI ($FF68)
-; -- Background Color Palette/Background Palette Index Specification(R/W)
+; -- Background Color Palette Specification (aka Background Palette Index) (R/W)
+
 ; --
 DEF rBCPS EQU $FF68
 DEF rBGPI EQU rBCPS
@@ -760,7 +761,8 @@ DEF BGPIB_AUTOINC EQU BCPSB_AUTOINC
 
 ; --
 ; -- BCPD/BGPD ($FF69)
-; -- Background Color Palette Data/Background Palette Data (R/W)
+; -- Background Color Palette Data (aka Background Palette Data) (R/W)
+
 ; --
 DEF rBCPD EQU $FF69
 DEF rBGPD EQU rBCPD
@@ -768,7 +770,8 @@ DEF rBGPD EQU rBCPD
 
 ; --
 ; -- OCPS/OBPI ($FF6A)
-; -- Object Color Palette/Object Background Palette Index Specification (R/W)
+; -- Object Color Palette Specification (aka Object Background Palette Index) (R/W)
+
 ; --
 DEF rOCPS EQU $FF6A
 DEF rOBPI EQU rOCPS
@@ -781,7 +784,8 @@ DEF OBPIB_AUTOINC EQU OCPSB_AUTOINC
 
 ; --
 ; -- OCPD/OBPD ($FF6B)
-; -- Object Color Palette Data/Object Background Palette Data (R/W)
+; -- Object Color Palette Data (aka Object Background Palette Data) (R/W)
+
 ; --
 DEF rOCPD EQU $FF6B
 DEF rOBPD EQU rOCPD
