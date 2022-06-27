@@ -6,7 +6,9 @@ The file was originally created by Jeff Frohwein in 1997, who still hosts [his l
 
 Although Jeff tried to version control the file with a rudimentary change log at the top of the file, people have added small changes throughout the years, often without bumping the version number.
 
-This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND) fork as baseline.
+This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND)'s fork as the baseline.
+
+Breaking changes, like those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2), receive a major version bump, while smaller changes, not meant to break anything, yet are important enough to require a feature addition, recieve a minor version bump.
 
 ## Contributors
 
@@ -14,5 +16,5 @@ This repo is an attempt at version control, using [@AntonioND](http://github.com
 * Carsten Sørensen (whose ideas Jeff based his file on)
 * Jeff Frohwein
 * AntonioND
-* BlitterObjectBob, tobiasvl, ISSOtm,  avivace, GreenAndEievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto
+* BlitterObjectBob, tobiasvl, ISSOtm, avivace, GreenAndEievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto
 * Probably lots of other people who have added to the file throughout the years
