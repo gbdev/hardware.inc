@@ -32,6 +32,7 @@
 ;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
+;* Rev 4.7 - 27-Jun-22 : Added alternate names for some constants
 
 IF __RGBDS_MAJOR__ == 0 && __RGBDS_MINOR__ < 5
     FAIL "This version of 'hardware.inc' requires RGBDS version 0.5.0 or later."
@@ -45,7 +46,7 @@ DEF HARDWARE_INC EQU 1
 MACRO rev_Check_hardware_inc
 ;NOTE: REVISION NUMBER CHANGES MUST BE ADDED
 ;TO SECOND PARAMETER IN FOLLOWING LINE.
-    IF  \1 > 4.6 ;PUT REVISION NUMBER HERE
+    IF  \1 > 4.7 ;PUT REVISION NUMBER HERE
         WARN    "Version \1 or later of 'hardware.inc' is required."
     ENDC
 ENDM
@@ -583,6 +584,8 @@ DEF rSCX EQU $FF43
 ; --
 DEF rLY EQU $FF44
 
+DEF LY_VBLANK EQU 144
+
 
 ; --
 ; -- LYC ($FF45)
@@ -651,6 +654,13 @@ DEF rWY EQU $FF4A
 DEF rWX EQU $FF4B
 
 DEF WX_OFS EQU 7 ; add this to a screen position to get a WX position
+
+
+; --
+; -- LCD/COMPATIBILITY MODE ($FF4C)
+; -- Select Compatibility Mode (R)
+; --
+DEF rLCDMODE EQU $FF4C
 
 
 ; --
@@ -732,6 +742,8 @@ DEF RPF_DATAIN   EQU %00000010 ; 0=Receiving IR Signal, 1=Normal
 DEF RPF_WRITE_HI EQU %00000001
 DEF RPF_WRITE_LO EQU %00000000
 
+DEF RPB_DATAIN   EQU 1
+
 
 ; --
 ; -- BCPS ($FF68)
@@ -803,17 +815,18 @@ DEF rPCM34 EQU $FF77
 ; --
 DEF rIE EQU $FFFF
 
-DEF IEF_HILO   EQU %00010000 ; Transition from High to Low of Pin number P10-P13
-DEF IEF_SERIAL EQU %00001000 ; Serial I/O transfer end
-DEF IEF_TIMER  EQU %00000100 ; Timer Overflow
-DEF IEF_STAT   EQU %00000010 ; STAT
-DEF IEF_VBLANK EQU %00000001 ; V-Blank
+DEF IEF_DEFAULT EQU (1 << IEF_SERIAL) | (1 << IEF_TIMER) | (1 << IEF_STAT) | (1 << IEF_VBLANK)
+DEF IEF_HILO    EQU %00010000 ; Transition from High to Low of Pin number P10-P13
+DEF IEF_SERIAL  EQU %00001000 ; Serial I/O transfer end
+DEF IEF_TIMER   EQU %00000100 ; Timer Overflow
+DEF IEF_STAT    EQU %00000010 ; STAT
+DEF IEF_VBLANK  EQU %00000001 ; V-Blank
 
-DEF IEB_HILO   EQU 4
-DEF IEB_SERIAL EQU 3
-DEF IEB_TIMER  EQU 2
-DEF IEB_STAT   EQU 1
-DEF IEB_VBLANK EQU 0
+DEF IEB_HILO    EQU 4
+DEF IEB_SERIAL  EQU 3
+DEF IEB_TIMER   EQU 2
+DEF IEB_STAT    EQU 1
+DEF IEB_VBLANK  EQU 0
 
 
 ;***************************************************************************
