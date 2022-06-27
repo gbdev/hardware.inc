@@ -746,37 +746,52 @@ DEF RPB_DATAIN   EQU 1
 
 
 ; --
-; -- BCPS ($FF68)
-; -- Background Color Palette Specification (R/W)
+; -- BCPS/BGPI ($FF68)
+; -- Background Color Palette/Background Palette Index Specification(R/W)
 ; --
 DEF rBCPS EQU $FF68
+DEF rBGPI EQU rBCPS
 
 DEF BCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF BCPSB_AUTOINC EQU 7
+DEF BGPIF_AUTOINC EQU BCPSF_AUTOINC
+DEF BGPIB_AUTOINC EQU BCPSB_AUTOINC
 
 
 ; --
-; -- BCPD ($FF69)
-; -- Background Color Palette Data (R/W)
+; -- BCPD/BGPD ($FF69)
+; -- Background Color Palette Data/Background Palette Data (R/W)
 ; --
 DEF rBCPD EQU $FF69
+DEF rBGPD EQU rBCPD
 
 
 ; --
-; -- OCPS ($FF6A)
-; -- Object Color Palette Specification (R/W)
+; -- OCPS/OBPI ($FF6A)
+; -- Object Color Palette/Object Background Palette Index Specification (R/W)
 ; --
 DEF rOCPS EQU $FF6A
+DEF rOBPI EQU rOCPS
 
 DEF OCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF OCPSB_AUTOINC EQU 7
+DEF OBPIF_AUTOINC EQU OCPSF_AUTOINC
+DEF OBPIB_AUTOINC EQU OCPSB_AUTOINC
 
 
 ; --
-; -- OCPD ($FF6B)
-; -- Object Color Palette Data (R/W)
+; -- OCPD/OBPD ($FF6B)
+; -- Object Color Palette Data/Object Background Palette Data (R/W)
 ; --
 DEF rOCPD EQU $FF6B
+DEF rOBPD EQU rOCPD
+
+
+; --
+; -- OPRI ($FF6C)
+; -- Object Priority Mode (CGB Only) (R/W)
+; --
+DEF rOPRI EQU $FF6C
 
 
 ; --
@@ -787,6 +802,19 @@ DEF rOCPD EQU $FF6B
 ; --
 DEF rSVBK EQU $FF70
 DEF rSMBK EQU rSVBK
+
+
+; --
+; -- Undocumented Registers ($FF72 - $FF75)
+; -- $FF72: Bits 0-7 (R/W)
+; -- $FF73: Bits 0-7 (R/W)
+; -- $FF74: Bits 0-7 (Non-CGB Mode) (R)
+; -- $FF74: Bits 0-7 (CGB Only) (R/W)
+; -- $FF75: Bits 4-6 (R/W)
+DEF rUNDOCUMENTED1 EQU $FF72
+DEF rUNDOCUMENTED2 EQU $FF73
+DEF rUNDOCUMENTED3 EQU $FF74
+DEF rUNDOCUMENTED4 EQU $FF75
 
 
 ; --
