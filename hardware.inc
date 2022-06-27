@@ -584,8 +584,6 @@ DEF rSCX EQU $FF43
 ; --
 DEF rLY EQU $FF44
 
-DEF LY_VBLANK EQU 144
-
 
 ; --
 ; -- LYC ($FF45)
@@ -654,13 +652,6 @@ DEF rWY EQU $FF4A
 DEF rWX EQU $FF4B
 
 DEF WX_OFS EQU 7 ; add this to a screen position to get a WX position
-
-
-; --
-; -- LCD/COMPATIBILITY MODE ($FF4C)
-; -- Select Compatibility Mode (R/W)
-; --
-DEF rLCDMODE EQU $FF4C
 
 
 ; --
@@ -788,13 +779,6 @@ DEF rOBPD EQU rOCPD
 
 
 ; --
-; -- OPRI ($FF6C)
-; -- Object Priority Mode (CGB Only) (R/W)
-; --
-DEF rOPRI EQU $FF6C
-
-
-; --
 ; -- SMBK/SVBK ($FF70)
 ; -- Select Main RAM Bank (R/W)
 ; --
@@ -802,19 +786,6 @@ DEF rOPRI EQU $FF6C
 ; --
 DEF rSVBK EQU $FF70
 DEF rSMBK EQU rSVBK
-
-
-; --
-; -- Undocumented Registers ($FF72 - $FF75)
-; -- $FF72: Bits 0-7 (R/W)
-; -- $FF73: Bits 0-7 (R/W)
-; -- $FF74: Bits 0-7 (Non-CGB Mode) (R)
-; -- $FF74: Bits 0-7 (CGB Only) (R/W)
-; -- $FF75: Bits 4-6 (R/W)
-DEF rUNDOCUMENTED1 EQU $FF72
-DEF rUNDOCUMENTED2 EQU $FF73
-DEF rUNDOCUMENTED3 EQU $FF74
-DEF rUNDOCUMENTED4 EQU $FF75
 
 
 ; --
@@ -843,7 +814,6 @@ DEF rPCM34 EQU $FF77
 ; --
 DEF rIE EQU $FFFF
 
-DEF IEF_DEFAULT EQU (1 << IEF_SERIAL) | (1 << IEF_TIMER) | (1 << IEF_STAT) | (1 << IEF_VBLANK)
 DEF IEF_HILO    EQU %00010000 ; Transition from High to Low of Pin number P10-P13
 DEF IEF_SERIAL  EQU %00001000 ; Serial I/O transfer end
 DEF IEF_TIMER   EQU %00000100 ; Timer Overflow
