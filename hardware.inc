@@ -1000,7 +1000,7 @@ DEF PADB_A      EQU $0
 ;***************************************************************************
 
 DEF SCRN_X    EQU 160 ; Width of screen in pixels
-DEF SCRN_Y    EQU 144 ; Height of screen in pixels, also used for VBlank
+DEF SCRN_Y    EQU 144 ; Height of screen in pixels. Also corresponds to the value in LY at the beginning of VBlank.
 DEF SCRN_X_B  EQU 20  ; Width of screen in bytes
 DEF SCRN_Y_B  EQU 18  ; Height of screen in bytes
 
