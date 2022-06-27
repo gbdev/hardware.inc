@@ -658,7 +658,7 @@ DEF WX_OFS EQU 7 ; add this to a screen position to get a WX position
 
 ; --
 ; -- LCD/COMPATIBILITY MODE ($FF4C)
-; -- Select Compatibility Mode (R)
+; -- Select Compatibility Mode (R/W)
 ; --
 DEF rLCDMODE EQU $FF4C
 
