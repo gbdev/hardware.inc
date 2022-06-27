@@ -8,7 +8,7 @@ Although Jeff tried to version control the file with a rudimentary change log at
 
 This repo is an attempt at version control, using [@AntonioND](http://github.com/AntonioND)'s fork as the baseline.
 
-Breaking changes, like those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2), receive a major version bump, while smaller changes, not meant to break anything, yet are important enough to require a feature addition, recieve a minor version bump.
+Breaking changes, like those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2) receive a major version bump, while smaller changes which add new features but do not make any breaking changes recieve a minor version bump.
 
 ## Contributors
 
@@ -16,5 +16,5 @@ Breaking changes, like those in [72ec03f](https://github.com/gbdev/hardware.inc/
 * Carsten Sørensen (whose ideas Jeff based his file on)
 * Jeff Frohwein
 * AntonioND
-* BlitterObjectBob, tobiasvl, ISSOtm, avivace, GreenAndEievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto
+* BlitterObjectBob, tobiasvl, ISSOtm, avivace, Eievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto
 * Probably lots of other people who have added to the file throughout the years
