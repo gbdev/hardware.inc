@@ -818,17 +818,17 @@ DEF rPCM34 EQU $FF77
 ; --
 DEF rIE EQU $FFFF
 
-DEF IEF_HILO    EQU %00010000 ; Transition from High to Low of Pin number P10-P13
-DEF IEF_SERIAL  EQU %00001000 ; Serial I/O transfer end
-DEF IEF_TIMER   EQU %00000100 ; Timer Overflow
-DEF IEF_STAT    EQU %00000010 ; STAT
-DEF IEF_VBLANK  EQU %00000001 ; V-Blank
+DEF IEF_HILO   EQU %00010000 ; Transition from High to Low of Pin number P10-P13
+DEF IEF_SERIAL EQU %00001000 ; Serial I/O transfer end
+DEF IEF_TIMER  EQU %00000100 ; Timer Overflow
+DEF IEF_STAT   EQU %00000010 ; STAT
+DEF IEF_VBLANK EQU %00000001 ; V-Blank
 
-DEF IEB_HILO    EQU 4
-DEF IEB_SERIAL  EQU 3
-DEF IEB_TIMER   EQU 2
-DEF IEB_STAT    EQU 1
-DEF IEB_VBLANK  EQU 0
+DEF IEB_HILO   EQU 4
+DEF IEB_SERIAL EQU 3
+DEF IEB_TIMER  EQU 2
+DEF IEB_STAT   EQU 1
+DEF IEB_VBLANK EQU 0
 
 
 ;***************************************************************************
