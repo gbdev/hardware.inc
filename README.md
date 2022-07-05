@@ -10,7 +10,7 @@ This repo has become the new official reference for `hardware.inc`, using [@Anto
 
 ## Contributing
 
-This repository's `master` branch should be considered production:
+This repository's `master` branch should be considered production;
 Each commit represents a new release, requiring the embedded version number to be bumped (and an entry to be added to the changelog at the beginning of the file).
 
 We follow [semantic versioning](https://semver.org);
