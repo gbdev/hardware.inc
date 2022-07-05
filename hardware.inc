@@ -32,7 +32,7 @@
 ;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
-;* Rev 4.6.1 - 27-Jun-22 : Added alternate names for some constants, first to use the new SemVer check
+;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
 ; IN `rev_Check_hardware_inc` BELOW!
@@ -51,7 +51,8 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,6,1"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,7,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
@@ -774,7 +775,6 @@ DEF rBGPD EQU rBCPD
 ; --
 ; -- OCPS/OBPI ($FF6A)
 ; -- Object Color Palette Specification (aka Object Background Palette Index) (R/W)
-
 ; --
 DEF rOCPS EQU $FF6A
 DEF rOBPI EQU rOCPS
