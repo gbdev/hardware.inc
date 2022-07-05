@@ -752,7 +752,6 @@ DEF RPB_DATAIN   EQU 1
 ; --
 ; -- BCPS/BGPI ($FF68)
 ; -- Background Color Palette Specification (aka Background Palette Index) (R/W)
-
 ; --
 DEF rBCPS EQU $FF68
 DEF rBGPI EQU rBCPS
@@ -766,7 +765,6 @@ DEF BGPIB_AUTOINC EQU BCPSB_AUTOINC
 ; --
 ; -- BCPD/BGPD ($FF69)
 ; -- Background Color Palette Data (aka Background Palette Data) (R/W)
-
 ; --
 DEF rBCPD EQU $FF69
 DEF rBGPD EQU rBCPD
@@ -788,7 +786,6 @@ DEF OBPIB_AUTOINC EQU OCPSB_AUTOINC
 ; --
 ; -- OCPD/OBPD ($FF6B)
 ; -- Object Color Palette Data (aka Object Background Palette Data) (R/W)
-
 ; --
 DEF rOCPD EQU $FF6B
 DEF rOBPD EQU rOCPD
@@ -877,7 +874,6 @@ DEF AUDENV_DOWN         EQU %00000000
 ; -- Can be used with AUD1HIGH, AUD2HIGH, AUD3HIGH
 ; -- See AUD1HIGH for more info
 ; --
-
 DEF AUDHIGH_RESTART     EQU %10000000
 DEF AUDHIGH_LENGTH_ON   EQU %01000000
 DEF AUDHIGH_LENGTH_OFF  EQU %00000000
