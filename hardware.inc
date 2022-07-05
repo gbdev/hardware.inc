@@ -32,6 +32,7 @@
 ;* Rev 4.4 - 11-Jan-22 : Deprecate VRAM CART_SRAM_2KB constant (avivace)
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
+;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
 ; IN `rev_Check_hardware_inc` BELOW!
@@ -50,7 +51,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,6,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,7,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
@@ -744,39 +745,49 @@ DEF RPF_DATAIN   EQU %00000010 ; 0=Receiving IR Signal, 1=Normal
 DEF RPF_WRITE_HI EQU %00000001
 DEF RPF_WRITE_LO EQU %00000000
 
+DEF RPB_DATAIN   EQU 1
+
 
 ; --
-; -- BCPS ($FF68)
-; -- Background Color Palette Specification (R/W)
+; -- BCPS/BGPI ($FF68)
+; -- Background Color Palette Specification (aka Background Palette Index) (R/W)
 ; --
 DEF rBCPS EQU $FF68
+DEF rBGPI EQU rBCPS
 
 DEF BCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF BCPSB_AUTOINC EQU 7
+DEF BGPIF_AUTOINC EQU BCPSF_AUTOINC
+DEF BGPIB_AUTOINC EQU BCPSB_AUTOINC
 
 
 ; --
-; -- BCPD ($FF69)
-; -- Background Color Palette Data (R/W)
+; -- BCPD/BGPD ($FF69)
+; -- Background Color Palette Data (aka Background Palette Data) (R/W)
 ; --
 DEF rBCPD EQU $FF69
+DEF rBGPD EQU rBCPD
 
 
 ; --
-; -- OCPS ($FF6A)
-; -- Object Color Palette Specification (R/W)
+; -- OCPS/OBPI ($FF6A)
+; -- Object Color Palette Specification (aka Object Background Palette Index) (R/W)
 ; --
 DEF rOCPS EQU $FF6A
+DEF rOBPI EQU rOCPS
 
 DEF OCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF OCPSB_AUTOINC EQU 7
+DEF OBPIF_AUTOINC EQU OCPSF_AUTOINC
+DEF OBPIB_AUTOINC EQU OCPSB_AUTOINC
 
 
 ; --
-; -- OCPD ($FF6B)
-; -- Object Color Palette Data (R/W)
+; -- OCPD/OBPD ($FF6B)
+; -- Object Color Palette Data (aka Object Background Palette Data) (R/W)
 ; --
 DEF rOCPD EQU $FF6B
+DEF rOBPD EQU rOCPD
 
 
 ; --
@@ -862,7 +873,6 @@ DEF AUDENV_DOWN         EQU %00000000
 ; -- Can be used with AUD1HIGH, AUD2HIGH, AUD3HIGH
 ; -- See AUD1HIGH for more info
 ; --
-
 DEF AUDHIGH_RESTART     EQU %10000000
 DEF AUDHIGH_LENGTH_ON   EQU %01000000
 DEF AUDHIGH_LENGTH_OFF  EQU %00000000
@@ -997,7 +1007,7 @@ DEF PADB_A      EQU $0
 ;***************************************************************************
 
 DEF SCRN_X    EQU 160 ; Width of screen in pixels
-DEF SCRN_Y    EQU 144 ; Height of screen in pixels
+DEF SCRN_Y    EQU 144 ; Height of screen in pixels. Also corresponds to the value in LY at the beginning of VBlank.
 DEF SCRN_X_B  EQU 20  ; Width of screen in bytes
 DEF SCRN_Y_B  EQU 18  ; Height of screen in bytes
 
