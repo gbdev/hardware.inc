@@ -33,6 +33,7 @@
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
 ;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
+;* Rev 4.8.0 - 05-Jul-22 : Added alternate names for more constants
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
 ; IN `rev_Check_hardware_inc` BELOW!
@@ -51,7 +52,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,7,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,8,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
@@ -162,18 +163,28 @@ DEF CART_RUMBLE_ON EQU 1 << 3
 ; -- P1 ($FF00)
 ; -- Register for reading joy pad info. (R/W)
 ; --
-DEF rP1 EQU $FF00
+DEF rP1   EQU $FF00
+DEF rJOYP EQU rP1
 
-DEF P1F_5 EQU %00100000 ; P15 out port, set to 0 to get buttons
-DEF P1F_4 EQU %00010000 ; P14 out port, set to 0 to get dpad
-DEF P1F_3 EQU %00001000 ; P13 in port
-DEF P1F_2 EQU %00000100 ; P12 in port
-DEF P1F_1 EQU %00000010 ; P11 in port
-DEF P1F_0 EQU %00000001 ; P10 in port
+DEF P1F_5   EQU %00100000 ; P15 out port, set to 0 to get buttons
+DEF P1F_4   EQU %00010000 ; P14 out port, set to 0 to get dpad
+DEF P1F_3   EQU %00001000 ; P13 in port
+DEF P1F_2   EQU %00000100 ; P12 in port
+DEF P1F_1   EQU %00000010 ; P11 in port
+DEF P1F_0   EQU %00000001 ; P10 in port
+DEF JOYPF_5 EQU P1F_5
+DEF JOYPF_4 EQU P1F_4
+DEF JOYPF_3 EQU P1F_3
+DEF JOYPF_2 EQU P1F_2
+DEF JOYPF_1 EQU P1F_1
+DEF JOYPF_0 EQU P1F_0
 
-DEF P1F_GET_DPAD EQU P1F_5
-DEF P1F_GET_BTN  EQU P1F_4
-DEF P1F_GET_NONE EQU P1F_4 | P1F_5
+DEF P1F_GET_DPAD   EQU P1F_5
+DEF P1F_GET_BTN    EQU P1F_4
+DEF P1F_GET_NONE   EQU P1F_4 | P1F_5
+DEF JOYPF_GET_DPAD EQU P1F_GET_DPAD
+DEF JOYPF_GET_BTN  EQU P1F_GET_BTN
+DEF JOYPF_GET_NONE EQU P1F_GET_NONE
 
 
 ; --
@@ -187,7 +198,10 @@ DEF rSB EQU $FF01
 ; -- SC ($FF02)
 ; -- Serial I/O Control (R/W)
 ; --
-DEF rSC EQU $FF02
+DEF rSC        EQU $FF02
+DEF rSC_ON     EQU SCB_START
+DEF rSC_CGB    EQU SCB_SPEED
+DEF rSC_CLOCK  EQU SCB_SOURCE
 
 DEF SCF_START  EQU %10000000 ; Transfer Start Flag (1=Transfer in progress, or requested)
 DEF SCF_SPEED  EQU %00000010 ; Clock Speed (0=Normal, 1=Fast) ** CGB Mode Only **
@@ -222,7 +236,12 @@ DEF rTMA EQU $FF06
 ; -- TAC ($FF07)
 ; -- Timer control (R/W)
 ; --
-DEF rTAC EQU $FF07
+DEF rTAC           EQU $FF07
+DEF rTAC_ON        EQU TACB_START
+DEF rTAC_4096_HZ   EQU TACF_4KHZ
+DEF rTAC_16384_HZ  EQU TACF_16KHZ
+DEF rTAC_65536_HZ  EQU TACF_65KHZ
+DEF rTAC_262144_HZ EQU TACF_262KHZ
 
 DEF TACF_START  EQU %00000100
 DEF TACF_STOP   EQU %00000000
@@ -520,7 +539,16 @@ DEF AUDENA_OFF   EQU %00000000  ; sets all audio regs to 0!
 ; -- LCDC ($FF40)
 ; -- LCD Control (R/W)
 ; --
-DEF rLCDC EQU $FF40
+DEF rLCDC                EQU $FF40
+DEF rLCDC_BG_PRIORITY    EQU LCDCB_BGON
+DEF rLCDC_SPRITES_ENABLE EQU LCDCB_OBJON
+DEF rLCDC_SPRITE_SIZE    EQU LCDCB_OBJ16
+DEF rLCDC_BG_TILEMAP     EQU LCDCB_BG9C00
+DEF rLCDC_TILE_DATA      EQU LCDCB_BG8000
+DEF rLCDC_WINDOW_ENABLE  EQU LCDCB_WINON
+DEF rLCDC_WINDOW_TILEMAP EQU LCDCB_WIN9C00
+DEF rLCDC_ENABLE         EQU LCDCB_ON
+DEF rLCDC_DEFAULT        EQU LCDCB_DEFAULT
 
 DEF LCDCF_OFF     EQU %00000000 ; LCD Control Operation
 DEF LCDCF_ON      EQU %10000000 ; LCD Control Operation
@@ -547,6 +575,7 @@ DEF LCDCB_BG9C00  EQU 3 ; BG Tile Map Display Select
 DEF LCDCB_OBJ16   EQU 2 ; OBJ Construction
 DEF LCDCB_OBJON   EQU 1 ; OBJ Display
 DEF LCDCB_BGON    EQU 0 ; BG Display
+DEF LCDCB_DEFAULT EQU (1 << LCDCB_ON) | (1 << LCDCB_WIN9C00) | (1 << LCDCB_WINON) | (1 << LCDCB_OBJON) | (1 << LCDCB_BGON)
 ; "Window Character Data Select" follows BG
 
 
@@ -738,13 +767,17 @@ DEF HDMA5F_BUSY EQU %10000000 ; 0=Busy (DMA still in progress), 1=Transfer compl
 ; -- Infrared Communications Port (R/W)
 ; -- CGB Mode Only
 ; --
-DEF rRP EQU $FF56
+DEF rRP                  EQU $FF56
+DEF rRP_LED_ON           EQU RPB_LED_ON
+DEF rRP_RECEIVING        EQU RPB_DATAIN
+DEF rRP_ENABLE_READ_MASK EQU RPF_ENREAD
 
 DEF RPF_ENREAD   EQU %11000000
 DEF RPF_DATAIN   EQU %00000010 ; 0=Receiving IR Signal, 1=Normal
 DEF RPF_WRITE_HI EQU %00000001
 DEF RPF_WRITE_LO EQU %00000000
 
+DEF RPB_LED_ON   EQU 0
 DEF RPB_DATAIN   EQU 1
 
 
@@ -752,8 +785,9 @@ DEF RPB_DATAIN   EQU 1
 ; -- BCPS/BGPI ($FF68)
 ; -- Background Color Palette Specification (aka Background Palette Index) (R/W)
 ; --
-DEF rBCPS EQU $FF68
-DEF rBGPI EQU rBCPS
+DEF rBCPS                EQU $FF68
+DEF rBGPI                EQU rBCPS
+DEF rBGPI_AUTO_INCREMENT EQU BGPIB_AUTOINC
 
 DEF BCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF BCPSB_AUTOINC EQU 7
@@ -773,8 +807,9 @@ DEF rBGPD EQU rBCPD
 ; -- OCPS/OBPI ($FF6A)
 ; -- Object Color Palette Specification (aka Object Background Palette Index) (R/W)
 ; --
-DEF rOCPS EQU $FF6A
-DEF rOBPI EQU rOCPS
+DEF rOCPS                EQU $FF6A
+DEF rOBPI                EQU rOCPS
+DEF rOPBI_AUTO_INCREMENT EQU OBPIB_AUTOINC
 
 DEF OCPSF_AUTOINC EQU %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
 DEF OCPSB_AUTOINC EQU 7
@@ -826,17 +861,26 @@ DEF rPCM34 EQU $FF77
 ; --
 DEF rIE EQU $FFFF
 
-DEF IEF_HILO   EQU %00010000 ; Transition from High to Low of Pin number P10-P13
-DEF IEF_SERIAL EQU %00001000 ; Serial I/O transfer end
-DEF IEF_TIMER  EQU %00000100 ; Timer Overflow
-DEF IEF_STAT   EQU %00000010 ; STAT
-DEF IEF_VBLANK EQU %00000001 ; V-Blank
+DEF IEF_HILO    EQU %00010000 ; Transition from High to Low of Pin number P10-P13
+DEF IEF_SERIAL  EQU %00001000 ; Serial I/O transfer end
+DEF IEF_TIMER   EQU %00000100 ; Timer Overflow
+DEF IEF_STAT    EQU %00000010 ; STAT
+DEF IEF_VBLANK  EQU %00000001 ; V-Blank
 
-DEF IEB_HILO   EQU 4
-DEF IEB_SERIAL EQU 3
-DEF IEB_TIMER  EQU 2
-DEF IEB_STAT   EQU 1
-DEF IEB_VBLANK EQU 0
+DEF IEB_HILO    EQU 4
+DEF IEB_SERIAL  EQU 3
+DEF IEB_TIMER   EQU 2
+DEF IEB_STAT    EQU 1
+DEF IEB_VBLANK  EQU 0
+DEF IEB_DEFAULT EQU (1 << IEB_SERIAL) | (1 << IEB_TIMER) | (1 << IEB_STAT) | (1 << IEB_VBLANK)
+
+DEF JOYPAD      EQU IEB_HILO
+DEF SERIAL      EQU IEB_SERIAL
+DEF TIMER       EQU IEB_TIMER
+DEF LCD_STAT    EQU IEB_STAT
+DEF VBLANK      EQU IEB_VBLANK
+DEF IE_DEFAULT  EQU IEB_DEFAULT
+
 
 
 ;***************************************************************************
@@ -1045,23 +1089,33 @@ DEF OAMF_PAL0       EQU %00000000 ; Palette number; 0,1 (DMG)
 DEF OAMF_PAL1       EQU %00010000 ; Palette number; 0,1 (DMG)
 DEF OAMF_BANK0      EQU %00000000 ; Bank number; 0,1 (GBC)
 DEF OAMF_BANK1      EQU %00001000 ; Bank number; 0,1 (GBC)
+DEF PRIORITY        EQU OAMF_PRI
+DEF Y_FLIP          EQU OAMF_YFLIP
+DEF X_FLIP          EQU OAMF_XFLIP
+DEF OBP_NUM         EQU OAMF_PAL1
+DEF VRAM_BANK_1     EQU OAMF_BANK1
 
 DEF OAMF_PALMASK    EQU %00000111 ; Palette (GBC)
+DEF PALETTE_MASK    EQU OAMF_PALMASK
 
 DEF OAMB_PRI        EQU 7 ; Priority
 DEF OAMB_YFLIP      EQU 6 ; Y flip
 DEF OAMB_XFLIP      EQU 5 ; X flip
 DEF OAMB_PAL1       EQU 4 ; Palette number; 0,1 (DMG)
 DEF OAMB_BANK1      EQU 3 ; Bank number; 0,1 (GBC)
+DEF OAM_PRIORITY    EQU OAMB_PRI
+DEF OAM_Y_FLIP      EQU OAMB_YFLIP
+DEF OAM_X_FLIP      EQU OAMB_XFLIP
+DEF OAM_OBP_NUM     EQU OAMB_PAL1
+DEF OAM_TILE_BANK   EQU OAMB_BANK1 
 
 
 ; Deprecated constants. Please avoid using.
 
-DEF IEF_LCDC   EQU %00000010 ; LCDC (see STAT)
-DEF _VRAM8000  EQU _VRAM
-DEF _VRAM8800  EQU _VRAM+$800
-DEF _VRAM9000  EQU _VRAM+$1000
+DEF IEF_LCDC        EQU %00000010 ; LCDC (see STAT)
+DEF _VRAM8000       EQU _VRAM
+DEF _VRAM8800       EQU _VRAM+$800
+DEF _VRAM9000       EQU _VRAM+$1000
 DEF CART_SRAM_2KB   EQU 1 ; 1 incomplete bank
-
 
     ENDC ;HARDWARE_INC
