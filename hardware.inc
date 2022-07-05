@@ -33,6 +33,7 @@
 ;* Rev 4.5 - 03-Mar-22 : Added bit number definitions for OCPS, BCPS and LCDC (sukus)
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
 ;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
+;* Rev 4.7.1 - 05-Jul-22 : Added RPB_LED_ON constant
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
 ; IN `rev_Check_hardware_inc` BELOW!
@@ -746,6 +747,7 @@ DEF RPF_DATAIN   EQU %00000010 ; 0=Receiving IR Signal, 1=Normal
 DEF RPF_WRITE_HI EQU %00000001
 DEF RPF_WRITE_LO EQU %00000000
 
+DEF RPB_LED_ON   EQU 0
 DEF RPB_DATAIN   EQU 1
 
 
