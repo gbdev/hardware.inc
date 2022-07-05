@@ -10,11 +10,11 @@ This repo has become the new official reference for `hardware.inc`, using [@Anto
 
 ## Contributing
 
-This repository's `master` branch should be considered production.
-That is, each commit represents a new release, which thus needs the embedded version number bumped (and an entry added to the changelog at the beginning of the file).
+This repository's `master` branch should be considered production:
+Each commit represents a new release, requiring the embedded version number to be bumped (and an entry to be added to the changelog at the beginning of the file).
 
 We follow [semantic versioning](https://semver.org).
-That is, breaking changes (such as those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2)) increase the major version, backwards-compatible changes (typically additions) only increase the minor version, and bugfixes only increase the patch level.
+Breaking changes (such as those in [72ec03f](https://github.com/gbdev/hardware.inc/commit/72ec03f835e72be83a1ef189a4a9eac0fbdf39e2)) increase the major version, backwards-compatible changes (typically additions) only increase the minor version, and bugfixes only increase the patch level.
 
 Changes to the comments should be considered a bugfix.
 
