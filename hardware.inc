@@ -52,8 +52,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,7,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
-
+    DEF CUR_VER equs "4,7,1"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
