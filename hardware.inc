@@ -34,7 +34,8 @@
 ;* Rev 4.6 - 15-Jun-22 : Added MBC3 registers and special values
 ;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
 ;* Rev 4.7.1 - 05-Jul-22 : Added RPB_LED_ON constant
-;* Rev 4.8 - 25-Oct-22 : Changed background addressing constants (zlago)
+;* Rev 4.8.0 - 25-Oct-22 : Changed background addressing constants (zlago)
+
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
 ; IN `rev_Check_hardware_inc` BELOW!
@@ -53,7 +54,8 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,8"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,8,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
@@ -544,7 +546,7 @@ DEF LCDCF_BGON    EQU %00000001 ; BG Display
 DEF LCDCB_ON      EQU 7 ; LCD Control Operation
 DEF LCDCB_WIN9C00 EQU 6 ; Window Tile Map Display Select
 DEF LCDCB_WINON   EQU 5 ; Window Display
-DEF LCDCB_BLK     EQU 4 ; BG & Window Tile Data Select
+DEF LCDCB_BLKS    EQU 4 ; BG & Window Tile Data Select
 DEF LCDCB_BG9C00  EQU 3 ; BG Tile Map Display Select
 DEF LCDCB_OBJ16   EQU 2 ; OBJ Construction
 DEF LCDCB_OBJON   EQU 1 ; OBJ Display
