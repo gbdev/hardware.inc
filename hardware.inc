@@ -35,6 +35,7 @@
 ;* Rev 4.7.0 - 27-Jun-22 : Added alternate names for some constants
 ;* Rev 4.7.1 - 05-Jul-22 : Added RPB_LED_ON constant
 ;* Rev 4.8.0 - 25-Oct-22 : Changed background addressing constants (zlago)
+;* Rev 4.8.1 - 29-Apr-23 : Added rOPRI (rbong)
 
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
@@ -54,7 +55,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,8,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,8,1"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
 
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
@@ -793,6 +794,21 @@ DEF OBPIB_AUTOINC EQU OCPSB_AUTOINC
 ; --
 DEF rOCPD EQU $FF6B
 DEF rOBPD EQU rOCPD
+
+
+; --
+; -- OPRI ($FF6C)
+; -- Object Priority Mode (R/W)
+; -- CGB Only
+
+; --
+; -- Priority can be changed only from the boot ROM
+; --
+DEF rOPRI EQU $FF6C
+
+DEF OPRI_OAM   EQU 0 ; Prioritize objects by location in OAM (CGB Mode default)
+DEF OPRI_COORD EQU 1 ; Prioritize objects by x-coordinate (Non-CGB Mode default)
+
 
 
 ; --
