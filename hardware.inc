@@ -805,8 +805,9 @@ DEF rOBPD EQU rOCPD
 ; --
 DEF rOPRI EQU $FF6C
 
-DEF OPRI_OAM   EQU 0 ; Prioritize objects by location in OAM (CGB default)
-DEF OPRI_COORD EQU 1 ; Prioritize objects by x-coordinate (DMG default)
+DEF OPRI_OAM   EQU 0 ; Prioritize objects by location in OAM (CGB Mode default)
+DEF OPRI_COORD EQU 1 ; Prioritize objects by x-coordinate (Non-CGB Mode default)
+
 
 
 ; --
