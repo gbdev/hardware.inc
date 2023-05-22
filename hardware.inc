@@ -799,7 +799,8 @@ DEF rOBPD EQU rOCPD
 ; --
 ; -- OPRI ($FF6C)
 ; -- Object Priority Mode (R/W)
-; -- CGB Mode Only
+; -- CGB Only
+
 ; --
 ; -- Priority can be changed only from the boot ROM
 ; --
