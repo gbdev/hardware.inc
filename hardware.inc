@@ -4,6 +4,12 @@
 ;* Based on Jones' hardware.inc
 ;* And based on Carsten Sorensen's ideas.
 ;*
+;* To the extent possible under law, the authors of this work have
+;* waived all copyright and related or neighboring rights to the work.
+;* See https://creativecommons.org/publicdomain/zero/1.0/ for details.
+;*
+;* SPDX-License-Identifier: CC0-1.0
+;*
 ;* Rev 1.1 - 15-Jul-97 : Added define check
 ;* Rev 1.2 - 18-Jul-97 : Added revision check macro
 ;* Rev 1.3 - 19-Jul-97 : Modified for RGBASM V1.05
@@ -37,6 +43,7 @@
 ;* Rev 4.8.0 - 25-Oct-22 : Changed background addressing constants (zlago)
 ;* Rev 4.8.1 - 29-Apr-23 : Added rOPRI (rbong)
 ;* Rev 4.9.0 - 24-Jun-23 : Added definitions for interrupt vectors (sukus)
+;* Rev 4.9.1 - 11-Sep-23 : Added CC0 waiver notice
 
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
@@ -56,7 +63,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,9,0"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,9,1"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
 
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
