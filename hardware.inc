@@ -1,5 +1,6 @@
 ;*
 ;* Gameboy Hardware definitions
+;* https://github.com/gbdev/hardware.inc
 ;*
 ;* Based on Jones' hardware.inc
 ;* And based on Carsten Sorensen's ideas.
@@ -43,7 +44,7 @@
 ;* Rev 4.8.0 - 25-Oct-22 : Changed background addressing constants (zlago)
 ;* Rev 4.8.1 - 29-Apr-23 : Added rOPRI (rbong)
 ;* Rev 4.9.0 - 24-Jun-23 : Added definitions for interrupt vectors (sukus)
-;* Rev 4.9.1 - 11-Sep-23 : Added CC0 waiver notice
+;* Rev 4.9.1 - 11-Sep-23 : Added repository link and CC0 waiver notice
 
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
