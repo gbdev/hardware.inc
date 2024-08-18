@@ -45,6 +45,7 @@
 ;* Rev 4.8.1 - 29-Apr-23 : Added rOPRI (rbong)
 ;* Rev 4.9.0 - 24-Jun-23 : Added definitions for interrupt vectors (sukus)
 ;* Rev 4.9.1 - 11-Sep-23 : Added repository link and CC0 waiver notice
+;* Rev 4.9.2 - 18-Aug-24 : Corrected CART_ROM_MBC5_BAT to CART_ROM_MBC5_RAM (DevEd)
 
 
 ; NOTE: REVISION NUMBER CHANGES MUST BE REFLECTED
@@ -64,7 +65,7 @@ DEF HARDWARE_INC EQU 1
 ;           rev_Check_hardware_inc 4.1 (equivalent to 4.1.0)
 ;           rev_Check_hardware_inc 4 (equivalent to 4.0.0)
 MACRO rev_Check_hardware_inc
-    DEF CUR_VER equs "4,9,1"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
+    DEF CUR_VER equs "4,9,2"    ; ** UPDATE THIS LINE WHEN CHANGING THE REVISION NUMBER **
 
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
@@ -980,7 +981,7 @@ DEF CART_ROM_MBC3                EQU $11
 DEF CART_ROM_MBC3_RAM            EQU $12
 DEF CART_ROM_MBC3_RAM_BAT        EQU $13
 DEF CART_ROM_MBC5                EQU $19
-DEF CART_ROM_MBC5_BAT            EQU $1A
+DEF CART_ROM_MBC5_RAM            EQU $1A
 DEF CART_ROM_MBC5_RAM_BAT        EQU $1B
 DEF CART_ROM_MBC5_RUMBLE         EQU $1C
 DEF CART_ROM_MBC5_RAM_RUMBLE     EQU $1D
