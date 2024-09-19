@@ -1,5 +1,5 @@
 ;*
-;* Gameboy Hardware definitions
+;* Game Boy Hardware definitions
 ;* https://github.com/gbdev/hardware.inc
 ;*
 ;* Based on Jones' hardware.inc
@@ -70,7 +70,7 @@ MACRO rev_Check_hardware_inc
     DEF MIN_VER equs STRRPL("\1", ".", ",")
     DEF INTERNAL_CHK equs """MACRO ___internal
     IF \\1 != \\4 || \\2 < \\5 || (\\2 == \\5 && \\3 < \\6)
-    	FAIL "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
+        FAIL "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
     ENDC
 \nENDM"""
     INTERNAL_CHK
@@ -916,8 +916,8 @@ DEF AUDHIGH_LENGTH_OFF  EQU %00000000
 ;***************************************************************************
 
 DEF BOOTUP_A_DMG    EQU $01 ; Dot Matrix Game
-DEF BOOTUP_A_CGB    EQU $11 ; Color GameBoy
-DEF BOOTUP_A_MGB    EQU $FF ; Mini GameBoy (Pocket GameBoy)
+DEF BOOTUP_A_CGB    EQU $11 ; Color Game Boy
+DEF BOOTUP_A_MGB    EQU $FF ; Mini Game Boy (Pocket Game Boy)
 
 ; if a=BOOTUP_A_CGB, bit 0 in b can be checked to determine if real CGB or
 ; other system running in GBC mode
@@ -946,7 +946,7 @@ DEF INT_HANDLER_JOYPAD EQU $0060
 
 ;*
 ;* Nintendo scrolling logo
-;* (Code won't work on a real GameBoy)
+;* (Code won't work on a real Game Boy)
 ;* (if next lines are altered.)
 MACRO NINTENDO_LOGO
     DB  $CE,$ED,$66,$66,$CC,$0D,$00,$0B,$03,$73,$00,$83,$00,$0C,$00,$0D
@@ -954,12 +954,12 @@ MACRO NINTENDO_LOGO
     DB  $BB,$BB,$67,$63,$6E,$0E,$EC,$CC,$DD,$DC,$99,$9F,$BB,$B9,$33,$3E
 ENDM
 
-; $0143 Color GameBoy compatibility code
+; $0143 Color Game Boy compatibility code
 DEF CART_COMPATIBLE_DMG     EQU $00
 DEF CART_COMPATIBLE_DMG_GBC EQU $80
 DEF CART_COMPATIBLE_GBC     EQU $C0
 
-; $0146 GameBoy/Super GameBoy indicator
+; $0146 Game Boy/Super Game Boy indicator
 DEF CART_INDICATOR_GB       EQU $00
 DEF CART_INDICATOR_SGB      EQU $03
 
