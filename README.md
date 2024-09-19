@@ -1,5 +1,7 @@
 # `hardware.inc`
-### Gameboy Hardware definitions
+
+### Game Boy Hardware definitions
+
 `hardware.inc` has been the standard include file containing Game Boy hardware definitions for use in [RGBDS](https://rgbds.gbdev.io) projects for over 20 years.
 
 The file was originally created by Jeff Frohwein in 1997, who still hosts [his latest version (2.3)](http://www.devrs.com/gb/files/hardware.zip) on his great [Dev'rs](http://devrs.com) website.
