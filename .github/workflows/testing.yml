@@ -7,7 +7,7 @@ jobs:
   macos-testing:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install RGBDS
         run: |
           brew install rgbds
@@ -18,7 +18,7 @@ jobs:
   windows-testing:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install RGBDS
         run: |
           # Find the URL of the latest Win64 release with the GitHub API
