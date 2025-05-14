@@ -445,24 +445,24 @@ def LCDCB_PRION   equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
 ; Graphics status and interrupt control
 def rSTAT equ $FF41
 
-def STATB_LYC     equ 6 ; 1 = LY match triggers the STAT interrupt [r/w]
-def STATB_MODE10  equ 5 ; 1 = OAM Scan triggers the PPU interrupt  [r/w]
-def STATB_MODE01  equ 4 ; 1 = VBlank triggers the PPU interrupt    [r/w]
-def STATB_MODE00  equ 3 ; 1 = HBlank triggers the PPU interrupt    [r/w]
-def STATB_LYCF    equ 2 ; 1 = LY is currently equal to LYC         [ro]
-def STATB_BUSY    equ 1 ; 1 = the PPU is currently accessing VRAM  [ro]
-    def STATF_LYC     equ 1 << STATB_LYC
-    def STATF_MODE10  equ 1 << STATB_MODE10
-    def STATF_MODE01  equ 1 << STATB_MODE01
-    def STATF_MODE00  equ 1 << STATB_MODE00
-    def STATF_LYCF    equ 1 << STATB_LYCF
-    def STATF_BUSY    equ 1 << STATB_BUSY
+def STATB_LYC    equ 6 ; 1 = LY match triggers the STAT interrupt [r/w]
+def STATB_MODE10 equ 5 ; 1 = OAM Scan triggers the PPU interrupt  [r/w]
+def STATB_MODE01 equ 4 ; 1 = VBlank triggers the PPU interrupt    [r/w]
+def STATB_MODE00 equ 3 ; 1 = HBlank triggers the PPU interrupt    [r/w]
+def STATB_LYCF   equ 2 ; 1 = LY is currently equal to LYC         [ro]
+def STATB_BUSY   equ 1 ; 1 = the PPU is currently accessing VRAM  [ro]
+    def STATF_LYC    equ 1 << STATB_LYC
+    def STATF_MODE10 equ 1 << STATB_MODE10
+    def STATF_MODE01 equ 1 << STATB_MODE01
+    def STATF_MODE00 equ 1 << STATB_MODE00
+    def STATF_LYCF   equ 1 << STATB_LYCF
+    def STATF_BUSY   equ 1 << STATB_BUSY
 
 def STATF_MODE equ %000000_11 ; PPU's current status [ro]
-    def STATF_HBL  equ %000000_00 ; Waiting after a line's rendering (HBlank)
-    def STATF_VBL  equ %000000_01 ; Waiting between frames (VBlank)
-    def STATF_OAM  equ %000000_10 ; Checking which OBJs will be rendered on this line (OAM scan)
-    def STATF_LCD  equ %000000_11 ; Pushing pixels to the LCD
+    def STATF_HBL equ %000000_00 ; Waiting after a line's rendering (HBlank)
+    def STATF_VBL equ %000000_01 ; Waiting between frames (VBlank)
+    def STATF_OAM equ %000000_10 ; Checking which OBJs will be rendered on this line (OAM scan)
+    def STATF_LCD equ %000000_11 ; Pushing pixels to the LCD
 
 ; -- SCY ($FF42) --------------------------------------------------------------
 ; Background Y scroll offset (in pixels) [r/w]
@@ -512,11 +512,16 @@ def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
 ; (CGB boot ROM only) CPU mode select
 def rKEY0 equ $FF4C
 
-def KEY1F_MODE equ %0000_11_00 ; current system mode [r/w]
-    def KEY1F_CGB  equ %0000_00_00 ; CGB mode
-    def KEY1F_DMG  equ %0000_01_00 ; DMG compatibility mode
-    def KEY1F_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
-    def KEY1F_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
+; KEY0 is known as the "CPU mode register" in Fig. 11 of this patent:
+; https://patents.google.com/patent/US6322447B1/en?oq=US6322447bi
+; "OBJ priority mode designating register" in the same patent
+; Credit to @mattcurrie for this finding!
+
+def KEY0F_MODE equ %0000_11_00 ; current system mode [r/w]
+    def KEY0F_CGB  equ %0000_00_00 ; CGB mode
+    def KEY0F_DMG  equ %0000_01_00 ; DMG compatibility mode
+    def KEY0F_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
+    def KEY0F_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
 
 ; -- SPD / KEY1 ($FF4D) -------------------------------------------------------
 ; (CGB only) Double-speed mode control
@@ -527,15 +532,22 @@ def SPDB_PREPARE  equ 0 ; 1 = next `stop` instruction will switch clock speeds [
     def SPDF_DBLSPEED equ 1 << SPDB_DBLSPEED
     def SPDF_PREPARE  equ 1 << SPDB_PREPARE
 
+; -- $FF4E is unused ----------------------------------------------------------
 
-
-; --
-; -- VBK ($FF4F)
-; -- Select Video RAM Bank (R/W)
-; --
-; -- Bit 0 - Bank Specification (0: Specify Bank 0; 1: Specify Bank 1)
-; --
+; -- VBK ($FF4F) --------------------------------------------------------------
+; (CGB only) VRAM bank number (0 or 1)
 def rVBK equ $FF4F
+
+def VBK_BANK equ %0000000_1 ; mapped VRAM bank [r/w]
+
+; -- BANK ($FF50) -------------------------------------------------------------
+; (boot ROM only) Boot ROM mapping control
+def rBANK equ $FF50
+
+def BANKB_ON equ 0 ; whether the boot ROM is mapped [wo]
+    def BANKF_ON  equ 0 << BANKB_ON
+    def BANKF_OFF equ 1 << BANKB_ON
+
 
 
 ; --
