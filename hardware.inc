@@ -1,5 +1,5 @@
 ;******************************************************************************
-; Game Boy hardware definitions
+; Game Boy hardware constant definitions
 ; https://github.com/gbdev/hardware.inc
 ;******************************************************************************
 
@@ -32,7 +32,7 @@ def HARDWARE_INC_VERSION equs "4.10.0"
 MACRO rev_Check_hardware_inc
     def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
     def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
-    def hw_inc_min_ver\@ equs """MACRO hw_inc_check\@
+    def hw_inc_def_check\@ equs """MACRO hw_inc_check\@
         if \\1 != \\4 || (\\2 < \\5 || (\\2 == \\5 && \\3 < \\6))
             fail "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
         endc
@@ -42,107 +42,30 @@ MACRO rev_Check_hardware_inc
     purge hw_inc_cur_ver\@, hw_inc_min_ver\@, hw_inc_def_check\@, hw_inc_check\@
 ENDM
 
-;******************************************************************************
-; General memory region constants
-;******************************************************************************
-
-; Prefer `STARTOF(<section type>)` when the value can be determined at link time,
-; for example `STARTOF(WRAMX)` instead of `_RAMBANK`
-def _ROM     equ $0000 ; $0000-$3FFF / $0000-$7FFF
-def _ROMBANK equ $4000 ; $4000-$7FFF
-def _VRAM    equ $8000 ; $8000-$9FFF
-def _SCRN0   equ $9800 ; $9800-$9BFF
-def _SCRN1   equ $9C00 ; $9C00-$9FFF
-def _SRAM    equ $A000 ; $A000-$BFFF
-def _RAM     equ $C000 ; $C000-$CFFF / $C000-$DFFF
-def _RAMBANK equ $D000 ; $D000-$DFFF
-def _OAMRAM  equ $FE00 ; $FE00-$FE9F
-def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF
-def _HRAM    equ $FF80 ; $FF80-$FFFE
 
 ;******************************************************************************
-; MBC registers
+; Memory-mapped registers ($FFxx range)
 ;******************************************************************************
 
-;------------------------------------------------------------------------------
-; RAMG ($0000-$1FFF)
-; RAM enable [w]
-;------------------------------------------------------------------------------
-def rRAMG equ $0000
-
-; Common values
-def CART_SRAM_ENABLE  equ $0A
-def CART_SRAM_DISABLE equ $00
-
-; MBC3-specific values
-def RTC_S  equ $08 ; seconds counter (0-59)
-def RTC_M  equ $09 ; minutes counter (0-59)
-def RTC_H  equ $0A ; hours counter (0-23)
-def RTC_DL equ $0B ; days counter, low byte (0-255)
-def RTC_DH equ $0C ; days counter, high bit and other flags
-    def RTC_DHB_OVERFLOW equ 7 ; 1 = days counter overflowed    [w]
-    def RTC_DHB_HALT     equ 6 ; 0 = run timer, 1 = stop timer  [w]
-    def RTC_DHB_HIGH     equ 0 ; days counter, high bit (bit 8) [w]
-        def RTC_DHF_OVERFLOW equ 1 << RTC_DHB_OVERFLOW
-        def RTC_DHF_HALT     equ 1 << RTC_DHB_HALT
-        def RTC_DHF_HIGH     equ 1 << RTC_DHB_HIGH
-
-;------------------------------------------------------------------------------
-; ROMB0 ($2000-$3FFF)
-; ROM bank number [w]
-;------------------------------------------------------------------------------
-def rROMB0 equ $2000
-
-;------------------------------------------------------------------------------
-; ROMB1 ($3000-$3FFF)
-; (MBC5 only) ROM bank number bit 8 [w]
-;------------------------------------------------------------------------------
-def rROMB1 equ $3000
-
-;------------------------------------------------------------------------------
-; RAMB ($4000-$5FFF)
-; RAM bank number [w]
-;------------------------------------------------------------------------------
-def rRAMB equ $4000
-
-def CARTB_RUMBLE_ON equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
-    def CART_RUMBLE_ON equ 1 << CARTB_RUMBLE_ON
-
-;------------------------------------------------------------------------------
-; RTCLATCH ($6000-$7FFF)
-; (MBC3 only) RTC latch clock data [w]
-;------------------------------------------------------------------------------
-def rRTCLATCH equ $6000
-
-; Write $00 then $01 to latch the current time into the RTC registers
-def RTCLATCH_START  equ $00
-def RTCLATCH_FINISH equ $01
-
-;******************************************************************************
-; Memory-mapped registers
-;******************************************************************************
-
-;------------------------------------------------------------------------------
-; JOYP / P1 ($FF00)
-; Joypad buttons
-;------------------------------------------------------------------------------
+; -- JOYP / P1 ($FF00) --------------------------------------------------------
+; Joypad face buttons
 def rJOYP equ $FF00
 
-def JOYPB_GET_BTN  equ 5 ; 0 = reading buttons [r/w]
-def JOYPB_GET_DPAD equ 4 ; 0 = reading D-pad   [r/w]
+def JOYPB_GET_BTN  equ 5 ; 0 = reading buttons     [r/w]
+def JOYPB_GET_DPAD equ 4 ; 0 = reading Control Pad [r/w]
     def JOYPF_GET equ %00_11_0000 ; select which inputs to read from the lower nybble
         def JOYP_GET_BTN  equ %00_01_0000 ; reading A/B/Select/Start buttons
-        def JOYP_GET_DPAD equ %00_10_0000 ; reading D-pad directions
+        def JOYP_GET_DPAD equ %00_10_0000 ; reading Control Pad directions
         def JOYP_GET_NONE equ %00_11_0000 ; reading nothing
 
-def JOYPB_START  equ 3 ; 0 = Start is pressed  (if reading buttons) [ro]
-def JOYPB_SELECT equ 2 ; 0 = Select is pressed (if reading buttons) [ro]
-def JOYPB_B      equ 1 ; 0 = B is pressed      (if reading buttons) [ro]
-def JOYPB_A      equ 0 ; 0 = A is pressed      (if reading buttons) [ro]
-def JOYPB_DOWN   equ 3 ; 0 = Down is pressed   (if reading D-pad)   [ro]
-def JOYPB_UP     equ 2 ; 0 = Up is pressed     (if reading D-pad)   [ro]
-def JOYPB_LEFT   equ 1 ; 0 = Left is pressed   (if reading D-pad)   [ro]
-def JOYPB_RIGHT  equ 0 ; 0 = Right is pressed  (if reading D-pad)   [ro]
+def JOYPB_START  equ 3 ; 0 = Start is pressed  (if reading buttons)     [ro]
+def JOYPB_SELECT equ 2 ; 0 = Select is pressed (if reading buttons)     [ro]
+def JOYPB_B      equ 1 ; 0 = B is pressed      (if reading buttons)     [ro]
+def JOYPB_A      equ 0 ; 0 = A is pressed      (if reading buttons)     [ro]
+def JOYPB_DOWN   equ 3 ; 0 = Down is pressed   (if reading Control Pad) [ro]
+def JOYPB_UP     equ 2 ; 0 = Up is pressed     (if reading Control Pad) [ro]
+def JOYPB_LEFT   equ 1 ; 0 = Left is pressed   (if reading Control Pad) [ro]
+def JOYPB_RIGHT  equ 0 ; 0 = Right is pressed  (if reading Control Pad) [ro]
     def JOYPF_INPUTS equ %0000_1111
     def JOYPF_START  equ 1 << JOYPB_START
     def JOYPF_SELECT equ 1 << JOYPB_SELECT
@@ -153,7 +76,7 @@ def JOYPB_RIGHT  equ 0 ; 0 = Right is pressed  (if reading D-pad)   [ro]
     def JOYPF_LEFT   equ 1 << JOYPB_LEFT
     def JOYPF_RIGHT  equ 1 << JOYPB_RIGHT
 
-; Combined input byte, with D-pad in high nybble (conventional order)
+; Combined input byte, with Control Pad in high nybble (conventional order)
 def PADB_DOWN   equ 7
 def PADB_UP     equ 6
 def PADB_LEFT   equ 5
@@ -171,7 +94,7 @@ def PADB_A      equ 0
     def PADF_B      equ 1 << PADB_B
     def PADF_A      equ 1 << PADB_A
 
-; Combined input byte, with D-pad in low nybble (swapped order)
+; Combined input byte, with Control Pad in low nybble (swapped order)
 def PADB_SWAP_START  equ 7
 def PADB_SWAP_SELECT equ 6
 def PADB_SWAP_B      equ 5
@@ -189,16 +112,12 @@ def PADB_SWAP_RIGHT  equ 0
     def PADF_SWAP_LEFT   equ 1 << PADB_SWAP_LEFT
     def PADF_SWAP_RIGHT  equ 1 << PADB_SWAP_RIGHT
 
-;------------------------------------------------------------------------------
-; SB ($FF01)
+; -- SB ($FF01) ---------------------------------------------------------------
 ; Serial transfer data [r/w]
-;------------------------------------------------------------------------------
 def rSB equ $FF01
 
-;------------------------------------------------------------------------------
-; SC ($FF02)
+; -- SC ($FF02) ---------------------------------------------------------------
 ; Serial transfer control
-;------------------------------------------------------------------------------
 def rSC equ $FF02
 
 def SCB_START  equ 7 ; reading 1 = transfer in progress, writing 1 = start transfer        [r/w]
@@ -212,32 +131,22 @@ def SCB_SOURCE equ 0 ; 0 = use external clock ("slave"), 1 = use internal clock 
         def SC_EXTERNAL equ 0 << SCB_SOURCE
         def SC_INTERNAL equ 1 << SCB_SOURCE
 
-;------------------------------------------------------------------------------
-; $FF03 is unused
-;------------------------------------------------------------------------------
+; -- $FF03 is unused ----------------------------------------------------------
 
-;------------------------------------------------------------------------------
-; DIV ($FF04)
+; -- DIV ($FF04) --------------------------------------------------------------
 ; Divider register [r/w]
-;------------------------------------------------------------------------------
 def rDIV equ $FF04
 
-;------------------------------------------------------------------------------
-; TIMA ($FF05)
+; -- TIMA ($FF05) -------------------------------------------------------------
 ; Timer counter [r/w]
-;------------------------------------------------------------------------------
 def rTIMA equ $FF05
 
-;------------------------------------------------------------------------------
-; TMA ($FF06)
+; -- TMA ($FF06) --------------------------------------------------------------
 ; Timer modulo [r/w]
-;------------------------------------------------------------------------------
 def rTMA equ $FF06
 
-;------------------------------------------------------------------------------
-; TAC ($FF07)
+; -- TAC ($FF07) --------------------------------------------------------------
 ; Timer control
-;------------------------------------------------------------------------------
 def rTAC equ $FF07
 
 def TACB_START equ 2 ; enable incrementing TIMA [r/w]
@@ -250,14 +159,10 @@ def TACF_CLOCK equ %000000_11 ; the frequency at which TIMER_CNT increments [r/w
     def TACF_65KHZ  equ %000000_10 ; every 16 M-cycles = ~65 KHz on DMG
     def TACF_16KHZ  equ %000000_11 ; every 64 M-cycles = ~16 KHz on DMG
 
-;------------------------------------------------------------------------------
-; $FF08-$FF0E are unused
-;------------------------------------------------------------------------------
+; -- $FF08-$FF0E are unused ---------------------------------------------------
 
-;------------------------------------------------------------------------------
-; IF ($FF0F)
+; -- IF ($FF0F) ---------------------------------------------------------------
 ; Pending interrupts
-;------------------------------------------------------------------------------
 def rIF equ $FF0F
 
 def IFB_JOYPAD equ 4 ; 1 = joypad interrupt is pending [r/w]
@@ -271,13 +176,12 @@ def IFB_VBLANK equ 0 ; 1 = VBlank interrupt is pending [r/w]
     def IFF_STAT   equ 1 << IFB_STAT
     def IFF_VBLANK equ 1 << IFB_VBLANK
 
-;------------------------------------------------------------------------------
-; AUD1SWEEP / NR10 ($FF10)
+; -- AUD1SWEEP / NR10 ($FF10) -------------------------------------------------
 ; Audio channel 1 sweep
-;------------------------------------------------------------------------------
 def rAUD1SWEEP equ $FF10
 
-def AUD1SWEEPF_TIME equ %0_111_0000 ; how long between sweep iterations (in 128 Hz ticks, ~7.8 ms apart) [r/w]
+def AUD1SWEEPF_TIME equ %0_111_0000 ; how long between sweep iterations
+                                    ; (in 128 Hz ticks, ~7.8 ms apart) [r/w]
 
 def AUD1SWEEPB_DIR equ 3 ; sweep direction [r/w]
     def AUD1SWEEPF_DIR  equ 1 << AUD1SWEEPB_DIR
@@ -286,10 +190,8 @@ def AUD1SWEEPB_DIR equ 3 ; sweep direction [r/w]
 
 def AUD1SWEEP_SHIFT equ %00000_111 ; how much the period increases/decreases per iteration [r/w]
 
-;------------------------------------------------------------------------------
-; AUD1LEN / NR11 ($FF11)
+; -- AUD1LEN / NR11 ($FF11) ---------------------------------------------------
 ; Audio channel 1 length timer and duty cycle
-;------------------------------------------------------------------------------
 def rAUD1LEN equ $FF11
 
 ; These values are also applicable to AUD2LEN
@@ -302,10 +204,8 @@ def AUDLENF_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r
 ; This value is also applicable to AUD2LEN and AUD4LEN
 def AUDLENF_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
-;------------------------------------------------------------------------------
-; AUD1ENV / NR12 ($FF12)
+; -- AUD1ENV / NR12 ($FF12) ---------------------------------------------------
 ; Audio channel 1 volume and envelope
-;------------------------------------------------------------------------------
 def rAUD1ENV equ $FF12
 
 ; Values are also applicable to AUD2ENV and AUD4ENV
@@ -317,18 +217,15 @@ def AUDENVB_DIR equ 3 ; direction of volume envelope [r/w]
         def AUDENV_DOWN equ 0 << AUDENVB_DIR
         def AUDENV_UP   equ 1 << AUDENVB_DIR
 
-def AUDENVF_PACE equ %00000_111 ; how long between envelope iterations (in 64 Hz ticks, ~15.6 ms apart) [r/w]
+def AUDENVF_PACE equ %00000_111 ; how long between envelope iterations
+                                ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
-;------------------------------------------------------------------------------
-; AUD1LOW / NR13 ($FF13)
+; -- AUD1LOW / NR13 ($FF13) ---------------------------------------------------
 ; Audio channel 1 period (low 8 bits) [rw]
-;------------------------------------------------------------------------------
 def rAUD1LOW equ $FF13
 
-;------------------------------------------------------------------------------
-; AUD1HIGH / NR14 ($FF14)
+; -- AUD1HIGH / NR14 ($FF14) --------------------------------------------------
 ; Audio channel 1 period (high 3 bits) and control
-;------------------------------------------------------------------------------
 def rAUD1HIGH equ $FF14
 
 ; Values are also applicable to AUD2HIGH and AUD3HIGH
@@ -341,60 +238,44 @@ def AUDHIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer exp
 
 def AUDHIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [rw]
 
-;------------------------------------------------------------------------------
-; $FF15 is unused
-;------------------------------------------------------------------------------
+; -- $FF15 is unused ----------------------------------------------------------
 
-;------------------------------------------------------------------------------
-; AUD2LEN / NR21 ($FF16)
+; -- AUD2LEN / NR21 ($FF16) ---------------------------------------------------
 ; Audio channel 2 length timer and duty cycle
-;------------------------------------------------------------------------------
 def rAUD2LEN equ $FF16
 
 ; Values are reused from AUD1LEN
 
-;------------------------------------------------------------------------------
-; AUD2ENV / NR22 ($FF17)
+; -- AUD2ENV / NR22 ($FF17) ---------------------------------------------------
 ; Audio channel 2 volume and envelope
-;------------------------------------------------------------------------------
 def rAUD2ENV equ $FF17
 
 ; Values are reused from AUD1ENV
 
-;------------------------------------------------------------------------------
-; AUD2LOW / NR23 ($FF18)
+; -- AUD2LOW / NR23 ($FF18) ---------------------------------------------------
 ; Audio channel 2 period (low 8 bits) [rw]
-;------------------------------------------------------------------------------
 def rAUD2LOW equ $FF18
 
-;------------------------------------------------------------------------------
-; AUD2HIGH / NR24 ($FF19)
+; -- AUD2HIGH / NR24 ($FF19) --------------------------------------------------
 ; Audio channel 2 period (high 3 bits) and control
-;------------------------------------------------------------------------------
 def rAUD2HIGH equ $FF19
 
 ; Values are reused from AUD1HIGH
 
-;------------------------------------------------------------------------------
-; AUD3ENA / NR30 ($FF1A)
+; -- AUD3ENA / NR30 ($FF1A) ---------------------------------------------------
 ; Audio channel 3 enable
-;------------------------------------------------------------------------------
 def rAUD3ENA equ $FF1A
 
 def AUD3ENAB_ENABLE equ 7 ; 1 = channel is active [rw]
     def AUD3ENA_OFF equ 0 << AUD3ENAB_ENABLE
     def AUD3ENA_ON  equ 1 << AUD3ENAB_ENABLE
 
-;------------------------------------------------------------------------------
-; AUD3LEN / NR31 ($FF1B)
+; -- AUD3LEN / NR31 ($FF1B) ---------------------------------------------------
 ; Audio channel 3 length timer [wo]
-;------------------------------------------------------------------------------
 def rAUD3LEN equ $FF1B
 
-;------------------------------------------------------------------------------
-; AUD3LEVEL / NR32 ($FF1C)
+; -- AUD3LEVEL / NR32 ($FF1C) -------------------------------------------------
 ; Audio channel 3 volume
-;------------------------------------------------------------------------------
 def rAUD3LEVEL equ $FF1C
 
 def AUD3LEVELF_VOLUME equ %0_11_00000 ; volume level [rw]
@@ -403,44 +284,32 @@ def AUD3LEVELF_VOLUME equ %0_11_00000 ; volume level [rw]
     def AUD3LEVEL_50   equ %0_10_00000 ; 50%
     def AUD3LEVEL_25   equ %0_11_00000 ; 25%
 
-;------------------------------------------------------------------------------
-; AUD3LOW / NR33 ($FF1D)
+; -- AUD3LOW / NR33 ($FF1D) ---------------------------------------------------
 ; Audio channel 3 period (low 8 bits) [rw]
-;------------------------------------------------------------------------------
 def rAUD3LOW equ $FF1D
 
-;------------------------------------------------------------------------------
-; AUD3HIGH / NR34 ($FF1E)
+; -- AUD3HIGH / NR34 ($FF1E) --------------------------------------------------
 ; Audio channel 3 period (high 3 bits) and control
-;------------------------------------------------------------------------------
 def rAUD3HIGH equ $FF1E
 
 ; Values are reused from AUD1HIGH
 
-;------------------------------------------------------------------------------
-; $FF1F is unused
-;------------------------------------------------------------------------------
+; -- $FF1F is unused ----------------------------------------------------------
 
-;------------------------------------------------------------------------------
-; AUD4LEN / NR41 ($FF20)
+; -- AUD4LEN / NR41 ($FF20) ---------------------------------------------------
 ; Audio channel 4 length timer [wo]
-;------------------------------------------------------------------------------
 def rAUD4LEN equ $FF20
 
 ; AUDLENF_TIMER value is reused from AUD1LEN
 
-;------------------------------------------------------------------------------
-; AUD4ENV / NR42 ($FF21)
+; -- AUD4ENV / NR42 ($FF21) ---------------------------------------------------
 ; Audio channel 4 volume and envelope
-;------------------------------------------------------------------------------
 def rAUD4ENV equ $FF21
 
 ; Values are reused from AUD1ENV
 
-;------------------------------------------------------------------------------
-; AUD4POLY / NR43 ($FF22)
+; -- AUD4POLY / NR43 ($FF22) --------------------------------------------------
 ; Audio channel 4 period and randomness
-;------------------------------------------------------------------------------
 def rAUD4POLY equ $FF22
 
 def AUD4POLYF_SHIFT equ %1111_0000 ; coarse control of the channel's period [rw]
@@ -451,10 +320,8 @@ def AUD4POLYB_WIDTH equ 3 ; controls the noise generator (LFSR)'s step width [rw
 
 def AUD4POLYF_DIV equ %00000_111 ; fine control of the channel's period [rw]
 
-;------------------------------------------------------------------------------
-; AUD4GO / NR44 ($FF23)
+; -- AUD4GO / NR44 ($FF23) ----------------------------------------------------
 ; Audio channel 4 control
-;------------------------------------------------------------------------------
 def rAUD4GO equ $FF23
 
 def AUD4GOB_RESTART    equ 7 ; 1 = restart the channel [wo]
@@ -463,10 +330,8 @@ def AUD4GOB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expi
     def AUD4GO_LENGTH_OFF equ 0 << AUD4GOB_LEN_ENABLE
     def AUD4GO_LENGTH_ON  equ 1 << AUD4GOB_LEN_ENABLE
 
-;------------------------------------------------------------------------------
-; AUDVOL / NR50 ($FF24)
+; -- AUDVOL / NR50 ($FF24) ----------------------------------------------------
 ; Audio master volume and VIN mixer
-;------------------------------------------------------------------------------
 def rAUDVOL equ $FF24
 
 def AUDVOLB_VIN_LEFT  equ 7 ; 1 = output VIN to left ear (SO2, speaker 2) [rw]
@@ -479,10 +344,8 @@ def AUDVOLB_VIN_RIGHT equ 3 ; 1 = output VIN to right ear (SO1, speaker 1) [rw]
 
 def AUDVOLF_RIGHT equ %00000_111 ; 0 = barely audible, 7 = full volume [rw]
 
-;------------------------------------------------------------------------------
-; AUDTERM / NR51 ($FF25)
+; -- AUDTERM / NR51 ($FF25) ---------------------------------------------------
 ; Audio channel mixer
-;------------------------------------------------------------------------------
 def rAUDTERM equ $FF25
 
 def AUDTERMB_4_LEFT  equ 7 ; 1 = output channel 4 to left  ear [rw]
@@ -502,10 +365,8 @@ def AUDTERMB_1_RIGHT equ 0 ; 1 = output channel 1 to right ear [rw]
     def AUDTERM_2_RIGHT equ 1 << AUDTERMB_2_RIGHT
     def AUDTERM_1_RIGHT equ 1 << AUDTERMB_1_RIGHT
 
-;------------------------------------------------------------------------------
-; AUDENA / NR52 ($FF26)
+; -- AUDENA / NR52 ($FF26) ----------------------------------------------------
 ; Audio master enable
-;------------------------------------------------------------------------------
 def rAUDENA equ $FF26
 
 def AUDENAB_ENABLE     equ 7 ; 0 = disable the APU, saving power (resets all audio registers to 0!) [r/w]
@@ -524,14 +385,10 @@ def AUDENAB_ENABLE_CH1 equ 0 ; 1 = channel 1 is running [ro]
     def AUDENAF_CH1_OFF equ 0 << AUDENAB_ENABLE_CH1
     def AUDENAF_CH1_ON  equ 1 << AUDENAB_ENABLE_CH1
 
-;------------------------------------------------------------------------------
-; $FF27-$FF2F are unused
-;------------------------------------------------------------------------------
+; -- $FF27-$FF2F are unused ---------------------------------------------------
 
-;------------------------------------------------------------------------------
-; AUD3WAVE ($FF30-$FF3F)
+; -- AUD3WAVE ($FF30-$FF3F) ---------------------------------------------------
 ; Audio channel 3 wave pattern RAM
-;------------------------------------------------------------------------------
 def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 
 def rAUD3WAVE_0 equ $FF30
@@ -551,10 +408,8 @@ def rAUD3WAVE_D equ $FF3D
 def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
 
-;------------------------------------------------------------------------------
-; LCDC ($FF40)
+; -- LCDC ($FF40) -------------------------------------------------------------
 ; LCD graphics control
-;------------------------------------------------------------------------------
 def rLCDC equ $FF40
 
 def LCDCF_OFF     equ %00000000 ; LCD Control Operation
@@ -889,6 +744,72 @@ def IEB_TIMER  equ 2
 def IEB_STAT   equ 1
 def IEB_VBLANK equ 0
 
+
+;******************************************************************************
+; Memory regions
+;******************************************************************************
+
+; Prefer `STARTOF(<section type>)` when the value can be determined at link time
+def _ROM     equ $0000 ; $0000-$3FFF / $0000-$7FFF (prefer `STARTOF(ROM0)`)
+def _ROMBANK equ $4000 ; $4000-$7FFF               (prefer `STARTOF(ROMX)`)
+def _VRAM    equ $8000 ; $8000-$9FFF               (prefer `STARTOF(VRAM)`)
+def _SRAM    equ $A000 ; $A000-$BFFF               (prefer `STARTOF(SRAM)`)
+def _RAM     equ $C000 ; $C000-$CFFF / $C000-$DFFF (prefer `STARTOF(WRAM0)`)
+def _RAMBANK equ $D000 ; $D000-$DFFF               (prefer `STARTOF(WRAMX)`)
+def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
+def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF
+def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
+
+
+;******************************************************************************
+; Cartridge registers (MBC)
+;******************************************************************************
+
+; -- RAMG ($0000-$1FFF) -------------------------------------------------------
+; RAM enable [w]
+def rRAMG equ $0000
+
+; Common values
+def CART_SRAM_ENABLE  equ $0A
+def CART_SRAM_DISABLE equ $00
+
+; MBC3-specific values
+def RTC_S  equ $08 ; seconds counter (0-59)
+def RTC_M  equ $09 ; minutes counter (0-59)
+def RTC_H  equ $0A ; hours counter (0-23)
+def RTC_DL equ $0B ; days counter, low byte (0-255)
+def RTC_DH equ $0C ; days counter, high bit and other flags
+    def RTC_DHB_OVERFLOW equ 7 ; 1 = days counter overflowed    [w]
+    def RTC_DHB_HALT     equ 6 ; 0 = run timer, 1 = stop timer  [w]
+    def RTC_DHB_HIGH     equ 0 ; days counter, high bit (bit 8) [w]
+        def RTC_DHF_OVERFLOW equ 1 << RTC_DHB_OVERFLOW
+        def RTC_DHF_HALT     equ 1 << RTC_DHB_HALT
+        def RTC_DHF_HIGH     equ 1 << RTC_DHB_HIGH
+
+; -- ROMB0 ($2000-$3FFF) ------------------------------------------------------
+; ROM bank number [w]
+def rROMB0 equ $2000
+
+; -- ROMB1 ($3000-$3FFF) ------------------------------------------------------
+; (MBC5 only) ROM bank number bit 8 [w]
+def rROMB1 equ $3000
+
+; -- RAMB ($4000-$5FFF) -------------------------------------------------------
+; RAM bank number [w]
+def rRAMB equ $4000
+
+def CARTB_RUMBLE_ON equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
+    def CART_RUMBLE_ON equ 1 << CARTB_RUMBLE_ON
+
+; -- RTCLATCH ($6000-$7FFF) ---------------------------------------------------
+; (MBC3 only) RTC latch clock data [w]
+def rRTCLATCH equ $6000
+
+; Write $00 then $01 to latch the current time into the RTC registers
+def RTCLATCH_START  equ $00
+def RTCLATCH_FINISH equ $01
+
+
 ;***************************************************************************
 ;*
 ;* CPU values on bootup (a=type, b=qualifier)
@@ -1004,6 +925,9 @@ def CART_DEST_NON_JAPANESE equ $01
 ;* Screen related
 ;*
 ;***************************************************************************
+
+def _SCRN0   equ $9800 ; $9800-$9BFF
+def _SCRN1   equ $9C00 ; $9C00-$9FFF
 
 def SCRN_X    equ 160 ; Width of screen in pixels
 def SCRN_Y    equ 144 ; Height of screen in pixels. Also corresponds to the value in LY at the beginning of VBlank.
