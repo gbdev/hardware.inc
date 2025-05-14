@@ -459,10 +459,10 @@ def STATB_BUSY   equ 1 ; 1 = the PPU is currently accessing VRAM  [ro]
     def STATF_BUSY   equ 1 << STATB_BUSY
 
 def STATF_MODE equ %000000_11 ; PPU's current status [ro]
-    def STATF_HBL equ %000000_00 ; Waiting after a line's rendering (HBlank)
-    def STATF_VBL equ %000000_01 ; Waiting between frames (VBlank)
-    def STATF_OAM equ %000000_10 ; Checking which OBJs will be rendered on this line (OAM scan)
-    def STATF_LCD equ %000000_11 ; Pushing pixels to the LCD
+    def STATF_HBL equ %000000_00 ; waiting after a line's rendering (HBlank)
+    def STATF_VBL equ %000000_01 ; waiting between frames (VBlank)
+    def STATF_OAM equ %000000_10 ; checking which OBJs will be rendered on this line (OAM scan)
+    def STATF_LCD equ %000000_11 ; pushing pixels to the LCD
 
 ; -- SCY ($FF42) --------------------------------------------------------------
 ; Background Y scroll offset (in pixels) [r/w]
@@ -548,69 +548,54 @@ def BANKB_ON equ 0 ; whether the boot ROM is mapped [wo]
     def BANKF_ON  equ 0 << BANKB_ON
     def BANKF_OFF equ 1 << BANKB_ON
 
+; -- VDMA_SRC_HIGH / HDMA1 ($FF51) --------------------------------------------
+; (CGB only) VRAM DMA source address (high 8 bits) [wo]
+def rVDMA_SRC_HIGH equ $FF51
 
+; -- VDMA_SRC_LO / HDMA2 ($FF52) ----------------------------------------------
+; (CGB only) VRAM DMA source address (low 8 bits) [wo]
+def rVDMA_SRC_LOW equ $FF52
 
-; --
-; -- HDMA1 ($FF51)
-; -- High byte for Horizontal Blanking/General Purpose DMA source address (W)
-; -- CGB Mode Only
-; --
-def rHDMA1 equ $FF51
+; -- VDMA_DEST_HIGH / HDMA3 ($FF53) -------------------------------------------
+; (CGB only) VRAM DMA destination address (high 8 bits) [wo]
+def rVDMA_DEST_HIGH equ $FF53
 
+; -- VDMA_DEST_LOW / HDMA3 ($FF54) --------------------------------------------
+; (CGB only) VRAM DMA destination address (low 8 bits) [wo]
+def rVDMA_DEST_LOW equ $FF54
 
-; --
-; -- HDMA2 ($FF52)
-; -- Low byte for Horizontal Blanking/General Purpose DMA source address (W)
-; -- CGB Mode Only
-; --
-def rHDMA2 equ $FF52
+; -- VDMA_LEN / HDMA5 ($FF55) -------------------------------------------------
+; (CGB only) VRAM DMA length, mode, and start
+def rVDMA_LEN equ $FF55
 
+def VDMA_LENB_MODE equ 7 ; on write: VRAM DMA mode [wo]
+    def VDMA_LENF_MODE equ 1 << HDMA_LENB_MODE
+        def VDMA_LENF_MODE_GP  equ 0 << HDMA_LENB_MODE ; GDMA (general-purpose)
+        def VDMA_LENF_MODE_HBL equ 1 << HDMA_LENB_MODE ; HDMA (HBlank)
 
-; --
-; -- HDMA3 ($FF53)
-; -- High byte for Horizontal Blanking/General Purpose DMA destination address (W)
-; -- CGB Mode Only
-; --
-def rHDMA3 equ $FF53
+def VDMA_LENB_BUSY equ 7 ; on read: is a VRAM DMA active?
+    def VDMA_LENF_BUSY equ 1 << VDMA_LENB_ACTIVE
+        def VDMA_LENF_NO  equ 0 << VDMA_LENB_ACTIVE
+        def VDMA_LENF_YES equ 1 << VDMA_LENB_ACTIVE
 
+def VDMA_LENB_SIZE equ %0_1111111 ; how many 16-byte blocks (minus 1) to transfer [r/w]
 
-; --
-; -- HDMA4 ($FF54)
-; -- Low byte for Horizontal Blanking/General Purpose DMA destination address (W)
-; -- CGB Mode Only
-; --
-def rHDMA4 equ $FF54
-
-
-; --
-; -- HDMA5 ($FF55)
-; -- Transfer length (in tiles minus 1)/mode/start for Horizontal Blanking, General Purpose DMA (R/W)
-; -- CGB Mode Only
-; --
-def rHDMA5 equ $FF55
-
-def HDMA5F_MODE_GP  equ %00000000 ; General Purpose DMA (W)
-def HDMA5F_MODE_HBL equ %10000000 ; HBlank DMA (W)
-def HDMA5B_MODE equ 7 ; DMA mode select (W)
-
-; -- Once DMA has started, use HDMA5F_BUSY to check when the transfer is complete
-def HDMA5F_BUSY equ %10000000 ; 0=Busy (DMA still in progress), 1=Transfer complete (R)
-
-
-; --
-; -- RP ($FF56)
-; -- Infrared Communications Port (R/W)
-; -- CGB Mode Only
-; --
+; -- RP ($FF56) ---------------------------------------------------------------
+; (CGB only) Infrared communications port
 def rRP equ $FF56
 
-def RPF_ENREAD   equ %11000000
-def RPF_DATAIN   equ %00000010 ; 0=Receiving IR Signal, 1=Normal
-def RPF_WRITE_HI equ %00000001
-def RPF_WRITE_LO equ %00000000
+def RPF_READ equ %11_000000 ; whether the IR read is enabled [r/w]
+    def RPF_DISREAD equ %00_000000
+    def RPF_ENREAD  equ %11_000000
 
-def RPB_LED_ON   equ 0
-def RPB_DATAIN   equ 1
+def RPB_DATAIN equ 1 ; 0 = IR light is being received [ro]
+def RPB_LED_ON equ 0 ; 1 = IR light is being sent     [r/w]
+    def RPF_DATAIN   equ 1 << RPB_DATAIN
+    def RPF_LED_ON equ 1 << RPB_LED_ON
+        def RPF_WRITE_LO equ 0 << RPB_LED_ON
+        def RPF_WRITE_HI equ 1 << RPB_LED_ON
+
+
 
 
 ; --
@@ -977,6 +962,11 @@ def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
 def rKEY1 equ rSPD
+def rHDMA1 equ rHDMA_SRC_HIGH
+def rHDMA2 equ rHDMA_SRC_LOW
+def rHDMA3 equ rHDMA_DEST_HIGH
+def rHDMA4 equ rHDMA_DEST_LOW
+def rHDMA5 equ rHDMA_LEN
 
 ; Deprecated constants. Please avoid using.
 
@@ -1005,5 +995,10 @@ def P1F_GET_NONE equ JOYP_GET_NONE
 
 def KEY1F_DBLSPEED equ 1 << SPDB_DBLSPEED
 def KEY1F_PREPARE  equ 1 << SPDB_PREPARE
+
+def HDMA5B_MODE     equ VDMA_LENB_MODE
+def HDMA5F_MODE_GP  equ VDMA_LENF_MODE_GP
+def HDMA5F_MODE_HBL equ VDMA_LENF_MODE_HBL
+def HDMA5F_BUSY     equ VDMA_LENF_BUSY
 
 endc ; HARDWARE_INC
