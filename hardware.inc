@@ -369,7 +369,7 @@ def AUDTERMB_1_RIGHT equ 0 ; 1 = output channel 1 to right ear [rw]
 ; Audio master enable
 def rAUDENA equ $FF26
 
-def AUDENAB_ENABLE     equ 7 ; 0 = disable the APU, saving power (resets all audio registers to 0!) [r/w]
+def AUDENAB_ENABLE     equ 7 ; 0 = disable the APU (resets all audio registers to 0!) [r/w]
 def AUDENAB_ENABLE_CH4 equ 3 ; 1 = channel 4 is running [ro]
 def AUDENAB_ENABLE_CH3 equ 2 ; 1 = channel 3 is running [ro]
 def AUDENAB_ENABLE_CH2 equ 1 ; 1 = channel 2 is running [ro]
@@ -388,7 +388,7 @@ def AUDENAB_ENABLE_CH1 equ 0 ; 1 = channel 1 is running [ro]
 ; -- $FF27-$FF2F are unused ---------------------------------------------------
 
 ; -- AUD3WAVE ($FF30-$FF3F) ---------------------------------------------------
-; Audio channel 3 wave pattern RAM
+; Audio channel 3 wave pattern RAM [r/w]
 def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 
 def rAUD3WAVE_0 equ $FF30
@@ -409,162 +409,124 @@ def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
 
 ; -- LCDC ($FF40) -------------------------------------------------------------
-; LCD graphics control
+; PPU graphics control
 def rLCDC equ $FF40
 
-def LCDCF_OFF     equ %00000000 ; LCD Control Operation
-def LCDCF_ON      equ %10000000 ; LCD Control Operation
-def LCDCF_WIN9800 equ %00000000 ; Window Tile Map Display Select
-def LCDCF_WIN9C00 equ %01000000 ; Window Tile Map Display Select
-def LCDCF_WINOFF  equ %00000000 ; Window Display
-def LCDCF_WINON   equ %00100000 ; Window Display
-def LCDCF_BLK21   equ %00000000 ; BG & Window Tile Data Select
-def LCDCF_BLK01   equ %00010000 ; BG & Window Tile Data Select
-def LCDCF_BG9800  equ %00000000 ; BG Tile Map Display Select
-def LCDCF_BG9C00  equ %00001000 ; BG Tile Map Display Select
-def LCDCF_OBJ8    equ %00000000 ; OBJ Construction
-def LCDCF_OBJ16   equ %00000100 ; OBJ Construction
-def LCDCF_OBJOFF  equ %00000000 ; OBJ Display
-def LCDCF_OBJON   equ %00000010 ; OBJ Display
-def LCDCF_BGOFF   equ %00000000 ; BG Display
-def LCDCF_BGON    equ %00000001 ; BG Display
+def LCDCB_ON      equ 7 ; whether the PPU (and LCD) are turned on          [r/w]
+def LCDCB_WIN9C00 equ 6 ; which tilemap the Window reads from              [r/w]
+def LCDCB_WINON   equ 5 ; whether the Window is enabled                    [r/w]
+def LCDCB_BLKS    equ 4 ; which "tile blocks" the BG and Window use        [r/w]
+def LCDCB_BG9C00  equ 3 ; which tilemap the BG reads from                  [r/w]
+def LCDCB_OBJ16   equ 2 ; how many pixels tall each OBJ is                 [r/w]
+def LCDCB_OBJON   equ 1 ; whether OBJs are enabled                         [r/w]
+def LCDCB_BGON    equ 0 ; (DMG only) whether the BG is enabled             [r/w]
+def LCDCB_PRION   equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
+    def LCDCF_OFF     equ 0 << LCDCB_ON
+    def LCDCF_ON      equ 1 << LCDCB_ON
+    def LCDCF_WIN9800 equ 0 << LCDCB_WIN9C00
+    def LCDCF_WIN9C00 equ 1 << LCDCB_WIN9C00
+    def LCDCF_WINOFF  equ 0 << LCDCB_WINON
+    def LCDCF_WINON   equ 1 << LCDCB_WINON
+    def LCDCF_BLKS    equ 1 << LCDCB_BLKS
+    def LCDCF_BLK21   equ 0 << LCDCB_BLKS
+    def LCDCF_BLK01   equ 1 << LCDCB_BLKS
+    def LCDCF_BG9800  equ 0 << LCDCB_BG9C00
+    def LCDCF_BG9C00  equ 1 << LCDCB_BG9C00
+    def LCDCF_OBJ8    equ 0 << LCDCB_OBJ16
+    def LCDCF_OBJ16   equ 1 << LCDCB_OBJ16
+    def LCDCF_OBJOFF  equ 0 << LCDCB_OBJON
+    def LCDCF_OBJON   equ 1 << LCDCB_OBJON
+    def LCDCF_BGOFF   equ 0 << LCDCB_BGON
+    def LCDCF_BGON    equ 1 << LCDCB_BGON
+    def LCDCF_PRIOFF  equ 0 << LCDCB_PRION
+    def LCDCF_PRION   equ 1 << LCDCB_PRION
 
-def LCDCB_ON      equ 7 ; LCD Control Operation
-def LCDCB_WIN9C00 equ 6 ; Window Tile Map Display Select
-def LCDCB_WINON   equ 5 ; Window Display
-def LCDCB_BLKS    equ 4 ; BG & Window Tile Data Select
-def LCDCB_BG9C00  equ 3 ; BG Tile Map Display Select
-def LCDCB_OBJ16   equ 2 ; OBJ Construction
-def LCDCB_OBJON   equ 1 ; OBJ Display
-def LCDCB_BGON    equ 0 ; BG Display
-; "Window Character Data Select" follows BG
-
-
-; --
-; -- STAT ($FF41)
-; -- LCDC Status   (R/W)
-; --
+; -- STAT ($FF41) -------------------------------------------------------------
+; Graphics status and interrupt control
 def rSTAT equ $FF41
 
-def STATF_LYC     equ  %01000000 ; LYC=LY Coincidence (Selectable)
-def STATF_MODE10  equ  %00100000 ; Mode 10
-def STATF_MODE01  equ  %00010000 ; Mode 01 (V-Blank)
-def STATF_MODE00  equ  %00001000 ; Mode 00 (H-Blank)
-def STATF_LYCF    equ  %00000100 ; Coincidence Flag
-def STATF_HBL     equ  %00000000 ; H-Blank
-def STATF_VBL     equ  %00000001 ; V-Blank
-def STATF_OAM     equ  %00000010 ; OAM-RAM is used by system
-def STATF_LCD     equ  %00000011 ; Both OAM and VRAM used by system
-def STATF_BUSY    equ  %00000010 ; When set, VRAM access is unsafe
+def STATB_LYC     equ 6 ; 1 = LY match triggers the STAT interrupt [r/w]
+def STATB_MODE10  equ 5 ; 1 = OAM Scan triggers the PPU interrupt  [r/w]
+def STATB_MODE01  equ 4 ; 1 = VBlank triggers the PPU interrupt    [r/w]
+def STATB_MODE00  equ 3 ; 1 = HBlank triggers the PPU interrupt    [r/w]
+def STATB_LYCF    equ 2 ; 1 = LY is currently equal to LYC         [ro]
+def STATB_BUSY    equ 1 ; 1 = the PPU is currently accessing VRAM  [ro]
+    def STATF_LYC     equ 1 << STATB_LYC
+    def STATF_MODE10  equ 1 << STATB_MODE10
+    def STATF_MODE01  equ 1 << STATB_MODE01
+    def STATF_MODE00  equ 1 << STATB_MODE00
+    def STATF_LYCF    equ 1 << STATB_LYCF
+    def STATF_BUSY    equ 1 << STATB_BUSY
 
-def STATB_LYC     equ  6
-def STATB_MODE10  equ  5
-def STATB_MODE01  equ  4
-def STATB_MODE00  equ  3
-def STATB_LYCF    equ  2
-def STATB_BUSY    equ  1
+def STATF_MODE equ %000000_11 ; PPU's current status [ro]
+    def STATF_HBL  equ %000000_00 ; Waiting after a line's rendering (HBlank)
+    def STATF_VBL  equ %000000_01 ; Waiting between frames (VBlank)
+    def STATF_OAM  equ %000000_10 ; Checking which OBJs will be rendered on this line (OAM scan)
+    def STATF_LCD  equ %000000_11 ; Pushing pixels to the LCD
 
-; --
-; -- SCY ($FF42)
-; -- Scroll Y (R/W)
-; --
+; -- SCY ($FF42) --------------------------------------------------------------
+; Background Y scroll offset (in pixels) [r/w]
 def rSCY equ $FF42
 
-
-; --
-; -- SCX ($FF43)
-; -- Scroll X (R/W)
-; --
+; -- SCX ($FF43) --------------------------------------------------------------
+; Background X scroll offset (in pixels) [r/w]
 def rSCX equ $FF43
 
-
-; --
-; -- LY ($FF44)
-; -- LCDC Y-Coordinate (R)
-; --
-; -- Values range from 0-153. 144-153 is the VBlank period.
-; --
+; -- LY ($FF44) ---------------------------------------------------------------
+; Y coordinate of the line currently processed by the PPU (0-153) [ro]
 def rLY equ $FF44
 
+def LY_VBLANK equ 144 ; 144-153 is the VBlank period
 
-; --
-; -- LYC ($FF45)
-; -- LY Compare (R/W)
-; --
-; -- When LY==LYC, STATF_LYCF will be set in STAT
-; --
+; -- LYC ($FF45) --------------------------------------------------------------
+; Value that LY is constantly compared to [r/w]
 def rLYC equ $FF45
 
-
-; --
-; -- DMA ($FF46)
-; -- DMA Transfer and Start Address (W)
-; --
+; -- DMA ($FF46) --------------------------------------------------------------
+; OAM DMA start address (high 8 bits) and start [wo]
 def rDMA equ $FF46
 
-
-; --
-; -- BGP ($FF47)
-; -- BG Palette Data (W)
-; --
-; -- Bit 7-6 - Intensity for %11
-; -- Bit 5-4 - Intensity for %10
-; -- Bit 3-2 - Intensity for %01
-; -- Bit 1-0 - Intensity for %00
-; --
+; -- BGP ($FF47) --------------------------------------------------------------
+; (DMG only) Background color mapping [r/w]
 def rBGP equ $FF47
 
-
-; --
-; -- OBP0 ($FF48)
-; -- Object Palette 0 Data (W)
-; --
-; -- See BGP for info
-; --
+; -- OBP0 ($FF48) -------------------------------------------------------------
+; (DMG only) OBJ color mapping #0 [r/w]
 def rOBP0 equ $FF48
 
-
-; --
-; -- OBP1 ($FF49)
-; -- Object Palette 1 Data (W)
-; --
-; -- See BGP for info
-; --
+; -- OBP1 ($FF49) -------------------------------------------------------------
+; (DMG only) OBJ color mapping #1 [r/w]
 def rOBP1 equ $FF49
 
-
-; --
-; -- WY ($FF4A)
-; -- Window Y Position (R/W)
-; --
-; -- 0 <= WY <= 143
-; -- When WY = 0, the window is displayed from the top edge of the LCD screen.
-; --
+; -- WY ($FF4A) ---------------------------------------------------------------
+; Y coordinate of the Window's top-left pixel (0-143) [r/w]
 def rWY equ $FF4A
 
-
-; --
-; -- WX ($FF4B)
-; -- Window X Position (R/W)
-; --
-; -- 7 <= WX <= 166
-; -- When WX = 7, the window is displayed from the left edge of the LCD screen.
-; -- Values of 0-6 and 166 are unreliable due to hardware bugs.
-; --
+; -- WX ($FF4B) ---------------------------------------------------------------
+; X coordinate of the Window's top-left pixel, plus 7 (7-166) [r/w]
 def rWX equ $FF4B
 
-def WX_OFS equ 7 ; add this to a screen position to get a WX position
+def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
 
+; -- KEY0 ($FF4C) -------------------------------------------------------------
+; (CGB boot ROM only) CPU mode select
+def rKEY0 equ $FF4C
 
-; --
-; -- SPEED ($FF4D)
-; -- Select CPU Speed (R/W)
-; --
-def rKEY1 equ $FF4D
-def rSPD  equ rKEY1
+def KEY1F_MODE equ %0000_11_00 ; current system mode [r/w]
+    def KEY1F_CGB  equ %0000_00_00 ; CGB mode
+    def KEY1F_DMG  equ %0000_01_00 ; DMG compatibility mode
+    def KEY1F_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
+    def KEY1F_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
 
-def KEY1F_DBLSPEED equ %10000000 ; 0=Normal Speed, 1=Double Speed (R)
-def KEY1F_PREPARE  equ %00000001 ; 0=No, 1=Prepare (R/W)
+; -- SPD / KEY1 ($FF4D) -------------------------------------------------------
+; (CGB only) Double-speed mode control
+def rSPD equ $FF4D
+
+def SPDB_DBLSPEED equ 7 ; current clock speed                                  [ro]
+def SPDB_PREPARE  equ 0 ; 1 = next `stop` instruction will switch clock speeds [r/w]
+    def SPDF_DBLSPEED equ 1 << SPDB_DBLSPEED
+    def SPDF_PREPARE  equ 1 << SPDB_PREPARE
+
 
 
 ; --
@@ -1002,13 +964,14 @@ def rNR44 equ rAUD4GO
 def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
+def rKEY1 equ rSPD
 
 ; Deprecated constants. Please avoid using.
 
 def IEB_HILO equ IEB_JOYPAD
 def IEF_HILO equ 1 << IEB_JOYPAD
 
-def IEF_LCDC   equ %00000010 ; LCDC (see STAT)
+def IEF_LCDC   equ IEF_STAT ; LCDC (see STAT)
 def _VRAM8000  equ _VRAM
 def _VRAM8800  equ _VRAM+$800
 def _VRAM9000  equ _VRAM+$1000
@@ -1027,5 +990,8 @@ def P1F_0 equ JOYPF_RIGHT
 def P1F_GET_DPAD equ JOYP_GET_DPAD
 def P1F_GET_BTN  equ JOYP_GET_BTN
 def P1F_GET_NONE equ JOYP_GET_NONE
+
+def KEY1F_DBLSPEED equ 1 << SPDB_DBLSPEED
+def KEY1F_PREPARE  equ 1 << SPDB_PREPARE
 
 endc ; HARDWARE_INC

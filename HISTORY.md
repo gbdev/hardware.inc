@@ -76,6 +76,6 @@
 - **Rev 4.9.2** - 2024-08-18 *(DevEd)*
   - Corrected `CART_ROM_MBC5_BAT` to `CART_ROM_MBC5_RAM`
 - **Rev 4.10.0** - 2025-05-13 *(Rangi42)*
-  - Moved revision history to separate HISTORY.md file
+  - Added more constants
   - Changed formatting
-  - Added `_ROM` and `_ROMBANK` constants
+  - Moved revision history to separate HISTORY.md file
