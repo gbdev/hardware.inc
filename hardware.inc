@@ -569,14 +569,14 @@ def rVDMA_DEST_LOW equ $FF54
 def rVDMA_LEN equ $FF55
 
 def VDMA_LENB_MODE equ 7 ; on write: VRAM DMA mode [wo]
-    def VDMA_LENF_MODE equ 1 << HDMA_LENB_MODE
-        def VDMA_LENF_MODE_GP  equ 0 << HDMA_LENB_MODE ; GDMA (general-purpose)
-        def VDMA_LENF_MODE_HBL equ 1 << HDMA_LENB_MODE ; HDMA (HBlank)
+    def VDMA_LENF_MODE equ 1 << VDMA_LENB_MODE
+        def VDMA_LENF_MODE_GP  equ 0 << VDMA_LENB_MODE ; GDMA (general-purpose)
+        def VDMA_LENF_MODE_HBL equ 1 << VDMA_LENB_MODE ; HDMA (HBlank)
 
 def VDMA_LENB_BUSY equ 7 ; on read: is a VRAM DMA active?
-    def VDMA_LENF_BUSY equ 1 << VDMA_LENB_ACTIVE
-        def VDMA_LENF_NO  equ 0 << VDMA_LENB_ACTIVE
-        def VDMA_LENF_YES equ 1 << VDMA_LENB_ACTIVE
+    def VDMA_LENF_BUSY equ 1 << VDMA_LENB_BUSY
+        def VDMA_LENF_NO  equ 0 << VDMA_LENB_BUSY
+        def VDMA_LENF_YES equ 1 << VDMA_LENB_BUSY
 
 def VDMA_LENB_SIZE equ %0_1111111 ; how many 16-byte blocks (minus 1) to transfer [r/w]
 
@@ -962,11 +962,11 @@ def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
 def rKEY1 equ rSPD
-def rHDMA1 equ rHDMA_SRC_HIGH
-def rHDMA2 equ rHDMA_SRC_LOW
-def rHDMA3 equ rHDMA_DEST_HIGH
-def rHDMA4 equ rHDMA_DEST_LOW
-def rHDMA5 equ rHDMA_LEN
+def rHDMA1 equ rVDMA_SRC_HIGH
+def rHDMA2 equ rVDMA_SRC_LOW
+def rHDMA3 equ rVDMA_DEST_HIGH
+def rHDMA4 equ rVDMA_DEST_LOW
+def rHDMA5 equ rVDMA_LEN
 
 ; Deprecated constants. Please avoid using.
 
