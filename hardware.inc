@@ -492,6 +492,8 @@ def rDMA equ $FF46
 ; (DMG only) Background color mapping [r/w]
 def rBGP equ $FF47
 
+def BGP_SGB_TRANSFER equ %11_10_01_00 ; set BGP to this value before SGB VRAM transfer
+
 ; -- OBP0 ($FF48) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #0 [r/w]
 def rOBP0 equ $FF48
