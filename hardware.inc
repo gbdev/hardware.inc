@@ -667,11 +667,11 @@ def IEB_SERIAL equ 3 ; 1 = serial interrupt is enabled [r/w]
 def IEB_TIMER  equ 2 ; 1 = timer  interrupt is enabled [r/w]
 def IEB_STAT   equ 1 ; 1 = STAT   interrupt is enabled [r/w]
 def IEB_VBLANK equ 0 ; 1 = VBlank interrupt is enabled [r/w]
-    def IEF_JOYPAD equ 1 << IFB_JOYPAD
-    def IEF_SERIAL equ 1 << IFB_SERIAL
-    def IEF_TIMER  equ 1 << IFB_TIMER
-    def IEF_STAT   equ 1 << IFB_STAT
-    def IEF_VBLANK equ 1 << IFB_VBLANK
+    def IEF_JOYPAD equ 1 << IEB_JOYPAD
+    def IEF_SERIAL equ 1 << IEB_SERIAL
+    def IEF_TIMER  equ 1 << IEB_TIMER
+    def IEF_STAT   equ 1 << IEB_STAT
+    def IEF_VBLANK equ 1 << IEB_VBLANK
 
 
 ;******************************************************************************
@@ -729,22 +729,6 @@ def RTCLATCH_START  equ $00
 def RTCLATCH_FINISH equ $01
 
 
-;******************************************************************************
-; Memory regions
-;******************************************************************************
-
-; Prefer `STARTOF(<section type>)` when the value can be determined at link time
-def _ROM     equ $0000 ; $0000-$3FFF / $0000-$7FFF (prefer `STARTOF(ROM0)`)
-def _ROMBANK equ $4000 ; $4000-$7FFF               (prefer `STARTOF(ROMX)`)
-def _VRAM    equ $8000 ; $8000-$9FFF               (prefer `STARTOF(VRAM)`)
-def _SRAM    equ $A000 ; $A000-$BFFF               (prefer `STARTOF(SRAM)`)
-def _RAM     equ $C000 ; $C000-$CFFF / $C000-$DFFF (prefer `STARTOF(WRAM0)`)
-def _RAMBANK equ $D000 ; $D000-$DFFF               (prefer `STARTOF(WRAMX)`)
-def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
-def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF
-def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
-
-
 ;***************************************************************************
 ;*
 ;* CPU values on bootup (a=type, b=qualifier)
@@ -772,87 +756,6 @@ def INT_HANDLER_STAT   equ $0048
 def INT_HANDLER_TIMER  equ $0050
 def INT_HANDLER_SERIAL equ $0058
 def INT_HANDLER_JOYPAD equ $0060
-
-
-;***************************************************************************
-;*
-;* Header
-;*
-;***************************************************************************
-
-;*
-;* Nintendo scrolling logo
-;* (Code won't work on a real Game Boy)
-;* (if next lines are altered.)
-MACRO NINTENDO_LOGO
-    DB  $CE,$ED,$66,$66,$CC,$0D,$00,$0B,$03,$73,$00,$83,$00,$0C,$00,$0D
-    DB  $00,$08,$11,$1F,$88,$89,$00,$0E,$DC,$CC,$6E,$E6,$DD,$DD,$D9,$99
-    DB  $BB,$BB,$67,$63,$6E,$0E,$EC,$CC,$DD,$DC,$99,$9F,$BB,$B9,$33,$3E
-ENDM
-
-; $0143 Color Game Boy compatibility code
-def CART_COMPATIBLE_DMG     equ $00
-def CART_COMPATIBLE_DMG_GBC equ $80
-def CART_COMPATIBLE_GBC     equ $C0
-
-; $0146 Game Boy/Super Game Boy indicator
-def CART_INDICATOR_GB       equ $00
-def CART_INDICATOR_SGB      equ $03
-
-; $0147 Cartridge type
-def CART_ROM                     equ $00
-def CART_ROM_MBC1                equ $01
-def CART_ROM_MBC1_RAM            equ $02
-def CART_ROM_MBC1_RAM_BAT        equ $03
-def CART_ROM_MBC2                equ $05
-def CART_ROM_MBC2_BAT            equ $06
-def CART_ROM_RAM                 equ $08
-def CART_ROM_RAM_BAT             equ $09
-def CART_ROM_MMM01               equ $0B
-def CART_ROM_MMM01_RAM           equ $0C
-def CART_ROM_MMM01_RAM_BAT       equ $0D
-def CART_ROM_MBC3_BAT_RTC        equ $0F
-def CART_ROM_MBC3_RAM_BAT_RTC    equ $10
-def CART_ROM_MBC3                equ $11
-def CART_ROM_MBC3_RAM            equ $12
-def CART_ROM_MBC3_RAM_BAT        equ $13
-def CART_ROM_MBC5                equ $19
-def CART_ROM_MBC5_RAM            equ $1A
-def CART_ROM_MBC5_RAM_BAT        equ $1B
-def CART_ROM_MBC5_RUMBLE         equ $1C
-def CART_ROM_MBC5_RAM_RUMBLE     equ $1D
-def CART_ROM_MBC5_RAM_BAT_RUMBLE equ $1E
-def CART_ROM_MBC7_RAM_BAT_GYRO   equ $22
-def CART_ROM_POCKET_CAMERA       equ $FC
-def CART_ROM_BANDAI_TAMA5        equ $FD
-def CART_ROM_HUDSON_HUC3         equ $FE
-def CART_ROM_HUDSON_HUC1         equ $FF
-
-; $0148 ROM size
-; these are kilobytes
-def CART_ROM_32KB   equ $00 ; 2 banks
-def CART_ROM_64KB   equ $01 ; 4 banks
-def CART_ROM_128KB  equ $02 ; 8 banks
-def CART_ROM_256KB  equ $03 ; 16 banks
-def CART_ROM_512KB  equ $04 ; 32 banks
-def CART_ROM_1024KB equ $05 ; 64 banks
-def CART_ROM_2048KB equ $06 ; 128 banks
-def CART_ROM_4096KB equ $07 ; 256 banks
-def CART_ROM_8192KB equ $08 ; 512 banks
-def CART_ROM_1152KB equ $52 ; 72 banks
-def CART_ROM_1280KB equ $53 ; 80 banks
-def CART_ROM_1536KB equ $54 ; 96 banks
-
-; $0149 SRAM size
-; these are kilobytes
-def CART_SRAM_NONE  equ 0
-def CART_SRAM_8KB   equ 2 ; 1 bank
-def CART_SRAM_32KB  equ 3 ; 4 banks
-def CART_SRAM_128KB equ 4 ; 16 banks
-
-; $014A Destination code
-def CART_DEST_JAPANESE     equ $00
-def CART_DEST_NON_JAPANESE equ $01
 
 
 ;***************************************************************************
@@ -913,18 +816,23 @@ def OAMB_PAL1       equ 4 ; Palette number; 0,1 (DMG)
 def OAMB_BANK1      equ 3 ; Bank number; 0,1 (GBC)
 
 
+;******************************************************************************
 ; Aliases
+;******************************************************************************
 
-def rP1   equ rJOYP
+; Prefer the standard names to these aliases, which may be official but are
+; less directly meaningful or human-readable.
+
+def rP1 equ rJOYP
+    def P1F_GET_BTN  equ JOYP_GET_BTN
+    def P1F_GET_DPAD equ JOYP_GET_DPAD
+    def P1F_GET_NONE equ JOYP_GET_NONE
     def P1F_5 equ JOYP_GET_DPAD
     def P1F_4 equ JOYP_GET_BTN
     def P1F_3 equ JOYPF_DOWN
     def P1F_2 equ JOYPF_UP
     def P1F_1 equ JOYPF_LEFT
     def P1F_0 equ JOYPF_RIGHT
-    def P1F_GET_DPAD equ JOYP_GET_DPAD
-    def P1F_GET_BTN  equ JOYP_GET_BTN
-    def P1F_GET_NONE equ JOYP_GET_NONE
 
 def rNR10 equ rAUD1SWEEP
 def rNR11 equ rAUD1LEN
@@ -958,9 +866,9 @@ def rHDMA3 equ rVDMA_DEST_HIGH
 def rHDMA4 equ rVDMA_DEST_LOW
 def rHDMA5 equ rVDMA_LEN
     def HDMA5B_MODE     equ VDMA_LENB_MODE
-    def HDMA5F_MODE_GP  equ VDMA_LENF_MODE_GP
-    def HDMA5F_MODE_HBL equ VDMA_LENF_MODE_HBL
-    def HDMA5F_BUSY     equ VDMA_LENF_BUSY
+        def HDMA5F_MODE_GP  equ VDMA_LENF_MODE_GP
+        def HDMA5F_MODE_HBL equ VDMA_LENF_MODE_HBL
+        def HDMA5F_BUSY     equ VDMA_LENF_BUSY
 
 def rBCPS equ rBGPI
     def BCPSB_AUTOINC equ BGPIB_AUTOINC
@@ -974,18 +882,117 @@ def rOCPD equ rOBPD
 
 def rSVBK equ rSMBK
 
-; Deprecated constants. Please avoid using.
+; These values are deprecated; please avoid using them.
+
+def LCDCB_BG8000 equ LCDCB_BLKS
+    def LCDCF_BG8800 equ LCDCF_BLK21
+    def LCDCF_BG8000 equ LCDCF_BLK01
 
 def IEB_HILO equ IEB_JOYPAD
-def IEF_HILO equ 1 << IEB_JOYPAD
+    def IEF_HILO equ IEF_JOYPAD
+def IEF_LCDC equ IEF_STAT
 
-def IEF_LCDC   equ IEF_STAT ; LCDC (see STAT)
+
+;******************************************************************************
+; (deprecated) Memory regions
+;******************************************************************************
+
+; These values are deprecated; please use RGBASM and RGBLINK features instead.
+; Note that the value of `STARTOF(<section_type>)` is determined at link time.
+
+def _ROM     equ $0000 ; $0000-$3FFF / $0000-$7FFF (prefer `STARTOF(ROM0)`)
+def _ROMBANK equ $4000 ; $4000-$7FFF               (prefer `STARTOF(ROMX)`)
+def _VRAM    equ $8000 ; $8000-$9FFF               (prefer `STARTOF(VRAM)`)
+def _SRAM    equ $A000 ; $A000-$BFFF               (prefer `STARTOF(SRAM)`)
+def _RAM     equ $C000 ; $C000-$CFFF / $C000-$DFFF (prefer `STARTOF(WRAM0)`)
+def _RAMBANK equ $D000 ; $D000-$DFFF               (prefer `STARTOF(WRAMX)`)
+def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
+def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF        (prefer `ldh [c]` to `ld [_IO+c]`)
+def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
+
 def _VRAM8000  equ _VRAM
-def _VRAM8800  equ _VRAM+$800
-def _VRAM9000  equ _VRAM+$1000
-def CART_SRAM_2KB   equ 1 ; 1 incomplete bank
-def LCDCF_BG8800  equ %00000000 ; BG & Window Tile Data Select
-def LCDCF_BG8000  equ %00010000 ; BG & Window Tile Data Select
-def LCDCB_BG8000  equ 4 ; BG & Window Tile Data Select
+def _VRAM8800  equ _VRAM + $800
+def _VRAM9000  equ _VRAM + $1000
+
+
+;******************************************************************************
+; (deprecated) Cartridge header
+;******************************************************************************
+
+; These values are deprecated; please use RGBFIX instead.
+
+; -- Nintendo logo ($0104-$0133) ----------------------------------------------
+; Prefer `rgbfix -f/--fix-spec l` for the official logo, or `rgbfix -L <logo_file>` for a custom one
+MACRO NINTENDO_LOGO
+    db $CE,$ED,$66,$66,$CC,$0D,$00,$0B,$03,$73,$00,$83,$00,$0C,$00,$0D
+    db $00,$08,$11,$1F,$88,$89,$00,$0E,$DC,$CC,$6E,$E6,$DD,$DD,$D9,$99
+    db $BB,$BB,$67,$63,$6E,$0E,$EC,$CC,$DD,$DC,$99,$9F,$BB,$B9,$33,$3E
+ENDM
+
+; -- CGB compatibility code ($0143) -------------------------------------------
+def CART_COMPATIBLE_DMG     equ $00
+def CART_COMPATIBLE_DMG_GBC equ $80 ; prefer `rgbfix -c/--color-compatible`
+def CART_COMPATIBLE_GBC     equ $C0 ; prefer `rgbfix -C/--color-only`
+
+; -- SGB flag ($0146) ---------------------------------------------------------
+def CART_INDICATOR_GB  equ $00
+def CART_INDICATOR_SGB equ $03 ; prefer `rgblink -s/--sgb-compatible`
+
+; -- Cartridge type ($0147) ---------------------------------------------------
+; Prefer `rgblink -m/--mbc_type <mbc_type>`
+def CART_ROM                     equ $00
+def CART_ROM_MBC1                equ $01
+def CART_ROM_MBC1_RAM            equ $02
+def CART_ROM_MBC1_RAM_BAT        equ $03
+def CART_ROM_MBC2                equ $05
+def CART_ROM_MBC2_BAT            equ $06
+def CART_ROM_RAM                 equ $08
+def CART_ROM_RAM_BAT             equ $09
+def CART_ROM_MMM01               equ $0B
+def CART_ROM_MMM01_RAM           equ $0C
+def CART_ROM_MMM01_RAM_BAT       equ $0D
+def CART_ROM_MBC3_BAT_RTC        equ $0F
+def CART_ROM_MBC3_RAM_BAT_RTC    equ $10
+def CART_ROM_MBC3                equ $11
+def CART_ROM_MBC3_RAM            equ $12
+def CART_ROM_MBC3_RAM_BAT        equ $13
+def CART_ROM_MBC5                equ $19
+def CART_ROM_MBC5_RAM            equ $1A
+def CART_ROM_MBC5_RAM_BAT        equ $1B
+def CART_ROM_MBC5_RUMBLE         equ $1C
+def CART_ROM_MBC5_RAM_RUMBLE     equ $1D
+def CART_ROM_MBC5_RAM_BAT_RUMBLE equ $1E
+def CART_ROM_MBC7_RAM_BAT_GYRO   equ $22
+def CART_ROM_POCKET_CAMERA       equ $FC
+def CART_ROM_BANDAI_TAMA5        equ $FD
+def CART_ROM_HUDSON_HUC3         equ $FE
+def CART_ROM_HUDSON_HUC1         equ $FF
+
+; -- ROM size ($0148) ---------------------------------------------------------
+; Prefer `rgbfix -p/--pad_value <pad_value>`, which pads to the smallest valid size
+def CART_ROM_32KB   equ $00 ;   2 banks
+def CART_ROM_64KB   equ $01 ;   4 banks
+def CART_ROM_128KB  equ $02 ;   8 banks
+def CART_ROM_256KB  equ $03 ;  16 banks
+def CART_ROM_512KB  equ $04 ;  32 banks
+def CART_ROM_1024KB equ $05 ;  64 banks
+def CART_ROM_2048KB equ $06 ; 128 banks
+def CART_ROM_4096KB equ $07 ; 256 banks
+def CART_ROM_8192KB equ $08 ; 512 banks
+def CART_ROM_1152KB equ $52 ;  72 banks
+def CART_ROM_1280KB equ $53 ;  80 banks
+def CART_ROM_1536KB equ $54 ;  96 banks
+
+; -- SRAM size ($0149) --------------------------------------------------------
+; Prefer `rgbfix -r/--ram_size <ram_size>`
+def CART_SRAM_NONE  equ 0 ; none
+def CART_SRAM_2KB   equ 1 ;  1 incomplete bank (homebrew only)
+def CART_SRAM_8KB   equ 2 ;  1 bank
+def CART_SRAM_32KB  equ 3 ;  4 banks
+def CART_SRAM_128KB equ 4 ; 16 banks
+
+; -- Destination code ($014A) -------------------------------------------------
+def CART_DEST_JAPANESE     equ $00
+def CART_DEST_NON_JAPANESE equ $01 ; prefer `rgbfix -j/--non-japanese`
 
 endc ; HARDWARE_INC
