@@ -762,46 +762,34 @@ def _SCRN0 equ $9800 ; $9800-$9BFF
 def _SCRN1 equ $9C00 ; $9C00-$9FFF
 
 
-;***************************************************************************
-;*
-;* OAM related
-;*
-;***************************************************************************
+;******************************************************************************
+; OBJ-related constants
+;******************************************************************************
 
-; OAM attributes
-; each entry in OAM RAM is 4 bytes (sizeof_OAM_ATTRS)
-RSRESET
-def OAMA_Y              RB  1   ; y pos plus 16
-def OAMA_X              RB  1   ; x pos plus 8
-def OAMA_TILEID         RB  1   ; tile id
-def OAMA_FLAGS          RB  1   ; flags (see below)
-def sizeof_OAM_ATTRS    RB  0
+; OAM attribute field offsets
+def OAMA_Y      equ 0
+    def OAM_Y_OFS equ 16 ; subtract 16 from what's written to OAM to get the real Y position
+def OAMA_X      equ 1
+    def OAM_X_OFS equ  8 ; subtract 8 from what's written to OAM to get the real X position
+def OAMA_TILEID equ 2
+def OAMA_FLAGS  equ 3
+    def OAMB_PRI     equ 7 ; whether the OBJ is drawn above BG colors 1-3
+    def OAMB_YFLIP   equ 6 ; whether the whole OBJ is flipped vertically
+    def OAMB_XFLIP   equ 5 ; whether the whole OBJ is flipped horizontally
+    def OAMB_PAL1    equ 4 ; (DMG only) which of the two palettes the OBJ uses
+    def OAMB_BANK1   equ 3 ; (CGB only) which VRAM bank the OBJ takes its tile(s) from
+    def OAMF_PALMASK equ %00000_111 ; (CGB only) which palette the OBJ uses
+        def OAMF_PRI   equ 1 << OAMB_PRI
+        def OAMF_YFLIP equ 1 << OAMB_YFLIP
+        def OAMF_XFLIP equ 1 << OAMB_XFLIP
+        def OAMF_PAL0  equ 0 << OAMB_PAL1
+        def OAMF_PAL1  equ 1 << OAMB_PAL1
+        def OAMF_BANK0 equ 0 << OAMB_BANK1
+        def OAMF_BANK1 equ 1 << OAMB_BANK1
 
-def OAM_Y_OFS equ 16 ; add this to a screen-relative Y position to get an OAM Y position
-def OAM_X_OFS equ 8  ; add this to a screen-relative X position to get an OAM X position
-
-def OAM_COUNT           equ 40  ; number of OAM entries in OAM RAM
-
-; flags
-def OAMF_PRI        equ %10000000 ; Priority
-def OAMF_YFLIP      equ %01000000 ; Y flip
-def OAMF_XFLIP      equ %00100000 ; X flip
-def OAMF_PAL0       equ %00000000 ; Palette number; 0,1 (DMG)
-def OAMF_PAL1       equ %00010000 ; Palette number; 0,1 (DMG)
-def OAMF_BANK0      equ %00000000 ; Bank number; 0,1 (GBC)
-def OAMF_BANK1      equ %00001000 ; Bank number; 0,1 (GBC)
-
-def OAMF_PALMASK    equ %00000111 ; Palette (GBC)
-
-def OAMB_PRI        equ 7 ; Priority
-def OAMB_YFLIP      equ 6 ; Y flip
-def OAMB_XFLIP      equ 5 ; X flip
-def OAMB_PAL1       equ 4 ; Palette number; 0,1 (DMG)
-def OAMB_BANK1      equ 3 ; Bank number; 0,1 (GBC)
-
-; from gb-bootroms
-DEF OBJ_SIZE equ 4 ; Each OAM OBJ is 4 bytes
-DEF OAM_SIZE equ OAM_COUNT * OBJ_SIZE
+def OBJ_B     equ  4 ; size of OBJ in bytes
+def OAM_COUNT equ 40 ; how many OBJs there are room for in OAM
+def OAM_B     equ OBJ_B * OAM_COUNT
 
 
 ;******************************************************************************
@@ -898,16 +886,6 @@ def rOCPD equ rOBPD
 
 def rSVBK equ rWBK
 def rSMBK equ rWBK
-
-; These values are deprecated; please avoid using them.
-
-def LCDCB_BG8000 equ LCDCB_BLKS
-    def LCDCF_BG8800 equ LCDCF_BLK21
-    def LCDCF_BG8000 equ LCDCF_BLK01
-
-def IEB_HILO equ IEB_JOYPAD
-    def IEF_HILO equ IEF_JOYPAD
-def IEF_LCDC equ IEF_STAT
 
 
 ;******************************************************************************
@@ -1011,5 +989,22 @@ def CART_SRAM_128KB equ 4 ; 16 banks
 ; -- Destination code ($014A) -------------------------------------------------
 def CART_DEST_JAPANESE     equ $00
 def CART_DEST_NON_JAPANESE equ $01 ; prefer `rgbfix -j/--non-japanese`
+
+
+;******************************************************************************
+; Deprecated constants
+;******************************************************************************
+
+; These values are deprecated; please avoid using them.
+
+def LCDCB_BG8000 equ LCDCB_BLKS
+    def LCDCF_BG8800 equ LCDCF_BLK21
+    def LCDCF_BG8000 equ LCDCF_BLK01
+
+def IEB_HILO equ IEB_JOYPAD
+    def IEF_HILO equ IEF_JOYPAD
+def IEF_LCDC equ IEF_STAT
+
+def sizeof_OAM_ATTRS equ OBJ_B
 
 endc ; HARDWARE_INC
