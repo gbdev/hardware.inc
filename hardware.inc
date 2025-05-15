@@ -731,32 +731,35 @@ def RTCLATCH_START  equ $00
 def RTCLATCH_FINISH equ $01
 
 
-;***************************************************************************
-;*
-;* Screen related
-;*
-;***************************************************************************
+;******************************************************************************
+; Screen-related constants
+;******************************************************************************
 
-def _SCRN0   equ $9800 ; $9800-$9BFF
-def _SCRN1   equ $9C00 ; $9C00-$9FFF
+def SCRN_X   equ 160 ; width of screen in pixels
+def SCRN_Y   equ 144 ; height of screen in pixels
+def SCRN_X_B equ  20 ; width of screen in bytes
+def SCRN_Y_B equ  18 ; height of screen in bytes
 
-def SCRN_X    equ 160 ; Width of screen in pixels
-def SCRN_Y    equ 144 ; Height of screen in pixels. Also corresponds to the value in LY at the beginning of VBlank.
-def SCRN_X_B  equ 20  ; Width of screen in bytes
-def SCRN_Y_B  equ 18  ; Height of screen in bytes
+def SCRN_VX   equ 256 ; width of tilemap in pixels
+def SCRN_VY   equ 256 ; height of tilemap in pixels
+def SCRN_VX_B equ  32 ; width of tilemap in bytes
+def SCRN_VY_B equ  32 ; height of tilemap in bytes
 
-def SCRN_VX   equ 256 ; Virtual width of screen in pixels
-def SCRN_VY   equ 256 ; Virtual height of screen in pixels
-def SCRN_VX_B equ 32  ; Virtual width of screen in bytes
-def SCRN_VY_B equ 32  ; Virtual height of screen in bytes
+def TILE_X equ  8 ; width of tile in pixels
+def TILE_Y equ  8 ; height of tile in pixels
+def TILE_B equ 16 ; size of tile in bytes (2 bits/pixel)
 
-; from gb-bootroms
-DEF COLOR_MASK equ $1F ; Each color spans 5 bits
-DEF COLOR_MAX equ $1F
-DEF COLOR_SIZE equ 2 ; Colors are encoded as 2-byte little-endian BGR555
-DEF COLORS_PER_PALETTE equ 4
-DEF PALETTE_SIZE equ COLOR_SIZE * COLORS_PER_PALETTE
-DEF TILE_SIZE equ 16 ; Each tile is 16 bytes = 8x8 pixels * 2 bits/pixel
+def COLOR_B    equ 2 ; size of color in bytes (little-endian BGR555)
+    def COLORF_BLUE       equ %0_11111_00
+    def COLORF_GREEN_HIGH equ %000000_11
+    def COLORF_GREEN_LOW  equ %111_00000
+    def COLORF_RED        equ %000_11111
+def PAL_COLORS equ 4 ; colors per palette
+def PAL_B      equ COLOR_B * PAL_COLORS ; size of palette in bytes
+
+; Tilemaps the BG or Window can read from (controlled by LCDC)
+def _SCRN0 equ $9800 ; $9800-$9BFF
+def _SCRN1 equ $9C00 ; $9C00-$9FFF
 
 
 ;***************************************************************************
@@ -802,22 +805,6 @@ DEF OAM_SIZE equ OAM_COUNT * OBJ_SIZE
 
 
 ;******************************************************************************
-; CPU values on bootup
-;******************************************************************************
-
-; Register A = CPU type
-def BOOTUP_A_DMG equ $01 ; DMG (Dot Matrix Game, aka Game Boy)
-def BOOTUP_A_CGB equ $11 ; CGB (Color Game Boy, aka Game Boy Color)
-                         ; or AGB (Advance Game Boy, aka GBA, GBA SP, GB Player, or New GBA SP)
-def BOOTUP_A_MGB equ $FF ; MGB (Mini Game Boy, aka Game Boy Pocket)
-
-; Register B = CPU qualifier (if A is BOOTUP_A_CGB)
-def BOOTUP_B_AGBB equ 0
-    def BOOTUP_B_CGB equ 0 << BOOTUP_B_AGBB ; CPU is really CGB
-    def BOOTUP_B_AGB equ 1 << BOOTUP_B_AGBB ; CPU is actually AGB
-
-
-;******************************************************************************
 ; Interrupt vector addresses
 ;******************************************************************************
 
@@ -826,6 +813,23 @@ def INT_HANDLER_STAT   equ $0048 ; STAT   interrupt handler address
 def INT_HANDLER_TIMER  equ $0050 ; timer  interrupt handler address
 def INT_HANDLER_SERIAL equ $0058 ; serial interrupt handler address
 def INT_HANDLER_JOYPAD equ $0060 ; joypad interrupt handler address
+
+
+;******************************************************************************
+; Boot-up register values
+;******************************************************************************
+
+; Register A = CPU type
+def BOOTUP_A_DMG equ $01
+def BOOTUP_A_CGB equ $11 ; CGB or AGB
+def BOOTUP_A_MGB equ $FF
+    def BOOTUP_A_SGB  equ BOOTUP_A_DMG
+    def BOOTUP_A_SGB2 equ BOOTUP_A_MGB
+
+; Register B = CPU qualifier (if A is BOOTUP_A_CGB)
+def BOOTUP_B_AGBB equ 0
+    def BOOTUP_B_CGB equ 0 << BOOTUP_B_AGBB
+    def BOOTUP_B_AGB equ 1 << BOOTUP_B_AGBB
 
 
 ;******************************************************************************
