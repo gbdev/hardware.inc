@@ -408,6 +408,8 @@ def rAUD3WAVE_D equ $FF3D
 def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
 
+def AUD3WAVE_SIZE equ 16
+
 ; -- LCDC ($FF40) -------------------------------------------------------------
 ; PPU graphics control
 def rLCDC equ $FF40
@@ -634,11 +636,11 @@ def OPRIB_PRI equ 0 ; which drawing priority is used for OBJs [r/w]
 
 ; -- $FF6D-$FF6F are unused ---------------------------------------------------
 
-; -- SMBK / SVBK ($FF70) ------------------------------------------------------
+; -- WBK / SVBK / SMBK ($FF70) ------------------------------------------------
 ; (CGB only) WRAM bank number
-def rSMBK equ $FF70
+def rWBK equ $FF70
 
-def SVMKF_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
+def WBKF_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 
 ; -- $FF71-$FF75 are unused ---------------------------------------------------
 
@@ -777,6 +779,14 @@ def SCRN_VY   equ 256 ; Virtual height of screen in pixels
 def SCRN_VX_B equ 32  ; Virtual width of screen in bytes
 def SCRN_VY_B equ 32  ; Virtual height of screen in bytes
 
+; from gb-bootroms
+DEF COLOR_MASK equ $1F ; Each color spans 5 bits
+DEF COLOR_MAX equ $1F
+DEF COLOR_SIZE equ 2 ; Colors are encoded as 2-byte little-endian BGR555
+DEF COLORS_PER_PALETTE equ 4
+DEF PALETTE_SIZE equ COLOR_SIZE * COLORS_PER_PALETTE
+DEF TILE_SIZE equ 16 ; Each tile is 16 bytes = 8x8 pixels * 2 bits/pixel
+
 
 ;***************************************************************************
 ;*
@@ -814,6 +824,10 @@ def OAMB_YFLIP      equ 6 ; Y flip
 def OAMB_XFLIP      equ 5 ; X flip
 def OAMB_PAL1       equ 4 ; Palette number; 0,1 (DMG)
 def OAMB_BANK1      equ 3 ; Bank number; 0,1 (GBC)
+
+; from gb-bootroms
+DEF OBJ_SIZE equ 4 ; Each OAM OBJ is 4 bytes
+DEF OAM_SIZE equ OAM_COUNT * OBJ_SIZE
 
 
 ;******************************************************************************
@@ -880,7 +894,8 @@ def rOCPS equ rOBPI
     def OCPSF_AUTOINC equ OBPIF_AUTOINC
 def rOCPD equ rOBPD
 
-def rSVBK equ rSMBK
+def rSVBK equ rWBK
+def rSMBK equ rWBK
 
 ; These values are deprecated; please avoid using them.
 
