@@ -675,6 +675,61 @@ def IEB_VBLANK equ 0 ; 1 = VBlank interrupt is enabled [r/w]
 
 
 ;******************************************************************************
+; Cartridge registers (MBC)
+;******************************************************************************
+
+; Note that these "registers" are each actually accessible at an entire address range;
+; however, one address for each of these ranges is considered the "canonical" one, and
+; these addresses are what's provided here.
+
+; -- RAMG ($0000-$1FFF) -------------------------------------------------------
+; Whether SRAM can be accessed [wo]
+def rRAMG equ $0000
+
+; Common values
+def CART_SRAM_DISABLE equ $00
+def CART_SRAM_ENABLE  equ $0A ; some MBCs accept any value whose low nybble is $A
+
+; -- ROMB0 ($2000-$3FFF) ------------------------------------------------------
+; ROM bank number (low 8 bits when applicable) [wo]
+def rROMB0 equ $2000
+
+; -- ROMB1 ($3000-$3FFF) ------------------------------------------------------
+; (MBC5 only) ROM bank number high bit (bit 8) [wo]
+def rROMB1 equ $3000
+
+; -- RAMB ($4000-$5FFF) -------------------------------------------------------
+    ; SRAM bank number [wo]
+def rRAMB equ $4000
+
+; (MBC3-only) Special RAM bank numbers that actually map the RTC registers
+def RTC_S  equ $08 ; seconds counter (0-59)
+def RTC_M  equ $09 ; minutes counter (0-59)
+def RTC_H  equ $0A ; hours counter (0-23)
+def RTC_DL equ $0B ; days counter, low byte (0-255)
+def RTC_DH equ $0C ; days counter, high bit and other flags
+    def RTC_DHB_CARRY equ 7 ; 1 = days counter overflowed    [wo]
+    def RTC_DHB_HALT  equ 6 ; 0 = run timer, 1 = stop timer  [wo]
+    def RTC_DHB_HIGH  equ 0 ; days counter, high bit (bit 8) [wo]
+        def RTC_DHF_CARRY equ 1 << RTC_DHB_CARRY
+        def RTC_DHF_HALT  equ 1 << RTC_DHB_HALT
+        def RTC_DHF_HIGH  equ 1 << RTC_DHB_HIGH
+
+def CARTB_RUMBLE_ON equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
+    def CARTF_RUMBLE_ON equ 1 << CARTB_RUMBLE_ON
+        def CART_RUMBLE_OFF equ 0 << CARTB_RUMBLE_ON
+        def CART_RUMBLE_ON  equ 1 << CARTB_RUMBLE_ON
+
+; -- RTCLATCH ($6000-$7FFF) ---------------------------------------------------
+; (MBC3 only) RTC latch clock data [wo]
+def rRTCLATCH equ $6000
+
+; Write $00 then $01 to latch the current time into the RTC registers
+def RTCLATCH_START  equ $00
+def RTCLATCH_FINISH equ $01
+
+
+;******************************************************************************
 ; Memory regions
 ;******************************************************************************
 
@@ -688,55 +743,6 @@ def _RAMBANK equ $D000 ; $D000-$DFFF               (prefer `STARTOF(WRAMX)`)
 def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
 def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF
 def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
-
-
-;******************************************************************************
-; Cartridge registers (MBC)
-;******************************************************************************
-
-; -- RAMG ($0000-$1FFF) -------------------------------------------------------
-; RAM enable [w]
-def rRAMG equ $0000
-
-; Common values
-def CART_SRAM_ENABLE  equ $0A
-def CART_SRAM_DISABLE equ $00
-
-; MBC3-specific values
-def RTC_S  equ $08 ; seconds counter (0-59)
-def RTC_M  equ $09 ; minutes counter (0-59)
-def RTC_H  equ $0A ; hours counter (0-23)
-def RTC_DL equ $0B ; days counter, low byte (0-255)
-def RTC_DH equ $0C ; days counter, high bit and other flags
-    def RTC_DHB_OVERFLOW equ 7 ; 1 = days counter overflowed    [w]
-    def RTC_DHB_HALT     equ 6 ; 0 = run timer, 1 = stop timer  [w]
-    def RTC_DHB_HIGH     equ 0 ; days counter, high bit (bit 8) [w]
-        def RTC_DHF_OVERFLOW equ 1 << RTC_DHB_OVERFLOW
-        def RTC_DHF_HALT     equ 1 << RTC_DHB_HALT
-        def RTC_DHF_HIGH     equ 1 << RTC_DHB_HIGH
-
-; -- ROMB0 ($2000-$3FFF) ------------------------------------------------------
-; ROM bank number [w]
-def rROMB0 equ $2000
-
-; -- ROMB1 ($3000-$3FFF) ------------------------------------------------------
-; (MBC5 only) ROM bank number bit 8 [w]
-def rROMB1 equ $3000
-
-; -- RAMB ($4000-$5FFF) -------------------------------------------------------
-; RAM bank number [w]
-def rRAMB equ $4000
-
-def CARTB_RUMBLE_ON equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
-    def CART_RUMBLE_ON equ 1 << CARTB_RUMBLE_ON
-
-; -- RTCLATCH ($6000-$7FFF) ---------------------------------------------------
-; (MBC3 only) RTC latch clock data [w]
-def rRTCLATCH equ $6000
-
-; Write $00 then $01 to latch the current time into the RTC registers
-def RTCLATCH_START  equ $00
-def RTCLATCH_FINISH equ $01
 
 
 ;***************************************************************************
