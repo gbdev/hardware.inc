@@ -221,7 +221,7 @@ def AUDENVF_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD1LOW / NR13 ($FF13) ---------------------------------------------------
-; Audio channel 1 period (low 8 bits) [rw]
+; Audio channel 1 period (low 8 bits) [r/w]
 def rAUD1LOW equ $FF13
 
 ; -- AUD1HIGH / NR14 ($FF14) --------------------------------------------------
@@ -231,12 +231,12 @@ def rAUD1HIGH equ $FF14
 ; Values are also applicable to AUD2HIGH and AUD3HIGH
 
 def AUDHIGHB_RESTART    equ 7 ; 1 = restart the channel [wo]
-def AUDHIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [rw]
+def AUDHIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
     def AUDHIGH_RESTART    equ 1 << AUDHIGHB_RESTART
     def AUDHIGH_LENGTH_OFF equ 0 << AUDHIGHB_LEN_ENABLE
     def AUDHIGH_LENGTH_ON  equ 1 << AUDHIGHB_LEN_ENABLE
 
-def AUDHIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [rw]
+def AUDHIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
 
 ; -- $FF15 is unused ----------------------------------------------------------
 
@@ -253,7 +253,7 @@ def rAUD2ENV equ $FF17
 ; Values are reused from AUD1ENV
 
 ; -- AUD2LOW / NR23 ($FF18) ---------------------------------------------------
-; Audio channel 2 period (low 8 bits) [rw]
+; Audio channel 2 period (low 8 bits) [r/w]
 def rAUD2LOW equ $FF18
 
 ; -- AUD2HIGH / NR24 ($FF19) --------------------------------------------------
@@ -266,7 +266,7 @@ def rAUD2HIGH equ $FF19
 ; Audio channel 3 enable
 def rAUD3ENA equ $FF1A
 
-def AUD3ENAB_ENABLE equ 7 ; 1 = channel is active [rw]
+def AUD3ENAB_ENABLE equ 7 ; 1 = channel is active [r/w]
     def AUD3ENA_OFF equ 0 << AUD3ENAB_ENABLE
     def AUD3ENA_ON  equ 1 << AUD3ENAB_ENABLE
 
@@ -278,14 +278,14 @@ def rAUD3LEN equ $FF1B
 ; Audio channel 3 volume
 def rAUD3LEVEL equ $FF1C
 
-def AUD3LEVELF_VOLUME equ %0_11_00000 ; volume level [rw]
+def AUD3LEVELF_VOLUME equ %0_11_00000 ; volume level [r/w]
     def AUD3LEVEL_MUTE equ %0_00_00000 ; 0% (muted)
     def AUD3LEVEL_100  equ %0_01_00000 ; 100%
     def AUD3LEVEL_50   equ %0_10_00000 ; 50%
     def AUD3LEVEL_25   equ %0_11_00000 ; 25%
 
 ; -- AUD3LOW / NR33 ($FF1D) ---------------------------------------------------
-; Audio channel 3 period (low 8 bits) [rw]
+; Audio channel 3 period (low 8 bits) [r/w]
 def rAUD3LOW equ $FF1D
 
 ; -- AUD3HIGH / NR34 ($FF1E) --------------------------------------------------
@@ -312,20 +312,20 @@ def rAUD4ENV equ $FF21
 ; Audio channel 4 period and randomness
 def rAUD4POLY equ $FF22
 
-def AUD4POLYF_SHIFT equ %1111_0000 ; coarse control of the channel's period [rw]
+def AUD4POLYF_SHIFT equ %1111_0000 ; coarse control of the channel's period [r/w]
 
-def AUD4POLYB_WIDTH equ 3 ; controls the noise generator (LFSR)'s step width [rw]
+def AUD4POLYB_WIDTH equ 3 ; controls the noise generator (LFSR)'s step width [r/w]
     def AUD4POLY_15STEP equ 0 << AUD4POLYB_WIDTH
     def AUD4POLY_7STEP  equ 1 << AUD4POLYB_WIDTH
 
-def AUD4POLYF_DIV equ %00000_111 ; fine control of the channel's period [rw]
+def AUD4POLYF_DIV equ %00000_111 ; fine control of the channel's period [r/w]
 
 ; -- AUD4GO / NR44 ($FF23) ----------------------------------------------------
 ; Audio channel 4 control
 def rAUD4GO equ $FF23
 
 def AUD4GOB_RESTART    equ 7 ; 1 = restart the channel [wo]
-def AUD4GOB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [rw]
+def AUD4GOB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
     def AUD4GO_RESTART    equ 1 << AUD4GOB_RESTART
     def AUD4GO_LENGTH_OFF equ 0 << AUD4GOB_LEN_ENABLE
     def AUD4GO_LENGTH_ON  equ 1 << AUD4GOB_LEN_ENABLE
@@ -334,28 +334,28 @@ def AUD4GOB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expi
 ; Audio master volume and VIN mixer
 def rAUDVOL equ $FF24
 
-def AUDVOLB_VIN_LEFT  equ 7 ; 1 = output VIN to left ear (SO2, speaker 2) [rw]
+def AUDVOLB_VIN_LEFT  equ 7 ; 1 = output VIN to left ear (SO2, speaker 2) [r/w]
     def AUDVOL_VIN_LEFT equ 1 << AUDVOLB_VIN_LEFT
 
-def AUDVOLF_LEFT equ %0_111_0000 ; 0 = barely audible, 7 = full volume [rw]
+def AUDVOLF_LEFT equ %0_111_0000 ; 0 = barely audible, 7 = full volume [r/w]
 
-def AUDVOLB_VIN_RIGHT equ 3 ; 1 = output VIN to right ear (SO1, speaker 1) [rw]
+def AUDVOLB_VIN_RIGHT equ 3 ; 1 = output VIN to right ear (SO1, speaker 1) [r/w]
     def AUDVOL_VIN_RIGHT equ 1 << AUDVOLB_VIN_RIGHT
 
-def AUDVOLF_RIGHT equ %00000_111 ; 0 = barely audible, 7 = full volume [rw]
+def AUDVOLF_RIGHT equ %00000_111 ; 0 = barely audible, 7 = full volume [r/w]
 
 ; -- AUDTERM / NR51 ($FF25) ---------------------------------------------------
 ; Audio channel mixer
 def rAUDTERM equ $FF25
 
-def AUDTERMB_4_LEFT  equ 7 ; 1 = output channel 4 to left  ear [rw]
-def AUDTERMB_3_LEFT  equ 6 ; 1 = output channel 3 to left  ear [rw]
-def AUDTERMB_2_LEFT  equ 5 ; 1 = output channel 2 to left  ear [rw]
-def AUDTERMB_1_LEFT  equ 4 ; 1 = output channel 1 to left  ear [rw]
-def AUDTERMB_4_RIGHT equ 3 ; 1 = output channel 4 to right ear [rw]
-def AUDTERMB_3_RIGHT equ 2 ; 1 = output channel 3 to right ear [rw]
-def AUDTERMB_2_RIGHT equ 1 ; 1 = output channel 2 to right ear [rw]
-def AUDTERMB_1_RIGHT equ 0 ; 1 = output channel 1 to right ear [rw]
+def AUDTERMB_4_LEFT  equ 7 ; 1 = output channel 4 to left  ear [r/w]
+def AUDTERMB_3_LEFT  equ 6 ; 1 = output channel 3 to left  ear [r/w]
+def AUDTERMB_2_LEFT  equ 5 ; 1 = output channel 2 to left  ear [r/w]
+def AUDTERMB_1_LEFT  equ 4 ; 1 = output channel 1 to left  ear [r/w]
+def AUDTERMB_4_RIGHT equ 3 ; 1 = output channel 4 to right ear [r/w]
+def AUDTERMB_3_RIGHT equ 2 ; 1 = output channel 3 to right ear [r/w]
+def AUDTERMB_2_RIGHT equ 1 ; 1 = output channel 2 to right ear [r/w]
+def AUDTERMB_1_RIGHT equ 0 ; 1 = output channel 1 to right ear [r/w]
     def AUDTERM_4_LEFT  equ 1 << AUDTERMB_4_LEFT
     def AUDTERM_3_LEFT  equ 1 << AUDTERMB_3_LEFT
     def AUDTERM_2_LEFT  equ 1 << AUDTERMB_2_LEFT
