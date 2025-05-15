@@ -733,35 +733,6 @@ def RTCLATCH_FINISH equ $01
 
 ;***************************************************************************
 ;*
-;* CPU values on bootup (a=type, b=qualifier)
-;*
-;***************************************************************************
-
-def BOOTUP_A_DMG    equ $01 ; Dot Matrix Game
-def BOOTUP_A_CGB    equ $11 ; Color Game Boy
-def BOOTUP_A_MGB    equ $FF ; Mini Game Boy (Pocket Game Boy)
-
-; if a=BOOTUP_A_CGB, bit 0 in b can be checked to determine if real CGB or
-; other system running in GBC mode
-def BOOTUP_B_CGB    equ %00000000
-def BOOTUP_B_AGB    equ %00000001   ; GBA, GBA SP, Game Boy Player, or New GBA SP
-
-
-;***************************************************************************
-;*
-;* Interrupt vector addresses
-;*
-;***************************************************************************
-
-def INT_HANDLER_VBLANK equ $0040
-def INT_HANDLER_STAT   equ $0048
-def INT_HANDLER_TIMER  equ $0050
-def INT_HANDLER_SERIAL equ $0058
-def INT_HANDLER_JOYPAD equ $0060
-
-
-;***************************************************************************
-;*
 ;* Screen related
 ;*
 ;***************************************************************************
@@ -828,6 +799,33 @@ def OAMB_BANK1      equ 3 ; Bank number; 0,1 (GBC)
 ; from gb-bootroms
 DEF OBJ_SIZE equ 4 ; Each OAM OBJ is 4 bytes
 DEF OAM_SIZE equ OAM_COUNT * OBJ_SIZE
+
+
+;******************************************************************************
+; CPU values on bootup
+;******************************************************************************
+
+; Register A = CPU type
+def BOOTUP_A_DMG equ $01 ; DMG (Dot Matrix Game, aka Game Boy)
+def BOOTUP_A_CGB equ $11 ; CGB (Color Game Boy, aka Game Boy Color)
+                         ; or AGB (Advance Game Boy, aka GBA, GBA SP, GB Player, or New GBA SP)
+def BOOTUP_A_MGB equ $FF ; MGB (Mini Game Boy, aka Game Boy Pocket)
+
+; Register B = CPU qualifier (if A is BOOTUP_A_CGB)
+def BOOTUP_B_AGBB equ 0
+    def BOOTUP_B_CGB equ 0 << BOOTUP_B_AGBB ; CPU is really CGB
+    def BOOTUP_B_AGB equ 1 << BOOTUP_B_AGBB ; CPU is actually AGB
+
+
+;******************************************************************************
+; Interrupt vector addresses
+;******************************************************************************
+
+def INT_HANDLER_VBLANK equ $0040 ; VBlank interrupt handler address
+def INT_HANDLER_STAT   equ $0048 ; STAT   interrupt handler address
+def INT_HANDLER_TIMER  equ $0050 ; timer  interrupt handler address
+def INT_HANDLER_SERIAL equ $0058 ; serial interrupt handler address
+def INT_HANDLER_JOYPAD equ $0060 ; joypad interrupt handler address
 
 
 ;******************************************************************************
@@ -925,9 +923,9 @@ def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
 def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF        (prefer `ldh [c]` to `ld [_IO+c]`)
 def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
 
-def _VRAM8000  equ _VRAM
-def _VRAM8800  equ _VRAM + $800
-def _VRAM9000  equ _VRAM + $1000
+def _VRAM8000 equ _VRAM
+def _VRAM8800 equ _VRAM + $800
+def _VRAM9000 equ _VRAM + $1000
 
 
 ;******************************************************************************
