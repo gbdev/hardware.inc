@@ -75,7 +75,7 @@
   - Added repository link and CC0 waiver notice
 - **Rev 4.9.2** - 2024-08-18 *(DevEd)*
   - Corrected `CART_ROM_MBC5_BAT` to `CART_ROM_MBC5_RAM`
-- **Rev 4.10.0** - 2025-05-13 *(Rangi42)*
-  - Added more constants
-  - Changed formatting
+- **Rev 4.10.0** - 2025-05-16 *(Rangi42)*
+  - Added many more constants
+  - Changed formatting and reorganized sections
   - Moved revision history to separate HISTORY.md file
