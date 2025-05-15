@@ -595,113 +595,83 @@ def RPB_LED_ON equ 0 ; 1 = IR light is being sent     [r/w]
         def RPF_WRITE_LO equ 0 << RPB_LED_ON
         def RPF_WRITE_HI equ 1 << RPB_LED_ON
 
+; -- $FF57-$FF67 are unused ---------------------------------------------------
 
+; -- BGPI / BCPS ($FF68) ------------------------------------------------------
+; (CGB only) Background palette I/O index
+def rBGPI equ $FF68
 
+def BGPIB_AUTOINC equ 7 ; whether the index field is incremented after each write to BCPD [r/w]
+    def BGPIF_AUTOINC equ 1 << BGPIB_AUTOINC
 
-; --
-; -- BCPS/BGPI ($FF68)
-; -- Background Color Palette Specification (aka Background Palette Index) (R/W)
-; --
-def rBCPS equ $FF68
-def rBGPI equ rBCPS
+def BGPIF_INDEX equ %00_111111 ; the index within Palette RAM accessed via BCPD [r/w]
 
-def BCPSF_AUTOINC equ %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
-def BCPSB_AUTOINC equ 7
-def BGPIF_AUTOINC equ BCPSF_AUTOINC
-def BGPIB_AUTOINC equ BCPSB_AUTOINC
+; -- BGPD / BCPD ($FF69) ------------------------------------------------------
+; (CGB only) Background palette I/O access [r/w]
+def rBGPD equ $FF69
 
+; -- OBPI / OCPS ($FF6A) ------------------------------------------------------
+; (CGB only) OBJ palette I/O index
+def rOBPI equ $FF6A
 
-; --
-; -- BCPD/BGPD ($FF69)
-; -- Background Color Palette Data (aka Background Palette Data) (R/W)
-; --
-def rBCPD equ $FF69
-def rBGPD equ rBCPD
+def OBPIB_AUTOINC equ 7 ; whether the index field is incremented after each write to OBPD [r/w]
+    def OBPIF_AUTOINC equ 1 << OBPIB_AUTOINC
 
+def OBPIF_INDEX equ %00_111111 ; the index within Palette RAM accessed via OBPD [r/w]
 
-; --
-; -- OCPS/OBPI ($FF6A)
-; -- Object Color Palette Specification (aka Object Background Palette Index) (R/W)
-; --
-def rOCPS equ $FF6A
-def rOBPI equ rOCPS
+; -- OBPD / OCPD ($FF6B) ------------------------------------------------------
+; (CGB only) OBJ palette I/O access [r/w]
+def rOBPD equ $FF6B
 
-def OCPSF_AUTOINC equ %10000000 ; Auto Increment (0=Disabled, 1=Increment after Writing)
-def OCPSB_AUTOINC equ 7
-def OBPIF_AUTOINC equ OCPSF_AUTOINC
-def OBPIB_AUTOINC equ OCPSB_AUTOINC
-
-
-; --
-; -- OCPD/OBPD ($FF6B)
-; -- Object Color Palette Data (aka Object Background Palette Data) (R/W)
-; --
-def rOCPD equ $FF6B
-def rOBPD equ rOCPD
-
-
-; --
-; -- OPRI ($FF6C)
-; -- Object Priority Mode (R/W)
-; -- CGB Only
-
-; --
-; -- Priority can be changed only from the boot ROM
-; --
+; -- OPRI ($FF6C) -------------------------------------------------------------
+; (CGB boot ROM only) OBJ draw priority mode
 def rOPRI equ $FF6C
 
-def OPRI_OAM   equ 0 ; Prioritize objects by location in OAM (CGB Mode default)
-def OPRI_COORD equ 1 ; Prioritize objects by x-coordinate (Non-CGB Mode default)
+def OPRIB_PRI equ 0 ; which drawing priority is used for OBJs [r/w]
+    def OPRIF_PRI equ 1 << OPRIB_PRI
+        def OPRI_OAM   equ 0 << OPRIB_PRI ; CGB mode default: earliest OBJ in OAM wins
+        def OPRI_COORD equ 1 << OPRIB_PRI ; DMG mode default: leftmost OBJ wins
 
+; -- $FF6D-$FF6F are unused ---------------------------------------------------
 
+; -- SMBK / SVBK ($FF70) ------------------------------------------------------
+; (CGB only) WRAM bank number
+def rSMBK equ $FF70
 
-; --
-; -- SMBK/SVBK ($FF70)
-; -- Select Main RAM Bank (R/W)
-; --
-; -- Bit 2-0 - Bank Specification (0,1: Specify Bank 1; 2-7: Specify Banks 2-7)
-; --
-def rSVBK equ $FF70
-def rSMBK equ rSVBK
+def SVMKF_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 
+; -- $FF71-$FF75 are unused ---------------------------------------------------
 
-; --
-; -- PCM12 ($FF76)
-; -- Sound channel 1&2 PCM amplitude (R)
-; --
-; -- Bit 7-4 - Copy of sound channel 2's PCM amplitude
-; -- Bit 3-0 - Copy of sound channel 1's PCM amplitude
-; --
+; -- PCM12 ($FF76) ------------------------------------------------------------
+; Audio channels 1 and 2 output
 def rPCM12 equ $FF76
 
+def PCM12F_CH2 equ %1111_0000 ; audio channel 2 output [ro]
+def PCM12F_CH1 equ %0000_1111 ; audio channel 1 output [ro]
 
-; --
-; -- PCM34 ($FF77)
-; -- Sound channel 3&4 PCM amplitude (R)
-; --
-; -- Bit 7-4 - Copy of sound channel 4's PCM amplitude
-; -- Bit 3-0 - Copy of sound channel 3's PCM amplitude
-; --
+; -- PCM34 ($FF77) ------------------------------------------------------------
+; Audio channels 3 and 4 output
 def rPCM34 equ $FF77
 
+def PCM34F_CH4 equ %1111_0000 ; audio channel 4 output [ro]
+def PCM34F_CH3 equ %0000_1111 ; audio channel 3 output [ro]
 
-; --
-; -- IE ($FFFF)
-; -- Interrupt Enable (R/W)
-; --
+; -- $FF78-$FF7F are unused ---------------------------------------------------
+
+; -- IE ($FFFF) ---------------------------------------------------------------
+; Interrupt enable
 def rIE equ $FFFF
 
-def IEF_JOYPAD equ %00010000 ; Transition from High to Low of Pin number P10-P13
-def IEF_SERIAL equ %00001000 ; Serial I/O transfer end
-def IEF_TIMER  equ %00000100 ; Timer Overflow
-def IEF_STAT   equ %00000010 ; STAT
-def IEF_VBLANK equ %00000001 ; V-Blank
-
-def IEB_JOYPAD equ 4
-def IEB_SERIAL equ 3
-def IEB_TIMER  equ 2
-def IEB_STAT   equ 1
-def IEB_VBLANK equ 0
+def IEB_JOYPAD equ 4 ; 1 = joypad interrupt is enabled [r/w]
+def IEB_SERIAL equ 3 ; 1 = serial interrupt is enabled [r/w]
+def IEB_TIMER  equ 2 ; 1 = timer  interrupt is enabled [r/w]
+def IEB_STAT   equ 1 ; 1 = STAT   interrupt is enabled [r/w]
+def IEB_VBLANK equ 0 ; 1 = VBlank interrupt is enabled [r/w]
+    def IEF_JOYPAD equ 1 << IFB_JOYPAD
+    def IEF_SERIAL equ 1 << IFB_SERIAL
+    def IEF_TIMER  equ 1 << IFB_TIMER
+    def IEF_STAT   equ 1 << IFB_STAT
+    def IEF_VBLANK equ 1 << IFB_VBLANK
 
 
 ;******************************************************************************
@@ -940,6 +910,16 @@ def OAMB_BANK1      equ 3 ; Bank number; 0,1 (GBC)
 ; Aliases
 
 def rP1   equ rJOYP
+    def P1F_5 equ JOYP_GET_DPAD
+    def P1F_4 equ JOYP_GET_BTN
+    def P1F_3 equ JOYPF_DOWN
+    def P1F_2 equ JOYPF_UP
+    def P1F_1 equ JOYPF_LEFT
+    def P1F_0 equ JOYPF_RIGHT
+    def P1F_GET_DPAD equ JOYP_GET_DPAD
+    def P1F_GET_BTN  equ JOYP_GET_BTN
+    def P1F_GET_NONE equ JOYP_GET_NONE
+
 def rNR10 equ rAUD1SWEEP
 def rNR11 equ rAUD1LEN
 def rNR12 equ rAUD1ENV
@@ -961,12 +941,32 @@ def rNR44 equ rAUD4GO
 def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
+
 def rKEY1 equ rSPD
+    def KEY1F_DBLSPEED equ SPDF_DBLSPEED
+    def KEY1F_PREPARE  equ SPDF_PREPARE
+
 def rHDMA1 equ rVDMA_SRC_HIGH
 def rHDMA2 equ rVDMA_SRC_LOW
 def rHDMA3 equ rVDMA_DEST_HIGH
 def rHDMA4 equ rVDMA_DEST_LOW
 def rHDMA5 equ rVDMA_LEN
+    def HDMA5B_MODE     equ VDMA_LENB_MODE
+    def HDMA5F_MODE_GP  equ VDMA_LENF_MODE_GP
+    def HDMA5F_MODE_HBL equ VDMA_LENF_MODE_HBL
+    def HDMA5F_BUSY     equ VDMA_LENF_BUSY
+
+def rBCPS equ rBGPI
+    def BCPSB_AUTOINC equ BGPIB_AUTOINC
+    def BCPSF_AUTOINC equ BGPIF_AUTOINC
+def rBCPD equ rBGPD
+
+def rOCPS equ rOBPI
+    def OCPSB_AUTOINC equ OBPIB_AUTOINC
+    def OCPSF_AUTOINC equ OBPIF_AUTOINC
+def rOCPD equ rOBPD
+
+def rSVBK equ rSMBK
 
 ; Deprecated constants. Please avoid using.
 
@@ -981,24 +981,5 @@ def CART_SRAM_2KB   equ 1 ; 1 incomplete bank
 def LCDCF_BG8800  equ %00000000 ; BG & Window Tile Data Select
 def LCDCF_BG8000  equ %00010000 ; BG & Window Tile Data Select
 def LCDCB_BG8000  equ 4 ; BG & Window Tile Data Select
-
-def P1F_5 equ JOYP_GET_DPAD
-def P1F_4 equ JOYP_GET_BTN
-def P1F_3 equ JOYPF_DOWN
-def P1F_2 equ JOYPF_UP
-def P1F_1 equ JOYPF_LEFT
-def P1F_0 equ JOYPF_RIGHT
-
-def P1F_GET_DPAD equ JOYP_GET_DPAD
-def P1F_GET_BTN  equ JOYP_GET_BTN
-def P1F_GET_NONE equ JOYP_GET_NONE
-
-def KEY1F_DBLSPEED equ 1 << SPDB_DBLSPEED
-def KEY1F_PREPARE  equ 1 << SPDB_PREPARE
-
-def HDMA5B_MODE     equ VDMA_LENB_MODE
-def HDMA5F_MODE_GP  equ VDMA_LENF_MODE_GP
-def HDMA5F_MODE_HBL equ VDMA_LENF_MODE_HBL
-def HDMA5F_BUSY     equ VDMA_LENF_BUSY
 
 endc ; HARDWARE_INC
