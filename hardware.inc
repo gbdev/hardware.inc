@@ -733,7 +733,7 @@ def RTCLATCH_START  equ $00
 def RTCLATCH_FINISH equ $01
 
 ; -- RTCREG ($A000-$BFFF) ---------------------------------------------------
-; (MBC3 only) RTC register [wo]
+; (MBC3 only) RTC register [r/w]
 def rRTCREG equ $A000
 
 
