@@ -706,7 +706,7 @@ def rROMB1 equ $3000
     ; SRAM bank number [wo]
 def rRAMB equ $4000
 
-; (MBC3-only) Special RAM bank numbers that actually map the RTC registers
+; (MBC3-only) Special RAM bank numbers that actually map values into RTCREG
 def RTC_S  equ $08 ; seconds counter (0-59)
 def RTC_M  equ $09 ; minutes counter (0-59)
 def RTC_H  equ $0A ; hours counter (0-23)
@@ -728,9 +728,13 @@ def CARTB_RUMBLE_ON equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any
 ; (MBC3 only) RTC latch clock data [wo]
 def rRTCLATCH equ $6000
 
-; Write $00 then $01 to latch the current time into the RTC registers
+; Write $00 then $01 to latch the current time into RTCREG
 def RTCLATCH_START  equ $00
 def RTCLATCH_FINISH equ $01
+
+; -- RTCREG ($A000-$BFFF) ---------------------------------------------------
+; (MBC3 only) RTC register [wo]
+def rRTCREG equ $A000
 
 
 ;******************************************************************************
