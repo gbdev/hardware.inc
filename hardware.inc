@@ -184,7 +184,7 @@ def AUD1SWEEPF_TIME equ %0_111_0000 ; how long between sweep iterations
                                     ; (in 128 Hz ticks, ~7.8 ms apart) [r/w]
 
 def AUD1SWEEPB_DIR equ 3 ; sweep direction [r/w]
-    def AUD1SWEEPF_DIR  equ 1 << AUD1SWEEPB_DIR
+    def AUD1SWEEPF_DIR equ 1 << AUD1SWEEPB_DIR
         def AUD1SWEEP_UP   equ 0 << AUD1SWEEPB_DIR
         def AUD1SWEEP_DOWN equ 1 << AUD1SWEEPB_DIR
 
