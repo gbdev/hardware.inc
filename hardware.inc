@@ -932,12 +932,12 @@ MACRO NINTENDO_LOGO
 ENDM
 
 ; -- CGB compatibility code ($0143) -------------------------------------------
-def CART_COMPATIBLE_DMG     equ $00
+def CART_COMPATIBLE_DMG     equ $00 ; default value if header is zero-filled
 def CART_COMPATIBLE_DMG_GBC equ $80 ; prefer `rgbfix -c/--color-compatible`
 def CART_COMPATIBLE_GBC     equ $C0 ; prefer `rgbfix -C/--color-only`
 
 ; -- SGB flag ($0146) ---------------------------------------------------------
-def CART_INDICATOR_GB  equ $00
+def CART_INDICATOR_GB  equ $00 ; default value if header is zero-filled
 def CART_INDICATOR_SGB equ $03 ; prefer `rgblink -s/--sgb-compatible`
 
 ; -- Cartridge type ($0147) ---------------------------------------------------
@@ -994,7 +994,7 @@ def CART_SRAM_32KB  equ 3 ;  4 banks
 def CART_SRAM_128KB equ 4 ; 16 banks
 
 ; -- Destination code ($014A) -------------------------------------------------
-def CART_DEST_JAPANESE     equ $00
+def CART_DEST_JAPANESE     equ $00 ; default value if header is zero-filled
 def CART_DEST_NON_JAPANESE equ $01 ; prefer `rgbfix -j/--non-japanese`
 
 
