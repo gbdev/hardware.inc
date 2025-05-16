@@ -917,6 +917,11 @@ def _VRAM9000 equ _VRAM + $1000
 ;******************************************************************************
 
 ; These values are deprecated; please use RGBFIX instead.
+; Zero-filled space can be reserved for fixable header values like this:
+;
+;     SECTION "Cartridge header", ROM0[$0100]
+;         nop :: jp $0150  ; Entry point ($0100-$0104)
+;         ds $150 - @, $00 ; Header ($0104-$014FF) filled with $00s for RGBFIX to populate
 
 ; -- Nintendo logo ($0104-$0133) ----------------------------------------------
 ; Prefer `rgbfix -f/--fix-spec l` for the official logo, or `rgbfix -L <logo_file>` for a custom one
