@@ -773,12 +773,13 @@ def _SCRN1 equ $9C00 ; $9C00-$9FFF
 ;******************************************************************************
 
 ; OAM attribute field offsets
-def OAMA_Y      equ 0
+rsreset
+def OAMA_Y      rb ; 0
     def OAM_Y_OFS equ 16 ; subtract 16 from what's written to OAM to get the real Y position
-def OAMA_X      equ 1
+def OAMA_X      rb ; 1
     def OAM_X_OFS equ  8 ; subtract 8 from what's written to OAM to get the real X position
-def OAMA_TILEID equ 2
-def OAMA_FLAGS  equ 3
+def OAMA_TILEID rb ; 2
+def OAMA_FLAGS  rb ; 3
     def OAMB_PRI     equ 7 ; whether the OBJ is drawn above BG colors 1-3
     def OAMB_YFLIP   equ 6 ; whether the whole OBJ is flipped vertically
     def OAMB_XFLIP   equ 5 ; whether the whole OBJ is flipped horizontally
@@ -792,8 +793,8 @@ def OAMA_FLAGS  equ 3
         def OAMF_PAL1  equ 1 << OAMB_PAL1
         def OAMF_BANK0 equ 0 << OAMB_BANK1
         def OAMF_BANK1 equ 1 << OAMB_BANK1
+def OBJ_B     rb 0 ; size of OBJ in bytes = 4
 
-def OBJ_B     equ  4 ; size of OBJ in bytes
 def OAM_COUNT equ 40 ; how many OBJs there are room for in OAM
 def OAM_B     equ OBJ_B * OAM_COUNT
 
