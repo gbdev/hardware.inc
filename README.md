@@ -4,7 +4,8 @@
 
 `hardware.inc` has been the standard include file containing Game Boy hardware definitions for use in [RGBDS](https://rgbds.gbdev.io) projects for over 20 years.
 
-The file was originally created by Jeff Frohwein in 1997. Although Jeff tried to track version updates with a rudimentary change log at the top of the file, people have made small changes throughout the years, often without bumping the version number.
+The file was originally created by Jeff Frohwein in 1997.
+Although Jeff tried to track version updates with a rudimentary change log at the top of the file, people have made small changes throughout the years, often without bumping the version number.
 
 This repository has become the official reference for `hardware.inc`, using [@AntonioND](https://github.com/AntonioND)'s fork as the baseline.
 

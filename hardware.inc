@@ -756,10 +756,10 @@ def TILE_Y equ  8 ; height of tile in pixels
 def TILE_B equ 16 ; size of tile in bytes (2 bits/pixel)
 
 def COLOR_B    equ 2 ; size of color in bytes (little-endian BGR555)
-    def COLORF_BLUE       equ %0_11111_00
-    def COLORF_GREEN_HIGH equ %000000_11
-    def COLORF_GREEN_LOW  equ %111_00000
-    def COLORF_RED        equ %000_11111
+    def COLORF_GREEN_LOW  equ %111_00000  ; for the low byte
+    def COLORF_RED        equ %000_11111  ; for the low byte
+    def COLORF_BLUE       equ %0_11111_00 ; for the high byte
+    def COLORF_GREEN_HIGH equ %000000_11  ; for the high byte
 def PAL_COLORS equ 4 ; colors per palette
 def PAL_B      equ COLOR_B * PAL_COLORS ; size of palette in bytes
 
@@ -821,9 +821,9 @@ def BOOTUP_A_MGB equ $FF
     def BOOTUP_A_SGB2 equ BOOTUP_A_MGB
 
 ; Register B = CPU qualifier (if A is BOOTUP_A_CGB)
-def BOOTUP_B_AGBB equ 0
-    def BOOTUP_B_CGB equ 0 << BOOTUP_B_AGBB
-    def BOOTUP_B_AGB equ 1 << BOOTUP_B_AGBB
+def BOOTUPB_B_AGB equ 0
+    def BOOTUP_B_CGB equ 0 << BOOTUPB_B_AGB
+    def BOOTUP_B_AGB equ 1 << BOOTUPB_B_AGB
 
 
 ;******************************************************************************
