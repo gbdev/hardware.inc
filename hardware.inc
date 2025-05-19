@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "4.10.0"
+def HARDWARE_INC_VERSION equs "4.11.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:
@@ -430,8 +430,8 @@ def LCDCB_PRION   equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
     def LCDCF_WINOFF  equ 0 << LCDCB_WINON
     def LCDCF_WINON   equ 1 << LCDCB_WINON
     def LCDCF_BLKS    equ 1 << LCDCB_BLKS
-    def LCDCF_BLK21   equ 0 << LCDCB_BLKS
-    def LCDCF_BLK01   equ 1 << LCDCB_BLKS
+        def LCDCF_BLK21 equ 0 << LCDCB_BLKS
+        def LCDCF_BLK01 equ 1 << LCDCB_BLKS
     def LCDCF_BG9800  equ 0 << LCDCB_BG9C00
     def LCDCF_BG9C00  equ 1 << LCDCB_BG9C00
     def LCDCF_OBJ8    equ 0 << LCDCB_OBJ16
@@ -512,20 +512,20 @@ def rWX equ $FF4B
 
 def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
 
-; -- KEY0 ($FF4C) -------------------------------------------------------------
+; -- SYS / KEY0 ($FF4C) -------------------------------------------------------------
 ; (CGB boot ROM only) CPU mode select
-def rKEY0 equ $FF4C
+def rSYS equ $FF4C
 
-; KEY0 is known as the "CPU mode register" in Fig. 11 of this patent:
+; This is known as the "CPU mode register" in Fig. 11 of this patent:
 ; https://patents.google.com/patent/US6322447B1/en?oq=US6322447bi
 ; "OBJ priority mode designating register" in the same patent
 ; Credit to @mattcurrie for this finding!
 
-def KEY0F_MODE equ %0000_11_00 ; current system mode [r/w]
-    def KEY0F_CGB  equ %0000_00_00 ; CGB mode
-    def KEY0F_DMG  equ %0000_01_00 ; DMG compatibility mode
-    def KEY0F_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
-    def KEY0F_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
+def SYSF_MODE equ %0000_11_00 ; current system mode [r/w]
+    def SYSF_CGB  equ %0000_00_00 ; CGB mode
+    def SYSF_DMG  equ %0000_01_00 ; DMG compatibility mode
+    def SYSF_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
+    def SYSF_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
 
 ; -- SPD / KEY1 ($FF4D) -------------------------------------------------------
 ; (CGB only) Double-speed mode control
@@ -866,6 +866,13 @@ def rNR44 equ rAUD4GO
 def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
+
+def rKEY0 equ rSYS
+def KEY0F_MODE equ SYSF_MODE
+    def KEY0F_CGB  equ SYSF_CGB
+    def KEY0F_DMG  equ SYSF_DMG
+    def KEY0F_PGB1 equ SYSF_PGB1
+    def KEY0F_PGB2 equ SYSF_PGB2
 
 def rKEY1 equ rSPD
     def KEY1F_DBLSPEED equ SPDF_DBLSPEED
