@@ -75,7 +75,7 @@
   - Added repository link and CC0 waiver notice
 - **Rev 4.9.2** - 2024-08-18 *(DevEd)*
   - Corrected `CART_ROM_MBC5_BAT` to `CART_ROM_MBC5_RAM`
-- **Rev 4.10.0** - 2025-05-16 *(Rangi42)*
+- **Rev 4.10.0** - 2025-05-19 *(Rangi42)*
   - Added `rKEY0`, `rBANK`, and `rRTCREG` registers
   - Added `rJOYP`, `rVDMA_*`, and `rWBK` register aliases
   - Added `HARDWARE_INC_VERSION` string constant
