@@ -1,0 +1,86 @@
+# History
+
+- **Rev 1.1** - 1997-07-15
+  - Added define check
+- **Rev 1.2** - 1997-07-18
+  - Added revision check macro
+- **Rev 1.3** - 1997-07-19
+  - Updated syntax for RGBASM 1.05
+- **Rev 1.4** - 1997-07-27
+  - Updated subroutine prefixes
+- **Rev 1.5** - 1997-08-15
+  - Added `_HRAM` constant
+  - Added `PAD*` constants for `rP1` register
+  - Added `CART*` MBC constants
+  - Added `NINTENDO_LOGO` macro
+- **Rev 1.6** - 1997-11-30
+  - Added `rDIV`, `rTIMA`, `rTMA`, and `rTAC` registers
+- **Rev 1.7** - 1998-01-31
+  - Added `_SCRN0` and `_SCRN1` constants
+- **Rev 1.8** - 1998-02-15
+  - Added `rSB` and `rSC` registers
+- **Rev 1.9** - 1998-02-16
+  - Converted I/O registers to `$FFxx` format
+- **Rev 2.0**
+  - Added GBC registers
+- **Rev 2.1**
+  - Added MBC5 and cart RAM enable/disable constants
+- **Rev 2.2**
+  - Fixed `NR42`, `NR43`, and `NR44` constants
+- **Rev 2.3**
+  - Fixed incorrect `_HRAM` constant
+- **Rev 2.4** - 2013-04-27 *(AntonioND)*
+  - Added some `CART_*` MBC constants
+- **Rev 2.5** - 2015-05-03 *(AntonioND)*
+  - Fixed formatting
+- **Rev 2.6** - 2016-04-09 *(AntonioND)*
+  - Added GBC `OAMF_*` and `CART_*` constants
+- **Rev 2.7** - 2019-01-19 *(ISSOtm)*
+  - Added `rPCM12` and `rPCM34` registers
+- **Rev 2.8** - 2019-02-03 *(Álvaro Cuesta)*
+  - Added flag values for audio registers
+- **Rev 2.9** - 2020-02-28
+  - Added `P1F_*` flag values for `rP1F` register
+- **Rev 3.0** - 2020-08-27 *(Blitter Object)*
+  - Register ordering
+  - Byte-based sizes
+  - OAM additions
+  - General cleanup
+- **Rev 4.0** - 2021-05-03 *(Eievui)*
+  - Updated to use RGBASM 0.5.0 syntax
+  - Changed `IEF_LCDC` to `IEF_STAT`
+- **Rev 4.1** - 2021-08-16 *(rondnelson99)*
+  - Added more flags, bit number constants, and offset constants for OAM and window positions
+- **Rev 4.2** - 2021-09-04 *(ISSOtm)*
+  - Added CH3- and CH4-specific audio registers flags
+- **Rev 4.3** - 2021-11-07 *(Eievui)*
+  - Deprecate VRAM address constants
+- **Rev 4.4** - 2022-01-11 *(avivace)*
+  - Deprecate VRAM `CART_SRAM_2KB` constant
+- **Rev 4.5** - 2022-03-03 *(sukus)*
+  - Added bit number definitions for `OCPS`, `BCPS` and `LCDC`
+- **Rev 4.6** - 2022-06-15
+  - Added MBC3 registers and special values
+- **Rev 4.7.0** - 2022-06-27
+  - Added alternate names for some constants
+- **Rev 4.7.1** - 2022-07-05
+  - Added `RPB_LED_ON` constant
+- **Rev 4.8.0** - 2022-10-25 *(zlago)*
+  - Changed background addressing constants
+- **Rev 4.8.1** - 2023-04-29 *(rbong)*
+  - Added `rOPRI`
+- **Rev 4.9.0** - 2023-06-24 *(sukus)*
+  - Added definitions for interrupt vectors
+- **Rev 4.9.1** - 2023-09-11
+  - Added repository link and CC0 waiver notice
+- **Rev 4.9.2** - 2024-08-18 *(DevEd)*
+  - Corrected `CART_ROM_MBC5_BAT` to `CART_ROM_MBC5_RAM`
+- **Rev 4.10.0** - 2025-05-19 *(Rangi42)*
+  - Added `rKEY0`, `rBANK`, and `rRTCREG` registers
+  - Added `rJOYP`, `rVDMA_*`, and `rWBK` register aliases
+  - Added `HARDWARE_INC_VERSION` string constant
+  - Added many more bit number, flag, and value constants
+  - Deprecate `IEB_HILO` and `IEF_HILO` in favor of `IEB_JOYPAD` and `IEF_JOYPAD`
+  - Deprecate memory region and cartridge header constants
+  - Changed formatting and reorganized sections
+  - Moved revision history to separate HISTORY.md file
