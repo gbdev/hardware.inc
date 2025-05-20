@@ -87,3 +87,4 @@
 - **Rev 4.11.0** - 2025-05-20 *(Rangi42)*
   - Added `rSYS` alias for `rKEY0`
   - Added separate bit number and flag constants for each audio channel
+  - Refactored the `rev_Check_hardware_inc` macro

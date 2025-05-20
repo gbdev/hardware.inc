@@ -30,16 +30,16 @@ def HARDWARE_INC_VERSION equs "4.11.0"
 ;     rev_Check_hardware_inc 1.2   (equivalent to 1.2.0)
 ;     rev_Check_hardware_inc 1     (equivalent to 1.0.0)
 MACRO rev_Check_hardware_inc
-    def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
-    def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
-    def hw_inc_def_check\@ equs """MACRO hw_inc_check\@
-        if \\1 != \\4 || (\\2 < \\5 || (\\2 == \\5 && \\3 < \\6))
-            fail "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
+    if _NARG == 1
+        def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
+        def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
+        rev_Check_hardware_inc {hw_inc_cur_ver\@}, {hw_inc_min_ver\@}, 0, 0
+        purge hw_inc_cur_ver\@, hw_inc_min_ver\@
+    else
+        if \1 != \4 || (\2 < \5 || (\2 == \5 && \3 < \6))
+            fail "Version \1.\2.\3 of 'hardware.inc' is incompatible with requested version \4.\5.\6"
         endc
-    \nENDM"""
-    hw_inc_def_check\@
-    hw_inc_check\@ {hw_inc_cur_ver\@}, {hw_inc_min_ver\@}, 0, 0
-    purge hw_inc_cur_ver\@, hw_inc_min_ver\@, hw_inc_def_check\@, hw_inc_check\@
+    endc
 ENDM
 
 
