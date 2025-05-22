@@ -30,12 +30,12 @@ def HARDWARE_INC_VERSION equs "4.11.0"
 ;     rev_Check_hardware_inc 1.2   (equivalent to 1.2.0)
 ;     rev_Check_hardware_inc 1     (equivalent to 1.0.0)
 MACRO rev_Check_hardware_inc
-    if _NARG == 1
+    if _NARG == 1 ; Actual invocation by the user
         def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
         def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
         rev_Check_hardware_inc {hw_inc_cur_ver\@}, {hw_inc_min_ver\@}, 0, 0
         purge hw_inc_cur_ver\@, hw_inc_min_ver\@
-    else
+    else ; Recursive invocation
         if \1 != \4 || (\2 < \5 || (\2 == \5 && \3 < \6))
             fail "Version \1.\2.\3 of 'hardware.inc' is incompatible with requested version \4.\5.\6"
         endc
