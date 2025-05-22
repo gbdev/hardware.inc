@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "4.10.0"
+def HARDWARE_INC_VERSION equs "4.11.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:
@@ -30,16 +30,16 @@ def HARDWARE_INC_VERSION equs "4.10.0"
 ;     rev_Check_hardware_inc 1.2   (equivalent to 1.2.0)
 ;     rev_Check_hardware_inc 1     (equivalent to 1.0.0)
 MACRO rev_Check_hardware_inc
-    def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
-    def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
-    def hw_inc_def_check\@ equs """MACRO hw_inc_check\@
-        if \\1 != \\4 || (\\2 < \\5 || (\\2 == \\5 && \\3 < \\6))
-            fail "Version \\1.\\2.\\3 of 'hardware.inc' is incompatible with requested version \\4.\\5.\\6"
+    if _NARG == 1 ; Actual invocation by the user
+        def hw_inc_cur_ver\@ equs strrpl("{HARDWARE_INC_VERSION}", ".", ",")
+        def hw_inc_min_ver\@ equs strrpl("\1", ".", ",")
+        rev_Check_hardware_inc {hw_inc_cur_ver\@}, {hw_inc_min_ver\@}, 0, 0
+        purge hw_inc_cur_ver\@, hw_inc_min_ver\@
+    else ; Recursive invocation
+        if \1 != \4 || (\2 < \5 || (\2 == \5 && \3 < \6))
+            fail "Version \1.\2.\3 of 'hardware.inc' is incompatible with requested version \4.\5.\6"
         endc
-    \nENDM"""
-    hw_inc_def_check\@
-    hw_inc_check\@ {hw_inc_cur_ver\@}, {hw_inc_min_ver\@}, 0, 0
-    purge hw_inc_cur_ver\@, hw_inc_min_ver\@, hw_inc_def_check\@, hw_inc_check\@
+    endc
 ENDM
 
 
@@ -194,31 +194,27 @@ def AUD1SWEEP_SHIFT equ %00000_111 ; how much the period increases/decreases per
 ; Audio channel 1 length timer and duty cycle
 def rAUD1LEN equ $FF11
 
-; These values are also applicable to AUD2LEN
-def AUDLENF_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r/w]
-    def AUDLEN_DUTY_12_5 equ %00_000000 ; 12.5%
-    def AUDLEN_DUTY_25   equ %01_000000 ; 25%
-    def AUDLEN_DUTY_50   equ %10_000000 ; 50%
-    def AUDLEN_DUTY_75   equ %11_000000 ; 75%
+def AUD1LENF_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r/w]
+    def AUD1LEN_DUTY_12_5 equ %00_000000 ; 12.5%
+    def AUD1LEN_DUTY_25   equ %01_000000 ; 25%
+    def AUD1LEN_DUTY_50   equ %10_000000 ; 50%
+    def AUD1LEN_DUTY_75   equ %11_000000 ; 75%
 
-; This value is also applicable to AUD2LEN and AUD4LEN
-def AUDLENF_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
+def AUD1LENF_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
 ; -- AUD1ENV / NR12 ($FF12) ---------------------------------------------------
 ; Audio channel 1 volume and envelope
 def rAUD1ENV equ $FF12
 
-; Values are also applicable to AUD2ENV and AUD4ENV
+def AUD1ENVF_INIT_VOL equ %1111_0000 ; initial volume [r/w]
 
-def AUDENVF_INIT_VOL equ %1111_0000 ; initial volume [r/w]
+def AUD1ENVB_DIR equ 3 ; direction of volume envelope [r/w]
+    def AUD1ENVF_DIR equ 1 << AUD1ENVB_DIR
+        def AUD1ENV_DOWN equ 0 << AUD1ENVB_DIR
+        def AUD1ENV_UP   equ 1 << AUD1ENVB_DIR
 
-def AUDENVB_DIR equ 3 ; direction of volume envelope [r/w]
-    def AUDENVF_DIR equ 1 << AUDENVB_DIR
-        def AUDENV_DOWN equ 0 << AUDENVB_DIR
-        def AUDENV_UP   equ 1 << AUDENVB_DIR
-
-def AUDENVF_PACE equ %00000_111 ; how long between envelope iterations
-                                ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
+def AUD1ENVF_PACE equ %00000_111 ; how long between envelope iterations
+                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD1LOW / NR13 ($FF13) ---------------------------------------------------
 ; Audio channel 1 period (low 8 bits) [r/w]
@@ -228,15 +224,13 @@ def rAUD1LOW equ $FF13
 ; Audio channel 1 period (high 3 bits) and control
 def rAUD1HIGH equ $FF14
 
-; Values are also applicable to AUD2HIGH and AUD3HIGH
+def AUD1HIGHB_RESTART    equ 7 ; 1 = restart the channel [wo]
+def AUD1HIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
+    def AUD1HIGH_RESTART    equ 1 << AUD1HIGHB_RESTART
+    def AUD1HIGH_LENGTH_OFF equ 0 << AUD1HIGHB_LEN_ENABLE
+    def AUD1HIGH_LENGTH_ON  equ 1 << AUD1HIGHB_LEN_ENABLE
 
-def AUDHIGHB_RESTART    equ 7 ; 1 = restart the channel [wo]
-def AUDHIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
-    def AUDHIGH_RESTART    equ 1 << AUDHIGHB_RESTART
-    def AUDHIGH_LENGTH_OFF equ 0 << AUDHIGHB_LEN_ENABLE
-    def AUDHIGH_LENGTH_ON  equ 1 << AUDHIGHB_LEN_ENABLE
-
-def AUDHIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD1HIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
 
 ; -- $FF15 is unused ----------------------------------------------------------
 
@@ -244,13 +238,27 @@ def AUDHIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [
 ; Audio channel 2 length timer and duty cycle
 def rAUD2LEN equ $FF16
 
-; Values are reused from AUD1LEN
+def AUD2LENF_DUTY equ %11_000000 ; ratio of time spent high vs. time spent low [r/w]
+    def AUD2LEN_DUTY_12_5 equ %00_000000 ; 12.5%
+    def AUD2LEN_DUTY_25   equ %01_000000 ; 25%
+    def AUD2LEN_DUTY_50   equ %10_000000 ; 50%
+    def AUD2LEN_DUTY_75   equ %11_000000 ; 75%
+
+def AUD2LENF_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
 ; -- AUD2ENV / NR22 ($FF17) ---------------------------------------------------
 ; Audio channel 2 volume and envelope
 def rAUD2ENV equ $FF17
 
-; Values are reused from AUD1ENV
+def AUD2ENVF_INIT_VOL equ %1111_0000 ; initial volume [r/w]
+
+def AUD2ENVB_DIR equ 3 ; direction of volume envelope [r/w]
+    def AUD2ENVF_DIR equ 1 << AUD2ENVB_DIR
+        def AUD2ENV_DOWN equ 0 << AUD2ENVB_DIR
+        def AUD2ENV_UP   equ 1 << AUD2ENVB_DIR
+
+def AUD2ENVF_PACE equ %00000_111 ; how long between envelope iterations
+                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD2LOW / NR23 ($FF18) ---------------------------------------------------
 ; Audio channel 2 period (low 8 bits) [r/w]
@@ -260,7 +268,13 @@ def rAUD2LOW equ $FF18
 ; Audio channel 2 period (high 3 bits) and control
 def rAUD2HIGH equ $FF19
 
-; Values are reused from AUD1HIGH
+def AUD2HIGHB_RESTART    equ 7 ; 1 = restart the channel [wo]
+def AUD2HIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
+    def AUD2HIGH_RESTART    equ 1 << AUD2HIGHB_RESTART
+    def AUD2HIGH_LENGTH_OFF equ 0 << AUD2HIGHB_LEN_ENABLE
+    def AUD2HIGH_LENGTH_ON  equ 1 << AUD2HIGHB_LEN_ENABLE
+
+def AUD2HIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
 
 ; -- AUD3ENA / NR30 ($FF1A) ---------------------------------------------------
 ; Audio channel 3 enable
@@ -292,21 +306,35 @@ def rAUD3LOW equ $FF1D
 ; Audio channel 3 period (high 3 bits) and control
 def rAUD3HIGH equ $FF1E
 
-; Values are reused from AUD1HIGH
+def AUD3HIGHB_RESTART    equ 7 ; 1 = restart the channel [wo]
+def AUD3HIGHB_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer expires [r/w]
+    def AUD3HIGH_RESTART    equ 1 << AUD3HIGHB_RESTART
+    def AUD3HIGH_LENGTH_OFF equ 0 << AUD3HIGHB_LEN_ENABLE
+    def AUD3HIGH_LENGTH_ON  equ 1 << AUD3HIGHB_LEN_ENABLE
+
+def AUD3HIGHF_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
 
 ; -- $FF1F is unused ----------------------------------------------------------
 
 ; -- AUD4LEN / NR41 ($FF20) ---------------------------------------------------
-; Audio channel 4 length timer [wo]
+; Audio channel 4 length timer
 def rAUD4LEN equ $FF20
 
-; AUDLENF_TIMER value is reused from AUD1LEN
+def AUD4LENF_TIMER equ %00_111111 ; initial length timer (0-63) [wo]
 
 ; -- AUD4ENV / NR42 ($FF21) ---------------------------------------------------
 ; Audio channel 4 volume and envelope
 def rAUD4ENV equ $FF21
 
-; Values are reused from AUD1ENV
+def AUD4ENVF_INIT_VOL equ %1111_0000 ; initial volume [r/w]
+
+def AUD4ENVB_DIR equ 3 ; direction of volume envelope [r/w]
+    def AUD4ENVF_DIR equ 1 << AUD4ENVB_DIR
+        def AUD4ENV_DOWN equ 0 << AUD4ENVB_DIR
+        def AUD4ENV_UP   equ 1 << AUD4ENVB_DIR
+
+def AUD4ENVF_PACE equ %00000_111 ; how long between envelope iterations
+                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD4POLY / NR43 ($FF22) --------------------------------------------------
 ; Audio channel 4 period and randomness
@@ -430,8 +458,8 @@ def LCDCB_PRION   equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
     def LCDCF_WINOFF  equ 0 << LCDCB_WINON
     def LCDCF_WINON   equ 1 << LCDCB_WINON
     def LCDCF_BLKS    equ 1 << LCDCB_BLKS
-    def LCDCF_BLK21   equ 0 << LCDCB_BLKS
-    def LCDCF_BLK01   equ 1 << LCDCB_BLKS
+        def LCDCF_BLK21 equ 0 << LCDCB_BLKS
+        def LCDCF_BLK01 equ 1 << LCDCB_BLKS
     def LCDCF_BG9800  equ 0 << LCDCB_BG9C00
     def LCDCF_BG9C00  equ 1 << LCDCB_BG9C00
     def LCDCF_OBJ8    equ 0 << LCDCB_OBJ16
@@ -512,20 +540,20 @@ def rWX equ $FF4B
 
 def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
 
-; -- KEY0 ($FF4C) -------------------------------------------------------------
+; -- SYS / KEY0 ($FF4C) -------------------------------------------------------------
 ; (CGB boot ROM only) CPU mode select
-def rKEY0 equ $FF4C
+def rSYS equ $FF4C
 
-; KEY0 is known as the "CPU mode register" in Fig. 11 of this patent:
+; This is known as the "CPU mode register" in Fig. 11 of this patent:
 ; https://patents.google.com/patent/US6322447B1/en?oq=US6322447bi
 ; "OBJ priority mode designating register" in the same patent
 ; Credit to @mattcurrie for this finding!
 
-def KEY0F_MODE equ %0000_11_00 ; current system mode [r/w]
-    def KEY0F_CGB  equ %0000_00_00 ; CGB mode
-    def KEY0F_DMG  equ %0000_01_00 ; DMG compatibility mode
-    def KEY0F_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
-    def KEY0F_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
+def SYSF_MODE equ %0000_11_00 ; current system mode [r/w]
+    def SYSF_CGB  equ %0000_00_00 ; CGB mode
+    def SYSF_DMG  equ %0000_01_00 ; DMG compatibility mode
+    def SYSF_PGB1 equ %0000_10_00 ; LCD is driven externally, CPU is stopped
+    def SYSF_PGB2 equ %0000_11_00 ; LCD is driven externally, CPU is running
 
 ; -- SPD / KEY1 ($FF4D) -------------------------------------------------------
 ; (CGB only) Double-speed mode control
@@ -867,6 +895,13 @@ def rNR50 equ rAUDVOL
 def rNR51 equ rAUDTERM
 def rNR52 equ rAUDENA
 
+def rKEY0 equ rSYS
+def KEY0F_MODE equ SYSF_MODE
+    def KEY0F_CGB  equ SYSF_CGB
+    def KEY0F_DMG  equ SYSF_DMG
+    def KEY0F_PGB1 equ SYSF_PGB1
+    def KEY0F_PGB2 equ SYSF_PGB2
+
 def rKEY1 equ rSPD
     def KEY1F_DBLSPEED equ SPDF_DBLSPEED
     def KEY1F_PREPARE  equ SPDF_PREPARE
@@ -911,10 +946,6 @@ def _RAMBANK equ $D000 ; $D000-$DFFF               (prefer `STARTOF(WRAMX)`)
 def _OAMRAM  equ $FE00 ; $FE00-$FE9F               (prefer `STARTOF(OAM)`)
 def _IO      equ $FF00 ; $FF00-$FF7F, $FFFF        (prefer `ldh [c]` to `ld [_IO+c]`)
 def _HRAM    equ $FF80 ; $FF80-$FFFE               (prefer `STARTOF(HRAM)`)
-
-def _VRAM8000 equ _VRAM
-def _VRAM8800 equ _VRAM + $800
-def _VRAM9000 equ _VRAM + $1000
 
 
 ;******************************************************************************
@@ -1009,6 +1040,31 @@ def CART_DEST_NON_JAPANESE equ $01 ; prefer `rgbfix -j/--non-japanese`
 
 ; These values are deprecated; please avoid using them.
 
+def AUDLENF_DUTY equ AUD1LENF_DUTY
+    def AUDLEN_DUTY_12_5 equ AUD1LEN_DUTY_12_5
+    def AUDLEN_DUTY_25   equ AUD1LEN_DUTY_25
+    def AUDLEN_DUTY_50   equ AUD1LEN_DUTY_50
+    def AUDLEN_DUTY_75   equ AUD1LEN_DUTY_75
+
+def AUDLENF_TIMER equ AUD1LENF_TIMER
+
+def AUDENVF_INIT_VOL equ AUD1ENVF_INIT_VOL
+
+def AUDENVB_DIR equ AUD1ENVB_DIR
+    def AUDENVF_DIR equ AUD1ENVF_DIR
+        def AUDENV_DOWN equ AUD1ENV_DOWN
+        def AUDENV_UP   equ AUD1ENV_UP
+
+def AUDENVF_PACE equ AUD1ENVF_PACE
+
+def AUDHIGHB_RESTART    equ AUD1HIGHB_RESTART
+def AUDHIGHB_LEN_ENABLE equ AUD1HIGHB_LEN_ENABLE
+    def AUDHIGH_RESTART    equ AUD1HIGH_RESTART
+    def AUDHIGH_LENGTH_OFF equ AUD1HIGH_LENGTH_OFF
+    def AUDHIGH_LENGTH_ON  equ AUD1HIGH_LENGTH_ON
+
+def AUDHIGHF_PERIOD_HIGH equ AUD1HIGHF_PERIOD_HIGH
+
 def LCDCB_BG8000 equ LCDCB_BLKS
     def LCDCF_BG8800 equ LCDCF_BLK21
     def LCDCF_BG8000 equ LCDCF_BLK01
@@ -1018,5 +1074,9 @@ def IEB_HILO equ IEB_JOYPAD
 def IEF_LCDC equ IEF_STAT
 
 def sizeof_OAM_ATTRS equ OBJ_B
+
+def _VRAM8000 equ _VRAM
+def _VRAM8800 equ _VRAM + $800
+def _VRAM9000 equ _VRAM + $1000
 
 endc ; HARDWARE_INC
