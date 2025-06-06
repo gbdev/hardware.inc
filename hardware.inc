@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "4.11.0"
+def HARDWARE_INC_VERSION equs "4.12.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:
@@ -731,7 +731,7 @@ def rROMB0 equ $2000
 def rROMB1 equ $3000
 
 ; -- RAMB ($4000-$5FFF) -------------------------------------------------------
-    ; SRAM bank number [wo]
+; SRAM bank number [wo]
 def rRAMB equ $4000
 
 ; (MBC3-only) Special RAM bank numbers that actually map values into RTCREG
@@ -773,11 +773,13 @@ def SCRN_X   equ 160 ; width of screen in pixels
 def SCRN_Y   equ 144 ; height of screen in pixels
 def SCRN_X_B equ  20 ; width of screen in bytes
 def SCRN_Y_B equ  18 ; height of screen in bytes
+def SCRN_B   equ SCRN_X_B * SCRN_Y_B ; size of screen in bytes
 
 def SCRN_VX   equ 256 ; width of tilemap in pixels
 def SCRN_VY   equ 256 ; height of tilemap in pixels
 def SCRN_VX_B equ  32 ; width of tilemap in bytes
 def SCRN_VY_B equ  32 ; height of tilemap in bytes
+def SCRN_V_B  equ SCRN_VX_B * SCRN_VY_B ; size of tilemap in bytes
 
 def TILE_X equ  8 ; width of tile in pixels
 def TILE_Y equ  8 ; height of tile in pixels
