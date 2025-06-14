@@ -420,6 +420,8 @@ def BCPSB_AUTOINC equ BGPIB_AUTOINC
 def OCPSB_AUTOINC equ OBPIB_AUTOINC
     def OCPSF_AUTOINC equ OBPIF_AUTOINC
 
+def rSMBK equ rWBK
+
 
 ;******************************************************************************
 ; Memory regions

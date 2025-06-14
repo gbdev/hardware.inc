@@ -97,3 +97,4 @@
   - Added `LCDC_*` flag constants separate from flag values
   - Added `SPD_SINGLE` flag constant
   - Added hardware_compat.inc for backwards-compatibility aliases
+  - Deprecated `rSMBK` alias for `rWBK`/`rSVBK`

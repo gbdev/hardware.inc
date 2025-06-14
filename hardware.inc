@@ -675,7 +675,7 @@ def B_OPRI_PRIORITY equ 0 ; which drawing priority is used for OBJs [r/w]
 
 ; -- $FF6D-$FF6F are unused ---------------------------------------------------
 
-; -- WBK / SVBK / SMBK ($FF70) ------------------------------------------------
+; -- WBK / SVBK ($FF70) -------------------------------------------------------
 ; (CGB only) WRAM bank number
 def rWBK equ $FF70
 
@@ -913,6 +913,5 @@ def rOCPS equ rOBPI
 def rOCPD equ rOBPD
 
 def rSVBK equ rWBK
-def rSMBK equ rWBK
 
 endc ; HARDWARE_INC
