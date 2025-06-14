@@ -787,10 +787,10 @@ def TILE_HEIGHT equ  8 ; height of tile in pixels
 def TILE_SIZE   equ 16 ; size of tile in bytes (2 bits/pixel)
 
 def COLOR_SIZE equ 2 ; size of color in bytes (little-endian BGR555)
-    def COLOR_GREEN_LOW  equ %111_00000 ; for the low byte
-    def COLOR_RED        equ %000_11111 ; for the low byte
+    def COLOR_GREEN_LOW  equ %111_00000  ; for the low byte
+    def COLOR_RED        equ %000_11111  ; for the low byte
     def COLOR_BLUE       equ %0_11111_00 ; for the high byte
-    def COLOR_GREEN_HIGH equ %000000_11 ; for the high byte
+    def COLOR_GREEN_HIGH equ %000000_11  ; for the high byte
 def PAL_COLORS equ 4 ; colors per palette
 def PAL_SIZE   equ COLOR_SIZE * PAL_COLORS ; size of palette in bytes
 
