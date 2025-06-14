@@ -443,33 +443,41 @@ def AUD3WAVE_SIZE equ 16
 def rLCDC equ $FF40
 
 def B_LCDC_ENABLE   equ 7 ; whether the PPU (and LCD) are turned on          [r/w]
-def B_LCDC_WIN_9C00 equ 6 ; which tilemap the Window reads from              [r/w]
+def B_LCDC_WIN_MAP  equ 6 ; which tilemap the Window reads from              [r/w]
 def B_LCDC_WINDOW   equ 5 ; whether the Window is enabled                    [r/w]
 def B_LCDC_BLOCKS   equ 4 ; which "tile blocks" the BG and Window use        [r/w]
-def B_LCDC_BG_9C00  equ 3 ; which tilemap the BG reads from                  [r/w]
-def B_LCDC_OBJ_16   equ 2 ; how many pixels tall each OBJ is                 [r/w]
+def B_LCDC_BG_MAP   equ 3 ; which tilemap the BG reads from                  [r/w]
+def B_LCDC_OBJ_SIZE equ 2 ; how many pixels tall each OBJ is                 [r/w]
 def B_LCDC_OBJS     equ 1 ; whether OBJs are enabled                         [r/w]
 def B_LCDC_BG       equ 0 ; (DMG only) whether the BG is enabled             [r/w]
 def B_LCDC_PRIORITY equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
-    def LCDC_OFF          equ 0 << B_LCDC_ENABLE
-    def LCDC_ON           equ 1 << B_LCDC_ENABLE
-    def LCDC_WIN_9800     equ 0 << B_LCDC_WIN_9C00
-    def LCDC_WIN_9C00     equ 1 << B_LCDC_WIN_9C00
-    def LCDC_WINDOW_OFF   equ 0 << B_LCDC_WINDOW
-    def LCDC_WINDOW_ON    equ 1 << B_LCDC_WINDOW
-    def LCDC_BLOCKS       equ 1 << B_LCDC_BLOCKS
+    def LCDC_ENABLE   equ 1 << B_LCDC_ENABLE
+        def LCDC_OFF equ 0 << B_LCDC_ENABLE
+        def LCDC_ON  equ 1 << B_LCDC_ENABLE
+    def LCDC_WIN_MAP  equ 1 << B_LCDC_WIN_MAP
+        def LCDC_WIN_9800 equ 0 << B_LCDC_WIN_MAP
+        def LCDC_WIN_9C00 equ 1 << B_LCDC_WIN_MAP
+    def LCDC_WINDOW   equ 1 << B_LCDC_WINDOW
+        def LCDC_WINDOW_OFF equ 0 << B_LCDC_WINDOW
+        def LCDC_WINDOW_ON  equ 1 << B_LCDC_WINDOW
+    def LCDC_BLOCKS   equ 1 << B_LCDC_BLOCKS
         def LCDC_BLOCK21 equ 0 << B_LCDC_BLOCKS
         def LCDC_BLOCK01 equ 1 << B_LCDC_BLOCKS
-    def LCDC_BG_9800      equ 0 << B_LCDC_BG_9C00
-    def LCDC_BG_9C00      equ 1 << B_LCDC_BG_9C00
-    def LCDC_OBJ_8        equ 0 << B_LCDC_OBJ_16
-    def LCDC_OBJ_16       equ 1 << B_LCDC_OBJ_16
-    def LCDC_OBJ_OFF      equ 0 << B_LCDC_OBJS
-    def LCDC_OBJ_ON       equ 1 << B_LCDC_OBJS
-    def LCDC_BG_OFF       equ 0 << B_LCDC_BG
-    def LCDC_BG_ON        equ 1 << B_LCDC_BG
-    def LCDC_PRIORITY_OFF equ 0 << B_LCDC_PRIORITY
-    def LCDC_PRIORITY_ON  equ 1 << B_LCDC_PRIORITY
+    def LCDC_BG_MAP   equ 1 << B_LCDC_BG_MAP
+        def LCDC_BG_9800 equ 0 << B_LCDC_BG_MAP
+        def LCDC_BG_9C00 equ 1 << B_LCDC_BG_MAP
+    def LCDC_OBJ_SIZE equ 1 << B_LCDC_OBJ_SIZE
+        def LCDC_OBJ_8  equ 0 << B_LCDC_OBJ_SIZE
+        def LCDC_OBJ_16 equ 1 << B_LCDC_OBJ_SIZE
+    def LCDC_OBJS     equ 1 << B_LCDC_OBJS
+        def LCDC_OBJ_OFF equ 0 << B_LCDC_OBJS
+        def LCDC_OBJ_ON  equ 1 << B_LCDC_OBJS
+    def LCDC_BG       equ 1 << B_LCDC_BG
+        def LCDC_BG_OFF equ 0 << B_LCDC_BG
+        def LCDC_BG_ON  equ 1 << B_LCDC_BG
+    def LCDC_PRIORITY equ 1 << B_LCDC_PRIORITY
+        def LCDC_PRIORITY_OFF equ 0 << B_LCDC_PRIORITY
+        def LCDC_PRIORITY_ON  equ 1 << B_LCDC_PRIORITY
 
 ; -- STAT ($FF41) -------------------------------------------------------------
 ; Graphics status and interrupt control

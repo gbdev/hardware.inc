@@ -94,5 +94,6 @@
   - Changed bit number naming convention `<REG>B_<NAME>` to `B_<REG>_<NAME>`
   - Changed bit flag naming convention `<REG>F_<NAME>` to `<REG>_<NAME>`
   - Unabbreviated some names, e.g. `SCRN` to `SCREEN` and `PRI` to `PRIORITY`
+  - Added `LCDC_*` flag constants separate from flag values
   - Added `SPD_SINGLE` flag constant
   - Added hardware_compat.inc for backwards-compatibility aliases
