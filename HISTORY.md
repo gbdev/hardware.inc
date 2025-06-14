@@ -90,3 +90,9 @@
   - Refactored the `rev_Check_hardware_inc` macro
 - **Rev 4.12.0** - 2025-06-06 *(Rangi42)*
   - Added `SCRN_B` and `SCRN_V_B` constants
+- **Rev 5.0.0** - 2025-06-15 *(Rangi42)*
+  - Changed bit number naming convention `<REG>B_<NAME>` to `B_<REG>_<NAME>`
+  - Changed bit flag naming convention `<REG>F_<NAME>` to `<REG>_<NAME>`
+  - Unabbreviated some names, e.g. `SCRN` to `SCREEN` and `PRI` to `PRIORITY`
+  - Added `SPD_SINGLE` flag constant
+  - Added hardware_compat.inc for backwards-compatibility aliases
