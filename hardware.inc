@@ -450,7 +450,7 @@ def B_LCDC_BG_MAP   equ 3 ; which tilemap the BG reads from                  [r/
 def B_LCDC_OBJ_SIZE equ 2 ; how many pixels tall each OBJ is                 [r/w]
 def B_LCDC_OBJS     equ 1 ; whether OBJs are enabled                         [r/w]
 def B_LCDC_BG       equ 0 ; (DMG only) whether the BG is enabled             [r/w]
-def B_LCDC_PRIORITY equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
+def B_LCDC_PRIO     equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/w]
     def LCDC_ENABLE   equ 1 << B_LCDC_ENABLE
         def LCDC_OFF equ 0 << B_LCDC_ENABLE
         def LCDC_ON  equ 1 << B_LCDC_ENABLE
@@ -458,8 +458,8 @@ def B_LCDC_PRIORITY equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/
         def LCDC_WIN_9800 equ 0 << B_LCDC_WIN_MAP
         def LCDC_WIN_9C00 equ 1 << B_LCDC_WIN_MAP
     def LCDC_WINDOW   equ 1 << B_LCDC_WINDOW
-        def LCDC_WINDOW_OFF equ 0 << B_LCDC_WINDOW
-        def LCDC_WINDOW_ON  equ 1 << B_LCDC_WINDOW
+        def LCDC_WIN_OFF equ 0 << B_LCDC_WINDOW
+        def LCDC_WIN_ON  equ 1 << B_LCDC_WINDOW
     def LCDC_BLOCKS   equ 1 << B_LCDC_BLOCKS
         def LCDC_BLOCK21 equ 0 << B_LCDC_BLOCKS
         def LCDC_BLOCK01 equ 1 << B_LCDC_BLOCKS
@@ -475,9 +475,9 @@ def B_LCDC_PRIORITY equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/
     def LCDC_BG       equ 1 << B_LCDC_BG
         def LCDC_BG_OFF equ 0 << B_LCDC_BG
         def LCDC_BG_ON  equ 1 << B_LCDC_BG
-    def LCDC_PRIORITY equ 1 << B_LCDC_PRIORITY
-        def LCDC_PRIORITY_OFF equ 0 << B_LCDC_PRIORITY
-        def LCDC_PRIORITY_ON  equ 1 << B_LCDC_PRIORITY
+    def LCDC_PRIO equ 1 << B_LCDC_PRIO
+        def LCDC_PRIO_OFF equ 0 << B_LCDC_PRIO
+        def LCDC_PRIO_ON  equ 1 << B_LCDC_PRIO
 
 ; -- STAT ($FF41) -------------------------------------------------------------
 ; Graphics status and interrupt control
@@ -819,19 +819,19 @@ def OAMA_X      rb ; 1
     def OAM_X_OFS equ  8 ; subtract 8 from what's written to OAM to get the real X position
 def OAMA_TILEID rb ; 2
 def OAMA_FLAGS  rb ; 3
-    def B_OAM_PRIORITY equ 7 ; whether the OBJ is drawn above BG colors 1-3
-    def B_OAM_YFLIP    equ 6 ; whether the whole OBJ is flipped vertically
-    def B_OAM_XFLIP    equ 5 ; whether the whole OBJ is flipped horizontally
-    def B_OAM_PAL1     equ 4 ; (DMG only) which of the two palettes the OBJ uses
-    def B_OAM_BANK1    equ 3 ; (CGB only) which VRAM bank the OBJ takes its tile(s) from
+    def B_OAM_PRIO  equ 7 ; whether the OBJ is drawn above BG colors 1-3
+    def B_OAM_YFLIP equ 6 ; whether the whole OBJ is flipped vertically
+    def B_OAM_XFLIP equ 5 ; whether the whole OBJ is flipped horizontally
+    def B_OAM_PAL1  equ 4 ; (DMG only) which of the two palettes the OBJ uses
+    def B_OAM_BANK1 equ 3 ; (CGB only) which VRAM bank the OBJ takes its tile(s) from
     def OAM_PALMASK equ %00000_111 ; (CGB only) which palette the OBJ uses
-        def OAM_PRIORITY equ 1 << B_OAM_PRIORITY
-        def OAM_YFLIP    equ 1 << B_OAM_YFLIP
-        def OAM_XFLIP    equ 1 << B_OAM_XFLIP
-        def OAM_PAL0     equ 0 << B_OAM_PAL1
-        def OAM_PAL1     equ 1 << B_OAM_PAL1
-        def OAM_BANK0    equ 0 << B_OAM_BANK1
-        def OAM_BANK1    equ 1 << B_OAM_BANK1
+        def OAM_PRIO  equ 1 << B_OAM_PRIO
+        def OAM_YFLIP equ 1 << B_OAM_YFLIP
+        def OAM_XFLIP equ 1 << B_OAM_XFLIP
+        def OAM_PAL0  equ 0 << B_OAM_PAL1
+        def OAM_PAL1  equ 1 << B_OAM_PAL1
+        def OAM_BANK0 equ 0 << B_OAM_BANK1
+        def OAM_BANK1 equ 1 << B_OAM_BANK1
 def OBJ_SIZE    rb 0 ; size of OBJ in bytes = 4
 
 def OAM_COUNT equ 40 ; how many OBJs there are room for in OAM

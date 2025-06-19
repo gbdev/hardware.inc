@@ -195,13 +195,13 @@ def LCDCB_BG9C00  equ B_LCDC_BG_MAP
 def LCDCB_OBJ16   equ B_LCDC_OBJ_SIZE
 def LCDCB_OBJON   equ B_LCDC_OBJS
 def LCDCB_BGON    equ B_LCDC_BG
-def LCDCB_PRION   equ B_LCDC_PRIORITY
+def LCDCB_PRION   equ B_LCDC_PRIO
     def LCDCF_OFF     equ LCDC_OFF
     def LCDCF_ON      equ LCDC_ON
     def LCDCF_WIN9800 equ LCDC_WIN_9800
     def LCDCF_WIN9C00 equ LCDC_WIN_9C00
-    def LCDCF_WINOFF  equ LCDC_WINDOW_OFF
-    def LCDCF_WINON   equ LCDC_WINDOW_ON
+    def LCDCF_WINOFF  equ LCDC_WIN_OFF
+    def LCDCF_WINON   equ LCDC_WIN_ON
     def LCDCF_BLKS    equ LCDC_BLOCKS
         def LCDCF_BLK21 equ LCDC_BLOCK21
         def LCDCF_BLK01 equ LCDC_BLOCK01
@@ -213,8 +213,8 @@ def LCDCB_PRION   equ B_LCDC_PRIORITY
     def LCDCF_OBJON   equ LCDC_OBJ_ON
     def LCDCF_BGOFF   equ LCDC_BG_OFF
     def LCDCF_BGON    equ LCDC_BG_ON
-    def LCDCF_PRIOFF  equ LCDC_PRIORITY_OFF
-    def LCDCF_PRION   equ LCDC_PRIORITY_ON
+    def LCDCF_PRIOFF  equ LCDC_PRIO_OFF
+    def LCDCF_PRION   equ LCDC_PRIO_ON
 
 def STATB_LYC    equ B_STAT_LYC
 def STATB_MODE10 equ B_STAT_MODE_2
@@ -361,13 +361,13 @@ def _SCRN1 equ TILEMAP1
 ; OBJ-related constants
 ;******************************************************************************
 
-def OAMB_PRI     equ B_OAM_PRIORITY
+def OAMB_PRI     equ B_OAM_PRIO
 def OAMB_YFLIP   equ B_OAM_YFLIP
 def OAMB_XFLIP   equ B_OAM_XFLIP
 def OAMB_PAL1    equ B_OAM_PAL1
 def OAMB_BANK1   equ B_OAM_BANK1
 def OAMF_PALMASK equ OAM_PALMASK
-    def OAMF_PRI   equ OAM_PRIORITY
+    def OAMF_PRI   equ OAM_PRIO
     def OAMF_YFLIP equ OAM_YFLIP
     def OAMF_XFLIP equ OAM_XFLIP
     def OAMF_PAL0  equ OAM_PAL0
