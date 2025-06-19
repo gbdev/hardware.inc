@@ -811,7 +811,7 @@ def B_BG_PRIO  equ 7 ; whether the BG tile colors 1-3 are drawn below OBJs
 def B_BG_YFLIP equ 6 ; whether the whole BG tile is flipped vertically
 def B_BG_XFLIP equ 5 ; whether the whole BG tile is flipped horizontally
 def B_BG_BANK1 equ 3 ; which VRAM bank the BG tile is taken from
-def BG_PALMASK equ %00000_111 ; which palette the BG tile uses
+def BG_PALETTE equ %00000_111 ; which palette the BG tile uses
     def BG_PRIO  equ 1 << B_BG_PRIO
     def BG_YFLIP equ 1 << B_BG_YFLIP
     def BG_XFLIP equ 1 << B_BG_XFLIP
@@ -836,7 +836,7 @@ def OAMA_FLAGS  rb ; 3
     def B_OAM_XFLIP equ 5 ; whether the whole OBJ is flipped horizontally
     def B_OAM_PAL1  equ 4 ; (DMG only) which of the two palettes the OBJ uses
     def B_OAM_BANK1 equ 3 ; (CGB only) which VRAM bank the OBJ takes its tile(s) from
-    def OAM_PALMASK equ %00000_111 ; (CGB only) which palette the OBJ uses
+    def OAM_PALETTE equ %00000_111 ; (CGB only) which palette the OBJ uses
         def OAM_PRIO  equ 1 << B_OAM_PRIO
         def OAM_YFLIP equ 1 << B_OAM_YFLIP
         def OAM_XFLIP equ 1 << B_OAM_XFLIP
