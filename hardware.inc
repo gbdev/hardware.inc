@@ -475,7 +475,7 @@ def B_LCDC_PRIO     equ 0 ; (CGB only) whether OBJ priority bits are enabled [r/
     def LCDC_BG       equ 1 << B_LCDC_BG
         def LCDC_BG_OFF equ 0 << B_LCDC_BG
         def LCDC_BG_ON  equ 1 << B_LCDC_BG
-    def LCDC_PRIO equ 1 << B_LCDC_PRIO
+    def LCDC_PRIO     equ 1 << B_LCDC_PRIO
         def LCDC_PRIO_OFF equ 0 << B_LCDC_PRIO
         def LCDC_PRIO_ON  equ 1 << B_LCDC_PRIO
 
@@ -548,7 +548,7 @@ def rWX equ $FF4B
 
 def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
 
-; -- SYS / KEY0 ($FF4C) -------------------------------------------------------------
+; -- SYS / KEY0 ($FF4C) -------------------------------------------------------
 ; (CGB boot ROM only) CPU mode select
 def rSYS equ $FF4C
 
@@ -593,7 +593,7 @@ def B_BANK_ON equ 0 ; whether the boot ROM is mapped [wo]
 ; (CGB only) VRAM DMA source address (high 8 bits) [wo]
 def rVDMA_SRC_HIGH equ $FF51
 
-; -- VDMA_SRC_LOW / HDMA2 ($FF52) ----------------------------------------------
+; -- VDMA_SRC_LOW / HDMA2 ($FF52) ---------------------------------------------
 ; (CGB only) VRAM DMA source address (low 8 bits) [wo]
 def rVDMA_SRC_LOW equ $FF52
 
@@ -769,7 +769,7 @@ def rRTCLATCH equ $6000
 def RTCLATCH_START  equ $00
 def RTCLATCH_FINISH equ $01
 
-; -- RTCREG ($A000-$BFFF) ---------------------------------------------------
+; -- RTCREG ($A000-$BFFF) -----------------------------------------------------
 ; (MBC3 only) RTC register [r/w]
 def rRTCREG equ $A000
 
