@@ -99,3 +99,8 @@
   - Added `BG_*` constants for CGB-only BG tile attributes
   - Added hardware_compat.inc for backwards-compatibility aliases
   - Deprecated `rSMBK` alias for `rWBK`/`rSVBK`
+- **Rev 5.1.0** - 2025-06-29 *(Rangi42)*
+  - Added registers and constants for more MBCs
+  - Added `PAD_*` constants for combined button and Control Pad masks
+  - Added `B_COLOR_*` red/green/blue bit numbers
+  - Corrected comments on `B_BG_PRIO` and `B_OAM_PRIO`
