@@ -104,3 +104,5 @@
   - Added `PAD_*` constants for combined button and Control Pad masks
   - Added `B_COLOR_*` red/green/blue bit numbers
   - Corrected comments on `B_BG_PRIO` and `B_OAM_PRIO`
+- **Rev 6.0.0** - 2025-06-30 *(Rangi42)*
+  - Changed `_AUD3WAVERAM` to `AUD3WAVERAM`

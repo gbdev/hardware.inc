@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "5.1.0"
+def HARDWARE_INC_VERSION equs "6.0.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:
@@ -422,7 +422,7 @@ def B_AUDENA_ENABLE_CH1 equ 0 ; 1 = channel 1 is running [ro]
 
 ; -- AUD3WAVE ($FF30-$FF3F) ---------------------------------------------------
 ; Audio channel 3 wave pattern RAM [r/w]
-def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
+def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 
 def rAUD3WAVE_0 equ $FF30
 def rAUD3WAVE_1 equ $FF31
