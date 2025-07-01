@@ -66,7 +66,7 @@ def B_JOYP_DOWN   equ 3 ; 0 = Down is pressed   (if reading Control Pad) [ro]
 def B_JOYP_UP     equ 2 ; 0 = Up is pressed     (if reading Control Pad) [ro]
 def B_JOYP_LEFT   equ 1 ; 0 = Left is pressed   (if reading Control Pad) [ro]
 def B_JOYP_RIGHT  equ 0 ; 0 = Right is pressed  (if reading Control Pad) [ro]
-    def JOYP_INPUTS equ %0000_1111
+    def JOYP_INPUTS equ %0000_1111 ; 0 bits are pressed (if reading inputs)
     def JOYP_START  equ 1 << B_JOYP_START
     def JOYP_SELECT equ 1 << B_JOYP_SELECT
     def JOYP_B      equ 1 << B_JOYP_B
@@ -441,7 +441,7 @@ def rAUD3WAVE_D equ $FF3D
 def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
 
-def AUD3WAVE_SIZE equ 16
+def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 ; -- LCDC ($FF40) -------------------------------------------------------------
 ; PPU graphics control
@@ -868,12 +868,14 @@ def RAMREG_ENABLE equ $40
 ; Latch accelerometer start [wo]
 def rACCLATCH0 equ $A000
 
+; Write $55 to ACCLATCH0 to erase the latched data
 def ACCLATCH0_START equ $55
 
 ; -- ACCLATCH1 ($Ax1x) --------------------------------------------------------
 ; Latch accelerometer finish [wo]
 def rACCLATCH1 equ $A010
 
+; Write $AA to ACCLATCH1 to latch the accelerometer and update ACCEL*
 def ACCLATCH1_FINISH equ $AA
 
 ; -- ACCELX0 ($Ax2x) ----------------------------------------------------------
@@ -903,6 +905,7 @@ def rEEPROM equ $A080
 ; IR register [r/w]
 def rIRREG equ $A000
 
+; whether the IR transmitter sees light
 def IR_LED_OFF equ $C0
 def IR_LED_ON  equ $C1
 
