@@ -606,7 +606,7 @@ def rVDMA_SRC_LOW equ $FF52
 ; (CGB only) VRAM DMA destination address (high 8 bits) [wo]
 def rVDMA_DEST_HIGH equ $FF53
 
-; -- VDMA_DEST_LOW / HDMA3 ($FF54) --------------------------------------------
+; -- VDMA_DEST_LOW / HDMA4 ($FF54) --------------------------------------------
 ; (CGB only) VRAM DMA destination address (low 8 bits) [wo]
 def rVDMA_DEST_LOW equ $FF54
 
