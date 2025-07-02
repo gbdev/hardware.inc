@@ -66,7 +66,7 @@ def B_JOYP_DOWN   equ 3 ; 0 = Down is pressed   (if reading Control Pad) [ro]
 def B_JOYP_UP     equ 2 ; 0 = Up is pressed     (if reading Control Pad) [ro]
 def B_JOYP_LEFT   equ 1 ; 0 = Left is pressed   (if reading Control Pad) [ro]
 def B_JOYP_RIGHT  equ 0 ; 0 = Right is pressed  (if reading Control Pad) [ro]
-    def JOYP_INPUTS equ %0000_1111 ; 0 bits are pressed (if reading inputs)
+    def JOYP_INPUTS equ %0000_1111 ; bits equal to 0 indicate pressed (when reading inputs)
     def JOYP_START  equ 1 << B_JOYP_START
     def JOYP_SELECT equ 1 << B_JOYP_SELECT
     def JOYP_B      equ 1 << B_JOYP_B
