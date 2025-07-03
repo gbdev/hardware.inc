@@ -941,6 +941,12 @@ def COLOR_SIZE equ 2 ; size of color in bytes (little-endian BGR555)
 def PAL_COLORS equ 4 ; colors per palette
 def PAL_SIZE   equ COLOR_SIZE * PAL_COLORS ; size of palette in bytes
 
+; (DMG only) grayscale shade indexes for BGP, OBP0, and OBP1
+def SHADE_WHITE equ %00
+def SHADE_LIGHT equ %01
+def SHADE_DARK  equ %10
+def SHADE_BLACK equ %11
+
 ; Tilemaps the BG or Window can read from (controlled by LCDC)
 def TILEMAP0 equ $9800 ; $9800-$9BFF
 def TILEMAP1 equ $9C00 ; $9C00-$9FFF
