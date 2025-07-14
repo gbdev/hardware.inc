@@ -422,8 +422,6 @@ def B_AUDENA_ENABLE_CH1 equ 0 ; 1 = channel 1 is running [ro]
 
 ; -- AUD3WAVE ($FF30-$FF3F) ---------------------------------------------------
 ; Audio channel 3 wave pattern RAM [r/w]
-def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
-
 def rAUD3WAVE_0 equ $FF30
 def rAUD3WAVE_1 equ $FF31
 def rAUD3WAVE_2 equ $FF32
@@ -440,8 +438,6 @@ def rAUD3WAVE_C equ $FF3C
 def rAUD3WAVE_D equ $FF3D
 def rAUD3WAVE_E equ $FF3E
 def rAUD3WAVE_F equ $FF3F
-
-def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 ; -- LCDC ($FF40) -------------------------------------------------------------
 ; PPU graphics control
@@ -993,6 +989,20 @@ def OBJ_SIZE    rb 0 ; size of OBJ in bytes = 4
 
 def OAM_COUNT equ 40 ; how many OBJs there are room for in OAM
 def OAM_SIZE  equ OBJ_SIZE * OAM_COUNT
+
+
+;******************************************************************************
+; Audio channel RAM addresses
+;******************************************************************************
+
+def AUD1RAM equ $FF10 ; $FF10-$FF14
+def AUD2RAM equ $FF15 ; $FF15-$FF19
+def AUD3RAM equ $FF1A ; $FF1A-$FF1E
+def AUD4RAM equ $FF1F ; $FF1F-$FF23
+def AUDRAM_SIZE equ 5 ; size of each audio channel RAM in bytes
+
+def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
+def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 
 ;******************************************************************************
