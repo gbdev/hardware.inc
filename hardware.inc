@@ -547,7 +547,7 @@ def rWY equ $FF4A
 ; X coordinate of the Window's top-left pixel, plus 7 (7-166) [r/w]
 def rWX equ $FF4B
 
-def WX_OFS equ 7 ; subtract this to get the actual Window Y coordinate
+def WX_OFS equ 7 ; subtract this to get the actual Window X coordinate
 
 ; -- SYS / KEY0 ($FF4C) -------------------------------------------------------
 ; (CGB boot ROM only) CPU mode select
