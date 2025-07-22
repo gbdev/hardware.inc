@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "6.0.0"
+def HARDWARE_INC_VERSION equs "5.2.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:

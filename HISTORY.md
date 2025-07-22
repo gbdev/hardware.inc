@@ -104,7 +104,7 @@
   - Added `PAD_*` constants for combined button and Control Pad masks
   - Added `B_COLOR_*` red/green/blue bit numbers
   - Corrected comments on `B_BG_PRIO` and `B_OAM_PRIO`
-- **Rev 6.0.0** - 2025-07-22 *(Rangi42)*
+- **Rev 5.2.0** - 2025-07-22 *(Rangi42)*
   - Added `AUD1RAM`-`AUD4RAM` address constants
   - Added `SHADE_*` constants for grayscale shades
   - Corrected comments on `WX_OFS`, `VDMA_DEST_LOW`, and `ROMB0`
