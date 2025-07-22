@@ -1001,7 +1001,7 @@ def AUD3RAM equ $FF1A ; $FF1A-$FF1E
 def AUD4RAM equ $FF1F ; $FF1F-$FF23
 def AUDRAM_SIZE equ 5 ; size of each audio channel RAM in bytes
 
-def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
+def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 
