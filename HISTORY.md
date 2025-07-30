@@ -108,3 +108,6 @@
   - Added `AUD1RAM`-`AUD4RAM` address constants
   - Added `SHADE_*` constants for grayscale shades
   - Corrected comments on `WX_OFS`, `VDMA_DEST_LOW`, and `ROMB0`
+- **Rev 6.0.0** - 2025-??-?? *(Rangi42)*
+  - Changed `_AUD3WAVERAM` to `AUD3WAVERAM`
+  - Corrected comments on some audio registers
