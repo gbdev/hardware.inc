@@ -22,7 +22,7 @@ endc
 ; Define the include guard and the current hardware.inc version
 ; (do this after the RGBDS version check since the `def` syntax depends on it)
 def HARDWARE_INC equ 1
-def HARDWARE_INC_VERSION equs "5.2.0"
+def HARDWARE_INC_VERSION equs "6.0.0"
 
 ; Usage: rev_Check_hardware_inc <min_ver>
 ; Examples:
@@ -222,7 +222,7 @@ def AUD1ENV_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD1LOW / NR13 ($FF13) ---------------------------------------------------
-; Audio channel 1 period (low 8 bits) [r/w]
+; Audio channel 1 period (low 8 bits) [wo]
 def rAUD1LOW equ $FF13
 
 ; -- AUD1HIGH / NR14 ($FF14) --------------------------------------------------
@@ -266,7 +266,7 @@ def AUD2ENV_PACE equ %00000_111 ; how long between envelope iterations
                                 ; (in 64 Hz ticks, ~15.6 ms apart) [r/w]
 
 ; -- AUD2LOW / NR23 ($FF18) ---------------------------------------------------
-; Audio channel 2 period (low 8 bits) [r/w]
+; Audio channel 2 period (low 8 bits) [wo]
 def rAUD2LOW equ $FF18
 
 ; -- AUD2HIGH / NR24 ($FF19) --------------------------------------------------
@@ -304,7 +304,7 @@ def AUD3LEVEL_VOLUME equ %0_11_00000 ; volume level [r/w]
     def AUD3LEVEL_25   equ %0_11_00000 ; 25%
 
 ; -- AUD3LOW / NR33 ($FF1D) ---------------------------------------------------
-; Audio channel 3 period (low 8 bits) [r/w]
+; Audio channel 3 period (low 8 bits) [wo]
 def rAUD3LOW equ $FF1D
 
 ; -- AUD3HIGH / NR34 ($FF1E) --------------------------------------------------
@@ -1001,7 +1001,7 @@ def AUD3RAM equ $FF1A ; $FF1A-$FF1E
 def AUD4RAM equ $FF1F ; $FF1F-$FF23
 def AUDRAM_SIZE equ 5 ; size of each audio channel RAM in bytes
 
-def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
+def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 
