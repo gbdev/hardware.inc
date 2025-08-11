@@ -108,3 +108,8 @@
   - Added `AUD1RAM`-`AUD4RAM` address constants
   - Added `SHADE_*` constants for grayscale shades
   - Corrected comments on `WX_OFS`, `VDMA_DEST_LOW`, and `ROMB0`
+- **Rev 5.3.0** - 2025-08-11 *(Rangi42)*
+  - Added `COLOR_CH_WIDTH` and `COLOR_CH_MAX` constants
+  - Added `JOYP_SGB_*` constants
+  - Added more `BOOTUP_*` value constants
+  - Corrected comments on some audio registers
