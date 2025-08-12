@@ -385,6 +385,9 @@ def OAM_B equ OAM_SIZE
 
 def BOOTUPB_B_AGB equ B_BOOTUP_B_AGB
 
+    def BOOTUP_B_CGB equ 0 << B_BOOTUP_B_AGB
+    def BOOTUP_B_AGB equ 1 << B_BOOTUP_B_AGB
+
 
 ;******************************************************************************
 ; Aliases
