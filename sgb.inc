@@ -59,13 +59,13 @@ def SGB_STUB6                   equ $1F << S_SGB_COMMAND
 ; SGB_SOUND Packet Indices
 ;******************************************************************************
 
-def SGB_SOUND_A                 equ $01
-def SGB_SOUND_B                 equ $02
-def SGB_SOUND_FLAGS             equ $03
+def A_SGB_SOUND_A               equ $01
+def A_SGB_SOUND_B               equ $02
+def A_SGB_SOUND_FLAGS           equ $03
 
 
 ;******************************************************************************
-; SGB_SOUND Flags
+; SGB_SOUND_FLAGS Values
 ;******************************************************************************
 
 def S_SGB_SOUND_A_PITCH   equ 0
@@ -193,7 +193,7 @@ def SGB_SOUND_B_STOP            equ $80
 ; SGB_MLT_REQ Packet Indices
 ;******************************************************************************
 
-def SGB_MLT_REQ_PLAYERS         equ $01
+def A_SGB_MLT_REQ_PLAYERS       equ $01
 
 
 ;******************************************************************************
@@ -209,7 +209,7 @@ def SGB_MLT_REQ_PLAYERS_FOUR    equ $01
 ; SGB_MASK_EN Packet Indices
 ;******************************************************************************
 
-def SGB_MASK_EN_MASK            equ $01
+def A_SGB_MASK_EN_MASK          equ $01
 
 
 ;******************************************************************************
