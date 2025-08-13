@@ -19,38 +19,40 @@ def SGB_INC equ 1
 ; SGB Command Prefixes
 ;******************************************************************************
 
-def SGB_PAL01                   equ $00 << 3
-def SGB_PAL23                   equ $01 << 3
-def SGB_PAL03                   equ $02 << 3
-def SGB_PAL12                   equ $03 << 3
-def SGB_ATTR_BLK                equ $04 << 3
-def SGB_ATTR_LIN                equ $05 << 3
-def SGB_ATTR_DIV                equ $06 << 3
-def SGB_ATTR_CHR                equ $07 << 3
-def SGB_SOUND                   equ $08 << 3
-def SGB_SOU_TRN                 equ $09 << 3
-def SGB_PAL_SET                 equ $0A << 3
-def SGB_PAL_TRN                 equ $0B << 3
-def SGB_ATRC_EN                 equ $0C << 3
-def SGB_TEST_EN                 equ $0D << 3
-def SGB_ICON_EN                 equ $0E << 3
-def SGB_DATA_SND                equ $0F << 3
-def SGB_DATA_TRN                equ $10 << 3
-def SGB_MLT_REQ                 equ $11 << 3
-def SGB_JUMP                    equ $12 << 3
-def SGB_CHR_TRN                 equ $13 << 3
-def SGB_PCT_TRN                 equ $14 << 3
-def SGB_ATTR_TRN                equ $15 << 3
-def SGB_ATTR_SET                equ $16 << 3
-def SGB_MASK_EN                 equ $17 << 3
-def SGB_OBJ_TRN                 equ $18 << 3
-def SGB_PAL_PRI                 equ $19 << 3
-def SGB_STUB1                   equ $1A << 3
-def SGB_STUB2                   equ $1B << 3
-def SGB_STUB3                   equ $1C << 3
-def SGB_STUB4                   equ $1D << 3
-def SGB_STUB5                   equ $1E << 3
-def SGB_STUB6                   equ $1F << 3
+def S_SGB_COMMAND               equ 3
+
+def SGB_PAL01                   equ $00 << S_SGB_COMMAND
+def SGB_PAL23                   equ $01 << S_SGB_COMMAND
+def SGB_PAL03                   equ $02 << S_SGB_COMMAND
+def SGB_PAL12                   equ $03 << S_SGB_COMMAND
+def SGB_ATTR_BLK                equ $04 << S_SGB_COMMAND
+def SGB_ATTR_LIN                equ $05 << S_SGB_COMMAND
+def SGB_ATTR_DIV                equ $06 << S_SGB_COMMAND
+def SGB_ATTR_CHR                equ $07 << S_SGB_COMMAND
+def SGB_SOUND                   equ $08 << S_SGB_COMMAND
+def SGB_SOU_TRN                 equ $09 << S_SGB_COMMAND
+def SGB_PAL_SET                 equ $0A << S_SGB_COMMAND
+def SGB_PAL_TRN                 equ $0B << S_SGB_COMMAND
+def SGB_ATRC_EN                 equ $0C << S_SGB_COMMAND
+def SGB_TEST_EN                 equ $0D << S_SGB_COMMAND
+def SGB_ICON_EN                 equ $0E << S_SGB_COMMAND
+def SGB_DATA_SND                equ $0F << S_SGB_COMMAND
+def SGB_DATA_TRN                equ $10 << S_SGB_COMMAND
+def SGB_MLT_REQ                 equ $11 << S_SGB_COMMAND
+def SGB_JUMP                    equ $12 << S_SGB_COMMAND
+def SGB_CHR_TRN                 equ $13 << S_SGB_COMMAND
+def SGB_PCT_TRN                 equ $14 << S_SGB_COMMAND
+def SGB_ATTR_TRN                equ $15 << S_SGB_COMMAND
+def SGB_ATTR_SET                equ $16 << S_SGB_COMMAND
+def SGB_MASK_EN                 equ $17 << S_SGB_COMMAND
+def SGB_OBJ_TRN                 equ $18 << S_SGB_COMMAND
+def SGB_PAL_PRI                 equ $19 << S_SGB_COMMAND
+def SGB_STUB1                   equ $1A << S_SGB_COMMAND
+def SGB_STUB2                   equ $1B << S_SGB_COMMAND
+def SGB_STUB3                   equ $1C << S_SGB_COMMAND
+def SGB_STUB4                   equ $1D << S_SGB_COMMAND
+def SGB_STUB5                   equ $1E << S_SGB_COMMAND
+def SGB_STUB6                   equ $1F << S_SGB_COMMAND
 
 
 ;******************************************************************************
@@ -66,32 +68,32 @@ def SGB_SOUND_FLAGS             equ $03
 ; SGB_SOUND Flags
 ;******************************************************************************
 
-def B_SGB_SOUND_A_PITCH   equ 0
+def S_SGB_SOUND_A_PITCH   equ 0
 
-    def SGB_SOUND_A_PITCH_0     equ 0 << B_SGB_SOUND_A_PITCH
-    def SGB_SOUND_A_PITCH_1     equ 1 << B_SGB_SOUND_A_PITCH
-    def SGB_SOUND_A_PITCH_2     equ 2 << B_SGB_SOUND_A_PITCH
-    def SGB_SOUND_A_PITCH_3     equ 3 << B_SGB_SOUND_A_PITCH
+    def SGB_SOUND_A_PITCH_0     equ 0 << S_SGB_SOUND_A_PITCH
+    def SGB_SOUND_A_PITCH_1     equ 1 << S_SGB_SOUND_A_PITCH
+    def SGB_SOUND_A_PITCH_2     equ 2 << S_SGB_SOUND_A_PITCH
+    def SGB_SOUND_A_PITCH_3     equ 3 << S_SGB_SOUND_A_PITCH
 
-def B_SGB_SOUND_A_VOLUME  equ 2
+def S_SGB_SOUND_A_VOLUME  equ 2
 
-    def SGB_SOUND_A_VOLUME_HIGH equ 0 << B_SGB_SOUND_A_VOLUME
-    def SGB_SOUND_A_VOLUME_MED  equ 1 << B_SGB_SOUND_A_VOLUME
-    def SGB_SOUND_A_VOLUME_LOW  equ 2 << B_SGB_SOUND_A_VOLUME
-    def SGB_SOUND_A_VOLUME_OFF  equ 3 << B_SGB_SOUND_A_VOLUME
+    def SGB_SOUND_A_VOLUME_HIGH equ 0 << S_SGB_SOUND_A_VOLUME
+    def SGB_SOUND_A_VOLUME_MED  equ 1 << S_SGB_SOUND_A_VOLUME
+    def SGB_SOUND_A_VOLUME_LOW  equ 2 << S_SGB_SOUND_A_VOLUME
+    def SGB_SOUND_A_VOLUME_OFF  equ 3 << S_SGB_SOUND_A_VOLUME
 
-def B_SGB_SOUND_B_PITCH   equ 4
+def S_SGB_SOUND_B_PITCH   equ 4
 
-    def SGB_SOUND_B_PITCH_0     equ 0 << B_SGB_SOUND_B_PITCH
-    def SGB_SOUND_B_PITCH_1     equ 1 << B_SGB_SOUND_B_PITCH
-    def SGB_SOUND_B_PITCH_2     equ 2 << B_SGB_SOUND_B_PITCH
-    def SGB_SOUND_B_PITCH_3     equ 3 << B_SGB_SOUND_B_PITCH
+    def SGB_SOUND_B_PITCH_0     equ 0 << S_SGB_SOUND_B_PITCH
+    def SGB_SOUND_B_PITCH_1     equ 1 << S_SGB_SOUND_B_PITCH
+    def SGB_SOUND_B_PITCH_2     equ 2 << S_SGB_SOUND_B_PITCH
+    def SGB_SOUND_B_PITCH_3     equ 3 << S_SGB_SOUND_B_PITCH
 
-def B_SGB_SOUND_B_VOLUME  equ 6
+def S_SGB_SOUND_B_VOLUME  equ 6
 
-    def SGB_SOUND_B_VOLUME_HIGH equ 0 << B_SGB_SOUND_B_VOLUME
-    def SGB_SOUND_B_VOLUME_MED  equ 1 << B_SGB_SOUND_B_VOLUME
-    def SGB_SOUND_B_VOLUME_LOW  equ 2 << B_SGB_SOUND_B_VOLUME
+    def SGB_SOUND_B_VOLUME_HIGH equ 0 << S_SGB_SOUND_B_VOLUME
+    def SGB_SOUND_B_VOLUME_MED  equ 1 << S_SGB_SOUND_B_VOLUME
+    def SGB_SOUND_B_VOLUME_LOW  equ 2 << S_SGB_SOUND_B_VOLUME
 
 
 ;******************************************************************************
