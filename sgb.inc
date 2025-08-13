@@ -1,6 +1,6 @@
 ;******************************************************************************
 ; Super Game Boy command constant definitions
-; https://github.com/gbdev/sgb.inc
+; https://github.com/gbdev/hardware.inc
 ;******************************************************************************
 
 ; To the extent possible under law, the authors of this work have
