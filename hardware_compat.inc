@@ -1,6 +1,6 @@
 ;******************************************************************************
 ; Deprecated Game Boy hardware constant definitions for backwards compatibility
-; https://github.com/gbdev/hardware_compat.inc
+; https://github.com/gbdev/hardware.inc
 ;******************************************************************************
 
 ; To the extent possible under law, the authors of this work have
