@@ -223,10 +223,10 @@ def A_SGB_CHR_TRN_DEST          equ $01
 ; SGB_CHR_TRN_DEST Values
 ;******************************************************************************
 
-def SGB_CHR_TRN_DEST_BG_TILES_0  equ $00
-def SGB_CHR_TRN_DEST_BG_TILES_1  equ $01
-def SGB_CHR_TRN_DEST_OBJ_TILES_0 equ $02
-def SGB_CHR_TRN_DEST_OBJ_TILES_1 equ $03
+def SGB_CHR_TRN_DEST_BG_0       equ $00
+def SGB_CHR_TRN_DEST_BG_1       equ $01
+def SGB_CHR_TRN_DEST_OBJ_0      equ $02
+def SGB_CHR_TRN_DEST_OBJ_1      equ $03
 
 
 ;******************************************************************************
