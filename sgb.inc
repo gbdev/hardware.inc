@@ -63,6 +63,58 @@ def SGB_STUB6                   equ $1F << S_SGB_COMMAND
 
 
 ;******************************************************************************
+; SGB_PAL01 Packet Indices
+;******************************************************************************
+
+def A_SGB_PAL01_COLOR_0         equ $01
+def A_SGB_PAL01_PAL_0_COLOR_1   equ $03
+def A_SGB_PAL01_PAL_0_COLOR_2   equ $05
+def A_SGB_PAL01_PAL_0_COLOR_3   equ $07
+def A_SGB_PAL01_PAL_1_COLOR_1   equ $09
+def A_SGB_PAL01_PAL_1_COLOR_2   equ $0B
+def A_SGB_PAL01_PAL_1_COLOR_3   equ $0D
+
+
+;******************************************************************************
+; SGB_PAL23 Packet Indices
+;******************************************************************************
+
+def A_SGB_PAL23_COLOR_0         equ $01
+def A_SGB_PAL23_PAL_2_COLOR_1   equ $03
+def A_SGB_PAL23_PAL_2_COLOR_2   equ $05
+def A_SGB_PAL23_PAL_2_COLOR_3   equ $07
+def A_SGB_PAL23_PAL_3_COLOR_1   equ $09
+def A_SGB_PAL23_PAL_3_COLOR_2   equ $0B
+def A_SGB_PAL23_PAL_3_COLOR_3   equ $0D
+
+
+;******************************************************************************
+; SGB_PAL03 Packet Indices
+;******************************************************************************
+
+def A_SGB_PAL03_COLOR_0         equ $01
+def A_SGB_PAL03_PAL_0_COLOR_1   equ $03
+def A_SGB_PAL03_PAL_0_COLOR_2   equ $05
+def A_SGB_PAL03_PAL_0_COLOR_3   equ $07
+def A_SGB_PAL03_PAL_3_COLOR_1   equ $09
+def A_SGB_PAL03_PAL_3_COLOR_2   equ $0B
+def A_SGB_PAL03_PAL_3_COLOR_3   equ $0D
+
+
+;******************************************************************************
+; SGB_PAL12 Packet Indices
+;******************************************************************************
+
+def A_SGB_PAL12_COLOR_0         equ $01
+def A_SGB_PAL12_PAL_1_COLOR_1   equ $03
+def A_SGB_PAL12_PAL_1_COLOR_2   equ $05
+def A_SGB_PAL12_PAL_1_COLOR_3   equ $07
+def A_SGB_PAL12_PAL_2_COLOR_1   equ $09
+def A_SGB_PAL12_PAL_2_COLOR_2   equ $0B
+def A_SGB_PAL12_PAL_2_COLOR_3   equ $0D
+
+
+;******************************************************************************
 ; SGB_SOUND Packet Indices
 ;******************************************************************************
 
