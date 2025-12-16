@@ -242,7 +242,7 @@ def B_AUD1HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD1HIGH_LENGTH_OFF equ 0 << B_AUD1HIGH_LEN_ENABLE
     def AUD1HIGH_LENGTH_ON  equ 1 << B_AUD1HIGH_LEN_ENABLE
 
-def AUD1HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD1HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- $FF15 is unused ----------------------------------------------------------
 
@@ -286,7 +286,7 @@ def B_AUD2HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD2HIGH_LENGTH_OFF equ 0 << B_AUD2HIGH_LEN_ENABLE
     def AUD2HIGH_LENGTH_ON  equ 1 << B_AUD2HIGH_LEN_ENABLE
 
-def AUD2HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD2HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- AUD3ENA / NR30 ($FF1A) ---------------------------------------------------
 ; Audio channel 3 enable
@@ -324,7 +324,7 @@ def B_AUD3HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD3HIGH_LENGTH_OFF equ 0 << B_AUD3HIGH_LEN_ENABLE
     def AUD3HIGH_LENGTH_ON  equ 1 << B_AUD3HIGH_LEN_ENABLE
 
-def AUD3HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD3HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- $FF1F is unused ----------------------------------------------------------
 
