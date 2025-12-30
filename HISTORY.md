@@ -113,3 +113,5 @@
   - Added `JOYP_SGB_*` constants
   - Added more `BOOTUP_*` value constants
   - Corrected comments on some audio registers
+- **Rev 5.4.0** - 2025-12-31 *(mattcurrie)*
+  - Added registers and constants for PSW
