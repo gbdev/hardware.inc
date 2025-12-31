@@ -694,8 +694,8 @@ def WBK_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 ; In CGB mode, reads return $FF and writes are ignored.
 def rPSW equ $FF71
 
-def B_PSW_WINDOW equ 7 ; whether the Palette Selection Window is enabled [r/w CGB's DMG mode only]
-def B_PSW_NMI    equ 0 ; whether the NMI is enabled                      [r/w CGB's DMG mode only]
+def B_PSW_WINDOW equ 7 ; whether the Palette Selection Window is enabled [r/w]
+def B_PSW_NMI    equ 0 ; whether the NMI is enabled                      [r/w]
     def PSW_WINDOW equ 1 << B_PSW_WINDOW
         def PSW_WIN_OFF equ 0 << B_PSW_WINDOW
         def PSW_WIN_ON  equ 1 << B_PSW_WINDOW
