@@ -689,9 +689,9 @@ def rWBK equ $FF70
 def WBK_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 
 ; -- PSW ($FF71) --------------------------------------------------------------
-; (CGB boot ROM only) Palette Selection Window and NMI control. [r/w CGB's DMG mode only]
-; In the CGB's CGB mode reads return $FF and writes are ignored. 
+; (CGB boot ROM's DMG mode only) Palette Selection Window and NMI control. [r/w]
 ; Bits 1-6 are always 1.
+; In CGB mode, reads return $FF and writes are ignored.
 def rPSW equ $FF71
 
 def B_PSW_WINDOW equ 7 ; whether the Palette Selection Window is enabled [r/w CGB's DMG mode only]
