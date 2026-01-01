@@ -689,7 +689,54 @@ def rWBK equ $FF70
 
 def WBK_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 
-; -- $FF71-$FF75 are unused ---------------------------------------------------
+; -- PSW ($FF71) --------------------------------------------------------------
+; (CGB boot ROM's DMG mode only) Palette Selection Window and NMI control. [r/w]
+; Bits 1-6 are always 1.
+; In CGB mode, reads return $FF and writes are ignored.
+def rPSW equ $FF71
+
+def B_PSW_WINDOW equ 7 ; whether the Palette Selection Window is enabled [r/w]
+def B_PSW_NMI    equ 0 ; whether the NMI is enabled                      [r/w]
+    def PSW_WINDOW equ 1 << B_PSW_WINDOW
+        def PSW_WIN_OFF equ 0 << B_PSW_WINDOW
+        def PSW_WIN_ON  equ 1 << B_PSW_WINDOW
+    def PSW_NMI equ 1 << B_PSW_NMI
+        def PSW_NMI_DISABLE equ 0 << B_PSW_NMI
+        def PSW_NMI_ENABLE  equ 1 << B_PSW_NMI
+
+; -- PSWX ($FF72) -------------------------------------------------------------
+; (CGB boot ROM only) X coordinate of the Palette Selection Window's top-left pixel, plus 7 (7-166) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSWX equ $FF72
+
+; -- PSWY ($FF73) -------------------------------------------------------------
+; (CGB boot ROM only) Y coordinate of the Palette Selection Window's top-left pixel (0-143) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSWY equ $FF73
+
+; -- PSM ($FF74) --------------------------------------------------------------
+; (CGB boot ROM only) Set the Palette Selection Window button mask (triggers NMI when pressed) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSM equ $FF74
+
+def B_PSM_START  equ 7
+def B_PSM_SELECT equ 6
+def B_PSM_B      equ 5
+def B_PSM_A      equ 4
+def B_PSM_DOWN   equ 3
+def B_PSM_UP     equ 2
+def B_PSM_LEFT   equ 1
+def B_PSM_RIGHT  equ 0
+    def PSM_START  equ 1 << B_PSM_START
+    def PSM_SELECT equ 1 << B_PSM_SELECT
+    def PSM_B      equ 1 << B_PSM_B
+    def PSM_A      equ 1 << B_PSM_A
+    def PSM_DOWN   equ 1 << B_PSM_DOWN
+    def PSM_UP     equ 1 << B_PSM_UP
+    def PSM_LEFT   equ 1 << B_PSM_LEFT
+    def PSM_RIGHT  equ 1 << B_PSM_RIGHT
+
+; -- $FF75 is unused ----------------------------------------------------------
 
 ; -- PCM12 ($FF76) ------------------------------------------------------------
 ; Audio channels 1 and 2 output
