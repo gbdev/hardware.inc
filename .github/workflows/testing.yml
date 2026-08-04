@@ -31,6 +31,8 @@ jobs:
           # Download latest release
           Invoke-WebRequest $githubWinReleaseURL -OutFile rgbds.zip
           Expand-Archive rgbds.zip
+          # Move files out of subdirectories if present
+          Get-ChildItem -Path rgbds -Recurse -File | Move-Item -Destination rgbds -Force
       - name: Test hardware.inc
         run: |
           rgbds/rgbasm.exe hardware.inc
