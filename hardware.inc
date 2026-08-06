@@ -1005,6 +1005,7 @@ def SHADE_BLACK equ %11
 def TILEBLOCK0 equ $8000 ; $8000-$87FF (tiles $00-$7F)
 def TILEBLOCK1 equ $8800 ; $8800-$8FFF (tiles $80-$FF)
 def TILEBLOCK2 equ $9000 ; $9000-$97FF (tiles $00-$7F)
+def TILES_PER_BLOCK equ 128
 
 ; Tilemaps the BG or Window can read from (controlled by LCDC)
 def TILEMAP0 equ $9800 ; $9800-$9BFF
