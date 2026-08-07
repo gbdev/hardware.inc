@@ -1000,9 +1000,19 @@ def SHADE_LIGHT equ %01
 def SHADE_DARK  equ %10
 def SHADE_BLACK equ %11
 
+; "Blocks" of 128 tiles each. OBJs always use blocks 0 and 1,
+; which blocks BG and Window use is controlled by LCDC
+def TILEBLOCK0 equ $8000 ; $8000-$87FF (tiles $00-$7F)
+def TILEBLOCK1 equ $8800 ; $8800-$8FFF (tiles $80-$FF)
+def TILEBLOCK2 equ $9000 ; $9000-$97FF (tiles $00-$7F)
+def TILES_PER_BLOCK equ 128
+
 ; Tilemaps the BG or Window can read from (controlled by LCDC)
 def TILEMAP0 equ $9800 ; $9800-$9BFF
 def TILEMAP1 equ $9C00 ; $9C00-$9FFF
+; (CGB only) Corresponding attribute maps, in VRAM bank 1
+def ATTRMAP0 equ $9800 ; $9800-$9BFF
+def ATTRMAP1 equ $9C00 ; $9C00-$9FFF
 
 ; (CGB only) BG tile attribute fields
 def B_BG_PRIO  equ 7 ; whether the BG tile colors 1-3 are drawn above OBJs
