@@ -84,7 +84,7 @@ def B_JOYP_SGB_ZERO equ 4 ; 0 = sending 0 bit
     def JOYP_SGB_ZERO   equ %00_10_0000 ; send 0 bit
     def JOYP_SGB_FINISH equ %00_11_0000 ; finish SGB packet transfer
 
-; Combined input byte, with Control Pad in high nybble (conventional order)
+; Combined input byte, with Control Pad in high nybble (conventional packed order in software)
 def B_PAD_DOWN   equ 7
 def B_PAD_UP     equ 6
 def B_PAD_LEFT   equ 5
@@ -104,7 +104,7 @@ def B_PAD_A      equ 0
     def PAD_B        equ 1 << B_PAD_B
     def PAD_A        equ 1 << B_PAD_A
 
-; Combined input byte, with Control Pad in low nybble (swapped order)
+; Combined input byte, with Control Pad in low nybble (swapped order in some software)
 def B_PAD_SWAP_START  equ 7
 def B_PAD_SWAP_SELECT equ 6
 def B_PAD_SWAP_B      equ 5
