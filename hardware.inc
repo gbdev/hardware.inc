@@ -815,12 +815,6 @@ def RAMB_RTC_M  equ $09 ; minutes counter (0-59)
 def RAMB_RTC_H  equ $0A ; hours counter (0-23)
 def RAMB_RTC_DL equ $0B ; days counter, low byte (0-255)
 def RAMB_RTC_DH equ $0C ; days counter, high bit and other flags
-    def B_RAMB_RTC_DH_CARRY equ 7 ; 1 = days counter overflowed    [r/w]
-    def B_RAMB_RTC_DH_HALT  equ 6 ; 0 = run timer, 1 = stop timer  [r/w]
-    def B_RAMB_RTC_DH_HIGH  equ 0 ; days counter, high bit (bit 8) [r/w]
-        def RAMB_RTC_DH_CARRY equ 1 << B_RAMB_RTC_DH_CARRY
-        def RAMB_RTC_DH_HALT  equ 1 << B_RAMB_RTC_DH_HALT
-        def RAMB_RTC_DH_HIGH  equ 1 << B_RAMB_RTC_DH_HIGH
 
 def B_RAMB_RUMBLE equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
     def RAMB_RUMBLE equ 1 << B_RAMB_RUMBLE
@@ -858,6 +852,14 @@ def RTCLATCH_FINISH equ $01
 ; -- RTCREG ($A000-$BFFF) -----------------------------------------------------
 ; RTC register [r/w]
 def rRTCREG equ $A000
+
+; Applicable after writing RAMB_RTC_DH to RAMB
+def B_RTCREG_DH_CARRY equ 7 ; 1 = days counter overflowed    [r/w]
+def B_RTCREG_DH_HALT  equ 6 ; 0 = run timer, 1 = stop timer  [r/w]
+def B_RTCREG_DH_HIGH  equ 0 ; days counter, high bit (bit 8) [r/w]
+    def RTCREG_DH_CARRY equ 1 << B_RTCREG_DH_CARRY
+    def RTCREG_DH_HALT  equ 1 << B_RTCREG_DH_HALT
+    def RTCREG_DH_HIGH  equ 1 << B_RTCREG_DH_HIGH
 
 
 ; ** MBC5 only ****************************************************************
