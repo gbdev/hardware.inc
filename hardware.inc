@@ -1039,7 +1039,7 @@ def BOOTUP_A_MGB equ $FF
 
 ; Register B = CPU qualifier
 def BOOTUP_B_DMG0  equ $FF
-def B_BOOTUP_B_AGB equ 0
+def B_BOOTUP_B_AGB equ 0 ; 0 = CGB, 1 = AGB
 
 ; Register C = CPU qualifier
 def BOOTUP_C_DMG equ $13
