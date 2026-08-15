@@ -16,7 +16,7 @@ def SGB_INC equ 1
 
 
 ;******************************************************************************
-; SGB packet size
+; SGB packet constants
 ;******************************************************************************
 
 def SGB_PACKET_SIZE equ 16
@@ -66,8 +66,10 @@ def SGB_STUB6    equ $1F << S_SGB_COMMAND
 
 
 ;******************************************************************************
-; SGB_PAL01 packet indexes
+; SGB command-related values
 ;******************************************************************************
+
+; -- SGB_PAL01 ($00) packet indexes -------------------------------------------
 
 def A_SGB_PAL01_COLOR_0       equ $01
 def A_SGB_PAL01_PAL_0_COLOR_1 equ $03
@@ -78,9 +80,7 @@ def A_SGB_PAL01_PAL_1_COLOR_2 equ $0B
 def A_SGB_PAL01_PAL_1_COLOR_3 equ $0D
 
 
-;******************************************************************************
-; SGB_PAL23 packet indexes
-;******************************************************************************
+; -- SGB_PAL23 ($01) packet indexes -------------------------------------------
 
 def A_SGB_PAL23_COLOR_0       equ $01
 def A_SGB_PAL23_PAL_2_COLOR_1 equ $03
@@ -91,9 +91,7 @@ def A_SGB_PAL23_PAL_3_COLOR_2 equ $0B
 def A_SGB_PAL23_PAL_3_COLOR_3 equ $0D
 
 
-;******************************************************************************
-; SGB_PAL03 packet indexes
-;******************************************************************************
+; -- SGB_PAL03 ($02) packet indexes -------------------------------------------
 
 def A_SGB_PAL03_COLOR_0       equ $01
 def A_SGB_PAL03_PAL_0_COLOR_1 equ $03
@@ -104,9 +102,7 @@ def A_SGB_PAL03_PAL_3_COLOR_2 equ $0B
 def A_SGB_PAL03_PAL_3_COLOR_3 equ $0D
 
 
-;******************************************************************************
-; SGB_PAL12 packet indices
-;******************************************************************************
+; -- SGB_PAL12 ($03) packet indices -------------------------------------------
 
 def A_SGB_PAL12_COLOR_0       equ $01
 def A_SGB_PAL12_PAL_1_COLOR_1 equ $03
@@ -117,49 +113,35 @@ def A_SGB_PAL12_PAL_2_COLOR_2 equ $0B
 def A_SGB_PAL12_PAL_2_COLOR_3 equ $0D
 
 
-;******************************************************************************
-; SGB_SOUND packet indexes
-;******************************************************************************
+; -- SGB_SOUND ($08) packet indexes -------------------------------------------
 
 def A_SGB_SOUND_A     equ $01
 def A_SGB_SOUND_B     equ $02
 def A_SGB_SOUND_FLAGS equ $03
 
-
-;******************************************************************************
-; SGB_SOUND_FLAGS values
-;******************************************************************************
-
+; A_SGB_SOUND_FLAGS values
 def S_SGB_SOUND_A_PITCH  equ 0
     def SGB_SOUND_A_PITCH_0     equ 0 << S_SGB_SOUND_A_PITCH
     def SGB_SOUND_A_PITCH_1     equ 1 << S_SGB_SOUND_A_PITCH
     def SGB_SOUND_A_PITCH_2     equ 2 << S_SGB_SOUND_A_PITCH
     def SGB_SOUND_A_PITCH_3     equ 3 << S_SGB_SOUND_A_PITCH
-
 def S_SGB_SOUND_A_VOLUME equ 2
     def SGB_SOUND_A_VOLUME_HIGH equ 0 << S_SGB_SOUND_A_VOLUME
     def SGB_SOUND_A_VOLUME_MED  equ 1 << S_SGB_SOUND_A_VOLUME
     def SGB_SOUND_A_VOLUME_LOW  equ 2 << S_SGB_SOUND_A_VOLUME
     def SGB_SOUND_A_VOLUME_OFF  equ 3 << S_SGB_SOUND_A_VOLUME
-
 def S_SGB_SOUND_B_PITCH  equ 4
     def SGB_SOUND_B_PITCH_0     equ 0 << S_SGB_SOUND_B_PITCH
     def SGB_SOUND_B_PITCH_1     equ 1 << S_SGB_SOUND_B_PITCH
     def SGB_SOUND_B_PITCH_2     equ 2 << S_SGB_SOUND_B_PITCH
     def SGB_SOUND_B_PITCH_3     equ 3 << S_SGB_SOUND_B_PITCH
-
 def S_SGB_SOUND_B_VOLUME equ 6
     def SGB_SOUND_B_VOLUME_HIGH equ 0 << S_SGB_SOUND_B_VOLUME
     def SGB_SOUND_B_VOLUME_MED  equ 1 << S_SGB_SOUND_B_VOLUME
     def SGB_SOUND_B_VOLUME_LOW  equ 2 << S_SGB_SOUND_B_VOLUME
 
-
-;******************************************************************************
-; SGB_SOUND_A values
-;******************************************************************************
-
+; A_SGB_SOUND_A values
 def SGB_SOUND_A_RETRIGGER       equ $00
-
 def SGB_SOUND_A_NINTENDO        equ $01
 def SGB_SOUND_A_GAME_OVER       equ $02
 def SGB_SOUND_A_DROP            equ $03
@@ -208,16 +190,10 @@ def SGB_SOUND_A_TELEPORTATION   equ $2D
 def SGB_SOUND_A_LIGHTNING       equ $2E
 def SGB_SOUND_A_EARTHQUAKE      equ $2F
 def SGB_SOUND_A_LASER_SMALL     equ $30
-
 def SGB_SOUND_A_STOP            equ $80
 
-
-;******************************************************************************
-; SGB_SOUND_B values
-;******************************************************************************
-
+; A_SGB_SOUND_B values
 def SGB_SOUND_B_RETRIGGER       equ $00
-
 def SGB_SOUND_B_APPLAUSE_SMALL  equ $01
 def SGB_SOUND_B_APPLAUSE_MED    equ $02
 def SGB_SOUND_B_APPLAUSE_LARGE  equ $03
@@ -243,54 +219,35 @@ def SGB_SOUND_B_FIRE            equ $16
 def SGB_SOUND_B_CAMERA_SHUTTER  equ $17
 def SGB_SOUND_B_WRITE           equ $18
 def SGB_SOUND_B_SHOW_UP         equ $19
-
 def SGB_SOUND_B_STOP            equ $80
 
 
-;******************************************************************************
-; SGB_MLT_REQ packet indexes
-;******************************************************************************
+; -- SGB_MLT_REQ ($11) packet indexes -----------------------------------------
 
 def A_SGB_MLT_REQ_PLAYERS equ $01
 
-
-;******************************************************************************
-; SGB_MLT_REQ_PLAYERS values
-;******************************************************************************
-
+; A_SGB_MLT_REQ_PLAYERS values
 def SGB_MLT_REQ_PLAYERS_ONE  equ $00
 def SGB_MLT_REQ_PLAYERS_TWO  equ $01
 def SGB_MLT_REQ_PLAYERS_FOUR equ $01
 
 
-;******************************************************************************
-; SGB_CHR_TRN packet indexes
-;******************************************************************************
+; -- SGB_CHR_TRN ($13) packet indexes -----------------------------------------
 
 def A_SGB_CHR_TRN_DEST equ $01
 
-
-;******************************************************************************
-; SGB_CHR_TRN_DEST values
-;******************************************************************************
-
+; A_SGB_CHR_TRN_DEST values
 def SGB_CHR_TRN_DEST_BG_0  equ $00
 def SGB_CHR_TRN_DEST_BG_1  equ $01
 def SGB_CHR_TRN_DEST_OBJ_0 equ $02
 def SGB_CHR_TRN_DEST_OBJ_1 equ $03
 
 
-;******************************************************************************
-; SGB_MASK_EN packet indexes
-;******************************************************************************
+; -- SGB_MASK_EN ($17) packet indexes -----------------------------------------
 
 def A_SGB_MASK_EN_MASK equ $01
 
-
-;******************************************************************************
-; SGB_MASK_EN_MASK values
-;******************************************************************************
-
+; A_SGB_MASK_EN_MASK values
 def SGB_MASK_EN_MASK_CANCEL  equ $00
 def SGB_MASK_EN_MASK_FREEZE  equ $01
 def SGB_MASK_EN_MASK_BLACK   equ $02
