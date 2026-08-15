@@ -118,6 +118,7 @@ def A_SGB_PAL12_PAL_2_COLOR_3 equ $0D ; $0D-$0E
 def A_SGB_SOUND_A     equ $01
 def A_SGB_SOUND_B     equ $02
 def A_SGB_SOUND_FLAGS equ $03
+def A_SGB_SOUND_SCORE equ $04
 
 ; A_SGB_SOUND_FLAGS values
 def S_SGB_SOUND_A_PITCH  equ 0
