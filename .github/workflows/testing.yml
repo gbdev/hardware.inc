@@ -17,6 +17,9 @@ jobs:
       - name: Test hardware_compat.inc
         run: |
           rgbasm -P hardware.inc hardware_compat.inc
+      - name: Test sgb.inc
+        run: |
+          rgbasm sgb.inc
 
   windows-testing:
     runs-on: windows-latest
