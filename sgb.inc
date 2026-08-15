@@ -229,7 +229,7 @@ def A_SGB_MLT_REQ_PLAYERS equ $01
 ; A_SGB_MLT_REQ_PLAYERS values
 def SGB_MLT_REQ_PLAYERS_ONE  equ $00
 def SGB_MLT_REQ_PLAYERS_TWO  equ $01
-def SGB_MLT_REQ_PLAYERS_FOUR equ $01
+def SGB_MLT_REQ_PLAYERS_FOUR equ $11
 
 
 ; -- SGB_CHR_TRN ($13) packet indexes -----------------------------------------
