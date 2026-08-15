@@ -1096,16 +1096,15 @@ def ROM_HEADER_SIZE equ $50
 ;******************************************************************************
 
 ; Register A = CPU type
-def BOOTUP_A_DMG equ $01
+def BOOTUP_A_DMG equ $01 ; DMG or SGB
 def BOOTUP_A_CGB equ $11 ; CGB or AGB
 def BOOTUP_A_MGB equ $FF
     def BOOTUP_A_SGB  equ BOOTUP_A_DMG
     def BOOTUP_A_SGB2 equ BOOTUP_A_MGB
 
-; Register B = CPU qualifier (if A is BOOTUP_A_CGB)
-def B_BOOTUP_B_AGB equ 0
-    def BOOTUP_B_CGB equ 0 << B_BOOTUP_B_AGB
-    def BOOTUP_B_AGB equ 1 << B_BOOTUP_B_AGB
+; Register B = CPU qualifier
+def BOOTUP_B_DMG0  equ $FF
+def B_BOOTUP_B_AGB equ 0 ; 0 = CGB, 1 = AGB
 
 ; Register C = CPU qualifier
 def BOOTUP_C_DMG equ $13
