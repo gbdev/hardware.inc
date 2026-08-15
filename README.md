@@ -24,5 +24,5 @@ Breaking changes increase the major version, backwards-compatible changes (typic
 * Carsten Sørensen (whose ideas Jeff based his file on)
 * Jeff Frohwein
 * AntonioND
-* BlitterObjectBob, tobiasvl, ISSOtm, Rangi42, avivace, Eievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto
+* BlitterObjectBob, tobiasvl, ISSOtm, Rangi42, avivace, Eievui, QuinnPainter, rondnelson99, daid, Hacktix, sukus21, alvaro-cuesta, basxto, mattcurrie
 * Probably lots of other people who have added to the file throughout the years

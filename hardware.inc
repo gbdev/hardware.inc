@@ -84,7 +84,7 @@ def B_JOYP_SGB_ZERO equ 4 ; 0 = sending 0 bit
     def JOYP_SGB_ZERO   equ %00_10_0000 ; send 0 bit
     def JOYP_SGB_FINISH equ %00_11_0000 ; finish SGB packet transfer
 
-; Combined input byte, with Control Pad in high nybble (conventional order)
+; Combined input byte, with Control Pad in high nybble (conventional packed order in software)
 def B_PAD_DOWN   equ 7
 def B_PAD_UP     equ 6
 def B_PAD_LEFT   equ 5
@@ -104,7 +104,7 @@ def B_PAD_A      equ 0
     def PAD_B        equ 1 << B_PAD_B
     def PAD_A        equ 1 << B_PAD_A
 
-; Combined input byte, with Control Pad in low nybble (swapped order)
+; Combined input byte, with Control Pad in low nybble (swapped order in some software)
 def B_PAD_SWAP_START  equ 7
 def B_PAD_SWAP_SELECT equ 6
 def B_PAD_SWAP_B      equ 5
@@ -242,7 +242,7 @@ def B_AUD1HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD1HIGH_LENGTH_OFF equ 0 << B_AUD1HIGH_LEN_ENABLE
     def AUD1HIGH_LENGTH_ON  equ 1 << B_AUD1HIGH_LEN_ENABLE
 
-def AUD1HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD1HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- $FF15 is unused ----------------------------------------------------------
 
@@ -286,7 +286,7 @@ def B_AUD2HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD2HIGH_LENGTH_OFF equ 0 << B_AUD2HIGH_LEN_ENABLE
     def AUD2HIGH_LENGTH_ON  equ 1 << B_AUD2HIGH_LEN_ENABLE
 
-def AUD2HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD2HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- AUD3ENA / NR30 ($FF1A) ---------------------------------------------------
 ; Audio channel 3 enable
@@ -324,7 +324,7 @@ def B_AUD3HIGH_LEN_ENABLE equ 6 ; 1 = reset the channel after the length timer e
     def AUD3HIGH_LENGTH_OFF equ 0 << B_AUD3HIGH_LEN_ENABLE
     def AUD3HIGH_LENGTH_ON  equ 1 << B_AUD3HIGH_LEN_ENABLE
 
-def AUD3HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [r/w]
+def AUD3HIGH_PERIOD_HIGH equ %00000_111 ; upper 3 bits of the channel's period [wo]
 
 ; -- $FF1F is unused ----------------------------------------------------------
 
@@ -689,7 +689,54 @@ def rWBK equ $FF70
 
 def WBK_BANK equ %00000_111 ; mapped WRAM bank (0-7) [r/w]
 
-; -- $FF71-$FF75 are unused ---------------------------------------------------
+; -- PSW ($FF71) --------------------------------------------------------------
+; (CGB boot ROM's DMG mode only) Palette Selection Window and NMI control. [r/w]
+; Bits 1-6 are always 1.
+; In CGB mode, reads return $FF and writes are ignored.
+def rPSW equ $FF71
+
+def B_PSW_WINDOW equ 7 ; whether the Palette Selection Window is enabled [r/w]
+def B_PSW_NMI    equ 0 ; whether the NMI is enabled                      [r/w]
+    def PSW_WINDOW equ 1 << B_PSW_WINDOW
+        def PSW_WIN_OFF equ 0 << B_PSW_WINDOW
+        def PSW_WIN_ON  equ 1 << B_PSW_WINDOW
+    def PSW_NMI equ 1 << B_PSW_NMI
+        def PSW_NMI_DISABLE equ 0 << B_PSW_NMI
+        def PSW_NMI_ENABLE  equ 1 << B_PSW_NMI
+
+; -- PSWX ($FF72) -------------------------------------------------------------
+; (CGB boot ROM only) X coordinate of the Palette Selection Window's top-left pixel, plus 7 (7-166) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSWX equ $FF72
+
+; -- PSWY ($FF73) -------------------------------------------------------------
+; (CGB boot ROM only) Y coordinate of the Palette Selection Window's top-left pixel (0-143) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSWY equ $FF73
+
+; -- PSM ($FF74) --------------------------------------------------------------
+; (CGB boot ROM only) Set the Palette Selection Window button mask (triggers NMI when pressed) [r/w]
+; Readable and writable in both CGB and DMG mode.
+def rPSM equ $FF74
+
+def B_PSM_START  equ 7
+def B_PSM_SELECT equ 6
+def B_PSM_B      equ 5
+def B_PSM_A      equ 4
+def B_PSM_DOWN   equ 3
+def B_PSM_UP     equ 2
+def B_PSM_LEFT   equ 1
+def B_PSM_RIGHT  equ 0
+    def PSM_START  equ 1 << B_PSM_START
+    def PSM_SELECT equ 1 << B_PSM_SELECT
+    def PSM_B      equ 1 << B_PSM_B
+    def PSM_A      equ 1 << B_PSM_A
+    def PSM_DOWN   equ 1 << B_PSM_DOWN
+    def PSM_UP     equ 1 << B_PSM_UP
+    def PSM_LEFT   equ 1 << B_PSM_LEFT
+    def PSM_RIGHT  equ 1 << B_PSM_RIGHT
+
+; -- $FF75 is unused ----------------------------------------------------------
 
 ; -- PCM12 ($FF76) ------------------------------------------------------------
 ; Audio channels 1 and 2 output
@@ -768,12 +815,6 @@ def RAMB_RTC_M  equ $09 ; minutes counter (0-59)
 def RAMB_RTC_H  equ $0A ; hours counter (0-23)
 def RAMB_RTC_DL equ $0B ; days counter, low byte (0-255)
 def RAMB_RTC_DH equ $0C ; days counter, high bit and other flags
-    def B_RAMB_RTC_DH_CARRY equ 7 ; 1 = days counter overflowed    [wo]
-    def B_RAMB_RTC_DH_HALT  equ 6 ; 0 = run timer, 1 = stop timer  [wo]
-    def B_RAMB_RTC_DH_HIGH  equ 0 ; days counter, high bit (bit 8) [wo]
-        def RAMB_RTC_DH_CARRY equ 1 << B_RAMB_RTC_DH_CARRY
-        def RAMB_RTC_DH_HALT  equ 1 << B_RAMB_RTC_DH_HALT
-        def RAMB_RTC_DH_HIGH  equ 1 << B_RAMB_RTC_DH_HIGH
 
 def B_RAMB_RUMBLE equ 3 ; (MBC5 and MBC7 only) enable the rumble motor (if any)
     def RAMB_RUMBLE equ 1 << B_RAMB_RUMBLE
@@ -811,6 +852,14 @@ def RTCLATCH_FINISH equ $01
 ; -- RTCREG ($A000-$BFFF) -----------------------------------------------------
 ; RTC register [r/w]
 def rRTCREG equ $A000
+
+; Applicable after writing RAMB_RTC_DH to RAMB
+def B_RTCREG_DH_CARRY equ 7 ; 1 = days counter overflowed    [r/w]
+def B_RTCREG_DH_HALT  equ 6 ; 0 = run timer, 1 = stop timer  [r/w]
+def B_RTCREG_DH_HIGH  equ 0 ; days counter, high bit (bit 8) [r/w]
+    def RTCREG_DH_CARRY equ 1 << B_RTCREG_DH_CARRY
+    def RTCREG_DH_HALT  equ 1 << B_RTCREG_DH_HALT
+    def RTCREG_DH_HIGH  equ 1 << B_RTCREG_DH_HIGH
 
 
 ; ** MBC5 only ****************************************************************
@@ -953,9 +1002,19 @@ def SHADE_LIGHT equ %01
 def SHADE_DARK  equ %10
 def SHADE_BLACK equ %11
 
+; "Blocks" of 128 tiles each. OBJs always use blocks 0 and 1,
+; which blocks BG and Window use is controlled by LCDC
+def TILEBLOCK0 equ $8000 ; $8000-$87FF (tiles $00-$7F)
+def TILEBLOCK1 equ $8800 ; $8800-$8FFF (tiles $80-$FF)
+def TILEBLOCK2 equ $9000 ; $9000-$97FF (tiles $00-$7F)
+def TILES_PER_BLOCK equ 128
+
 ; Tilemaps the BG or Window can read from (controlled by LCDC)
 def TILEMAP0 equ $9800 ; $9800-$9BFF
 def TILEMAP1 equ $9C00 ; $9C00-$9FFF
+; (CGB only) Corresponding attribute maps, in VRAM bank 1
+def ATTRMAP0 equ $9800 ; $9800-$9BFF
+def ATTRMAP1 equ $9C00 ; $9C00-$9FFF
 
 ; (CGB only) BG tile attribute fields
 def B_BG_PRIO  equ 7 ; whether the BG tile colors 1-3 are drawn above OBJs
@@ -1011,7 +1070,7 @@ def AUD3RAM equ $FF1A ; $FF1A-$FF1E
 def AUD4RAM equ $FF1F ; $FF1F-$FF23
 def AUDRAM_SIZE equ 5 ; size of each audio channel RAM in bytes
 
-def _AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
+def AUD3WAVERAM equ $FF30 ; $FF30-$FF3F
 def AUD3WAVE_SIZE equ 16 ; size of wave pattern RAM in bytes
 
 
@@ -1024,6 +1083,14 @@ def INT_HANDLER_STAT   equ $0048 ; STAT   interrupt handler address
 def INT_HANDLER_TIMER  equ $0050 ; timer  interrupt handler address
 def INT_HANDLER_SERIAL equ $0058 ; serial interrupt handler address
 def INT_HANDLER_JOYPAD equ $0060 ; joypad interrupt handler address
+
+
+;******************************************************************************
+; ROM header address
+;******************************************************************************
+
+def ROM_HEADER equ $0100 ; $0100-$014F
+def ROM_HEADER_SIZE equ $50
 
 
 ;******************************************************************************
