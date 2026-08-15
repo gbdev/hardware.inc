@@ -69,51 +69,51 @@ def SGB_STUB6    equ $1F << S_SGB_COMMAND
 ; SGB command-related values
 ;******************************************************************************
 
-; -- SGB_PAL01 ($00) packet indexes -------------------------------------------
+; -- SGB_PAL01 ($00) ----------------------------------------------------------
 
-def A_SGB_PAL01_COLOR_0       equ $01
-def A_SGB_PAL01_PAL_0_COLOR_1 equ $03
-def A_SGB_PAL01_PAL_0_COLOR_2 equ $05
-def A_SGB_PAL01_PAL_0_COLOR_3 equ $07
-def A_SGB_PAL01_PAL_1_COLOR_1 equ $09
-def A_SGB_PAL01_PAL_1_COLOR_2 equ $0B
-def A_SGB_PAL01_PAL_1_COLOR_3 equ $0D
-
-
-; -- SGB_PAL23 ($01) packet indexes -------------------------------------------
-
-def A_SGB_PAL23_COLOR_0       equ $01
-def A_SGB_PAL23_PAL_2_COLOR_1 equ $03
-def A_SGB_PAL23_PAL_2_COLOR_2 equ $05
-def A_SGB_PAL23_PAL_2_COLOR_3 equ $07
-def A_SGB_PAL23_PAL_3_COLOR_1 equ $09
-def A_SGB_PAL23_PAL_3_COLOR_2 equ $0B
-def A_SGB_PAL23_PAL_3_COLOR_3 equ $0D
+def A_SGB_PAL01_COLOR_0       equ $01 ; $01-$02
+def A_SGB_PAL01_PAL_0_COLOR_1 equ $03 ; $03-$04
+def A_SGB_PAL01_PAL_0_COLOR_2 equ $05 ; $05-$06
+def A_SGB_PAL01_PAL_0_COLOR_3 equ $07 ; $07-$08
+def A_SGB_PAL01_PAL_1_COLOR_1 equ $09 ; $09-$0A
+def A_SGB_PAL01_PAL_1_COLOR_2 equ $0B ; $0B-$0C
+def A_SGB_PAL01_PAL_1_COLOR_3 equ $0D ; $0D-$0E
 
 
-; -- SGB_PAL03 ($02) packet indexes -------------------------------------------
+; -- SGB_PAL23 ($01) ----------------------------------------------------------
 
-def A_SGB_PAL03_COLOR_0       equ $01
-def A_SGB_PAL03_PAL_0_COLOR_1 equ $03
-def A_SGB_PAL03_PAL_0_COLOR_2 equ $05
-def A_SGB_PAL03_PAL_0_COLOR_3 equ $07
-def A_SGB_PAL03_PAL_3_COLOR_1 equ $09
-def A_SGB_PAL03_PAL_3_COLOR_2 equ $0B
-def A_SGB_PAL03_PAL_3_COLOR_3 equ $0D
-
-
-; -- SGB_PAL12 ($03) packet indices -------------------------------------------
-
-def A_SGB_PAL12_COLOR_0       equ $01
-def A_SGB_PAL12_PAL_1_COLOR_1 equ $03
-def A_SGB_PAL12_PAL_1_COLOR_2 equ $05
-def A_SGB_PAL12_PAL_1_COLOR_3 equ $07
-def A_SGB_PAL12_PAL_2_COLOR_1 equ $09
-def A_SGB_PAL12_PAL_2_COLOR_2 equ $0B
-def A_SGB_PAL12_PAL_2_COLOR_3 equ $0D
+def A_SGB_PAL23_COLOR_0       equ $01 ; $01-$02
+def A_SGB_PAL23_PAL_2_COLOR_1 equ $03 ; $03-$04
+def A_SGB_PAL23_PAL_2_COLOR_2 equ $05 ; $05-$06
+def A_SGB_PAL23_PAL_2_COLOR_3 equ $07 ; $07-$08
+def A_SGB_PAL23_PAL_3_COLOR_1 equ $09 ; $09-$0A
+def A_SGB_PAL23_PAL_3_COLOR_2 equ $0B ; $0B-$0C
+def A_SGB_PAL23_PAL_3_COLOR_3 equ $0D ; $0D-$0E
 
 
-; -- SGB_SOUND ($08) packet indexes -------------------------------------------
+; -- SGB_PAL03 ($02) ----------------------------------------------------------
+
+def A_SGB_PAL03_COLOR_0       equ $01 ; $01-$02
+def A_SGB_PAL03_PAL_0_COLOR_1 equ $03 ; $03-$04
+def A_SGB_PAL03_PAL_0_COLOR_2 equ $05 ; $05-$06
+def A_SGB_PAL03_PAL_0_COLOR_3 equ $07 ; $07-$08
+def A_SGB_PAL03_PAL_3_COLOR_1 equ $09 ; $09-$0A
+def A_SGB_PAL03_PAL_3_COLOR_2 equ $0B ; $0B-$0C
+def A_SGB_PAL03_PAL_3_COLOR_3 equ $0D ; $0D-$0E
+
+
+; -- SGB_PAL12 ($03) ----------------------------------------------------------
+
+def A_SGB_PAL12_COLOR_0       equ $01 ; $01-$02
+def A_SGB_PAL12_PAL_1_COLOR_1 equ $03 ; $03-$04
+def A_SGB_PAL12_PAL_1_COLOR_2 equ $05 ; $05-$06
+def A_SGB_PAL12_PAL_1_COLOR_3 equ $07 ; $07-$08
+def A_SGB_PAL12_PAL_2_COLOR_1 equ $09 ; $09-$0A
+def A_SGB_PAL12_PAL_2_COLOR_2 equ $0B ; $0B-$0C
+def A_SGB_PAL12_PAL_2_COLOR_3 equ $0D ; $0D-$0E
+
+
+; -- SGB_SOUND ($08) ----------------------------------------------------------
 
 def A_SGB_SOUND_A     equ $01
 def A_SGB_SOUND_B     equ $02
@@ -222,7 +222,7 @@ def SGB_SOUND_B_SHOW_UP         equ $19
 def SGB_SOUND_B_STOP            equ $80
 
 
-; -- SGB_MLT_REQ ($11) packet indexes -----------------------------------------
+; -- SGB_MLT_REQ ($11) --------------------------------------------------------
 
 def A_SGB_MLT_REQ_PLAYERS equ $01
 
@@ -232,7 +232,7 @@ def SGB_MLT_REQ_PLAYERS_TWO  equ $01
 def SGB_MLT_REQ_PLAYERS_FOUR equ $11
 
 
-; -- SGB_CHR_TRN ($13) packet indexes -----------------------------------------
+; -- SGB_CHR_TRN ($13) --------------------------------------------------------
 
 def A_SGB_CHR_TRN_DEST equ $01
 
@@ -243,7 +243,7 @@ def SGB_CHR_TRN_DEST_OBJ_0 equ $02
 def SGB_CHR_TRN_DEST_OBJ_1 equ $03
 
 
-; -- SGB_MASK_EN ($17) packet indexes -----------------------------------------
+; -- SGB_MASK_EN ($17) --------------------------------------------------------
 
 def A_SGB_MASK_EN_MASK equ $01
 
