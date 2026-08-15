@@ -1031,7 +1031,7 @@ def INT_HANDLER_JOYPAD equ $0060 ; joypad interrupt handler address
 ;******************************************************************************
 
 ; Register A = CPU type
-def BOOTUP_A_DMG equ $01
+def BOOTUP_A_DMG equ $01 ; DMG or SGB
 def BOOTUP_A_CGB equ $11 ; CGB or AGB
 def BOOTUP_A_MGB equ $FF
     def BOOTUP_A_SGB  equ BOOTUP_A_DMG
