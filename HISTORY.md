@@ -113,3 +113,10 @@
   - Added `JOYP_SGB_*` constants
   - Added more `BOOTUP_*` value constants
   - Corrected comments on some audio registers
+- **Rev 6.0.0-rc1** - 2026-08-28 *(Rangi42, mattcurrie)*
+  - Renamed `VDMA_LEN_YES/NO` to `VDMA_LEN_ACTIVE/INACTIVE` and fixed their swapped values
+  - Added `rPSW`, `rPSWX`, `rPSWY`, and `rPSM` registers for CGB boot ROM
+  - Added `ROM_HEADER` and `ROM_HEADER_SIZE` constants
+  - Added `TILEBLOCK0/1/2` and `ATTRMAP0/1` constants
+  - Added `*_COLOR0/1/2/3` constants for `rBGP`, `rOBP0`, and `rOBP1` bits
+  - Corrected comments on `B_PAD_*`, `AUD<x>HIGH_PERIOD_HIGH`, and `B_RAMB_RTC_DH_*`
