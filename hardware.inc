@@ -536,15 +536,42 @@ def rDMA equ $FF46
 ; (DMG only) Background color mapping [r/w]
 def rBGP equ $FF47
 
+def B_BGP_COLOR3 equ 6 ; bits 7-6
+def B_BGP_COLOR2 equ 4 ; bits 5-4
+def B_BGP_COLOR1 equ 2 ; bits 3-2
+def B_BGP_COLOR0 equ 0 ; bits 1-0
+    def BGP_COLOR3 equ %11_000000
+    def BGP_COLOR2 equ %00_11_0000
+    def BGP_COLOR1 equ %0000_11_00
+    def BGP_COLOR0 equ %000000_11
+
 def BGP_SGB_TRANSFER equ %11_10_01_00 ; set BGP to this value before SGB VRAM transfer
 
 ; -- OBP0 ($FF48) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #0 [r/w]
 def rOBP0 equ $FF48
 
+def B_OBP0_COLOR3 equ 6 ; bits 7-6
+def B_OBP0_COLOR2 equ 4 ; bits 5-4
+def B_OBP0_COLOR1 equ 2 ; bits 3-2
+def B_OBP0_COLOR0 equ 0 ; bits 1-0
+    def OBP0_COLOR3 equ %11_000000
+    def OBP0_COLOR2 equ %00_11_0000
+    def OBP0_COLOR1 equ %0000_11_00
+    def OBP0_COLOR0 equ %000000_11
+
 ; -- OBP1 ($FF49) -------------------------------------------------------------
 ; (DMG only) OBJ color mapping #1 [r/w]
 def rOBP1 equ $FF49
+
+def B_OBP1_COLOR3 equ 6 ; bits 7-6
+def B_OBP1_COLOR2 equ 4 ; bits 5-4
+def B_OBP1_COLOR1 equ 2 ; bits 3-2
+def B_OBP1_COLOR0 equ 0 ; bits 1-0
+    def OBP1_COLOR3 equ %11_000000
+    def OBP1_COLOR2 equ %00_11_0000
+    def OBP1_COLOR1 equ %0000_11_00
+    def OBP1_COLOR0 equ %000000_11
 
 ; -- WY ($FF4A) ---------------------------------------------------------------
 ; Y coordinate of the Window's top-left pixel (0-143) [r/w]
