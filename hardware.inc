@@ -622,10 +622,10 @@ def B_VDMA_LEN_MODE equ 7 ; on write: VRAM DMA mode [wo]
         def VDMA_LEN_MODE_GENERAL equ 0 << B_VDMA_LEN_MODE ; GDMA (general-purpose)
         def VDMA_LEN_MODE_HBLANK  equ 1 << B_VDMA_LEN_MODE ; HDMA (HBlank)
 
-def B_VDMA_LEN_BUSY equ 7 ; on read: is a VRAM DMA active?
+def B_VDMA_LEN_BUSY equ 7 ; on read: is a VRAM DMA active? (0 = yes, 1 = no) [ro]
     def VDMA_LEN_BUSY equ 1 << B_VDMA_LEN_BUSY
-        def VDMA_LEN_NO  equ 0 << B_VDMA_LEN_BUSY
-        def VDMA_LEN_YES equ 1 << B_VDMA_LEN_BUSY
+        def VDMA_LEN_YES equ 0 << B_VDMA_LEN_BUSY
+        def VDMA_LEN_NO  equ 1 << B_VDMA_LEN_BUSY
 
 def VDMA_LEN_SIZE equ %0_1111111 ; how many 16-byte blocks (minus 1) to transfer [r/w]
 
