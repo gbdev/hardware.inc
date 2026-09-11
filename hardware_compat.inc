@@ -400,6 +400,11 @@ def _AUD3WAVERAM equ AUD3WAVERAM
 
 def BOOTUPB_B_AGB equ B_BOOTUP_B_AGB
 
+; Warning: these values should not be relied upon; see
+; https://gbdev.io/pandocs/Power_Up_Sequence.html#cpu-registers
+    def BOOTUP_B_CGB equ 0 << B_BOOTUP_B_AGB
+    def BOOTUP_B_AGB equ 1 << B_BOOTUP_B_AGB
+
 
 ;******************************************************************************
 ; Aliases
