@@ -113,6 +113,58 @@ def A_SGB_PAL12_PAL_2_COLOR_2 equ $0B ; $0B-$0C
 def A_SGB_PAL12_PAL_2_COLOR_3 equ $0D ; $0D-$0E
 
 
+; -- SGB_ATTR_BLK ($04) -------------------------------------------------------
+
+def A_SGB_ATTR_BLK_NUM_SETS equ $01
+
+; data set byte 0 (control code) values
+def S_SGB_ATTR_BLK_INSIDE_AREA    equ 0
+def S_SGB_ATTR_BLK_RECTANGLE_AREA equ 1
+def S_SGB_ATTR_BLK_OUTSIDE_AREA   equ 2
+
+; data set byte 1 (color palettes) values
+def S_SGB_ATTR_BLK_INSIDE_PAL    equ 0 ; bit 0-1
+def S_SGB_ATTR_BLK_RECTANGLE_PAL equ 2 ; bit 2-3
+def S_SGB_ATTR_BLK_OUTSIDE_PAL   equ 4 ; bit 4-5
+
+
+; -- SGB_ATTR_LIN ($05) -------------------------------------------------------
+
+def A_SGB_ATTR_LIN_NUM_SETS equ $01
+
+; data set values
+def S_SGB_ATTR_LIN_LINE equ 0 ; bit 0-4
+def S_SGB_ATTR_LIN_PAL  equ 5 ; bit 5-6
+def S_SGB_ATTR_LIN_MODE equ 7
+    def SGB_ATTR_LIN_VERTICAL   equ 0 << S_SGB_ATTR_LIN_MODE
+    def SGB_ATTR_LIN_HORIZONTAL equ 1 << S_SGB_ATTR_LIN_MODE
+
+
+; -- SGB_ATTR_DIV ($06) -------------------------------------------------------
+
+def A_SGB_ATTR_DIV_PAL_HV equ $01
+
+; A_SGB_ATTR_DIV_PAL_HV values
+def S_SGB_ATTR_DIV_POST_LINE_PAL equ 0 ; bit 0-1
+def S_SGB_ATTR_DIV_PRE_LINE_PAL  equ 2 ; bit 2-3
+def S_SGB_ATTR_DIV_LINE_PAL      equ 4 ; bit 4-5
+def S_SGB_ATTR_DIV_MODE          equ 6
+    def SGB_ATTR_DIV_VERTICAL   equ 0 << S_SGB_ATTR_DIV_MODE
+    def SGB_ATTR_DIV_HORIZONTAL equ 1 << S_SGB_ATTR_DIV_MODE
+
+
+; -- SGB_ATTR_CHR ($07) -------------------------------------------------------
+
+def A_SGB_ATTR_CHR_X_COORD  equ $01
+def A_SGB_ATTR_CHR_Y_COORD  equ $02
+def A_SGB_ATTR_CHR_NUM_SETS equ $03 ; $03-$04
+def A_SGB_ATTR_CHR_ORDER    equ $05
+
+; A_SGB_ATTR_CHR_ORDER values
+def A_SGB_ATTR_CHR_ROWS    equ $00
+def A_SGB_ATTR_CHR_COLUMNS equ $01
+
+
 ; -- SGB_SOUND ($08) ----------------------------------------------------------
 
 def A_SGB_SOUND_A     equ $01
@@ -223,14 +275,55 @@ def SGB_SOUND_B_SHOW_UP         equ $19
 def SGB_SOUND_B_STOP            equ $80
 
 
+; -- SGB_PAL_SET ($0A) --------------------------------------------------------
+
+def A_SGB_PAL_SET_PAL_0 equ $01 ; $01-$02
+def A_SGB_PAL_SET_PAL_1 equ $03 ; $03-$04
+def A_SGB_PAL_SET_PAL_2 equ $05 ; $05-$06
+def A_SGB_PAL_SET_PAL_3 equ $07 ; $07-$08
+def A_SGB_PAL_SET_FLAGS equ $09
+
+; A_SGB_PAL_SET_FLAGS values
+def S_SGB_PAL_SET_ATF_NUM   equ 0 ; bit 0-5
+def S_SGB_PAL_SET_MASK_EN   equ 6
+    def SGB_PAL_SET_CANCEL_MASK_EN equ 1 << S_SGB_PAL_SET_MASK_EN
+def S_SGB_PAL_SET_APPLY_ATF equ 7
+    def SGB_PAL_SET_APPLY_ATF      equ 1 << S_SGB_PAL_SET_APPLY_ATF
+
+
+; -- SGB_ATRC_EN ($0C) --------------------------------------------------------
+
+def A_SGB_ATRC_EN_ATRC equ $01
+
+; A_SGB_ATRC_EN_ATRC values
+def A_SGB_ATRC_EN_ATRC_ENABLE  equ $00
+def A_SGB_ATRC_EN_ATRC_DISABLE equ $01
+
+
+; -- SGB_ICON_EN ($0E) --------------------------------------------------------
+
+def A_SGB_ICON_EN_FLAGS equ $01
+
+; A_SGB_ICON_EN_FLAGS values
+def S_SGB_ICON_EN_BUILTIN_PAL     equ 0
+    def SGB_ICON_EN_ENABLE_BUILTIN_PAL      equ 0 << S_SGB_ICON_EN_BUILTIN_PAL
+    def SGB_ICON_EN_DISABLE_BUILTIN_PAL     equ 1 << S_SGB_ICON_EN_BUILTIN_PAL
+def S_SGB_ICON_EN_CONTR_SCREEN    equ 1
+    def SGB_ICON_EN_ENABLE_CONTR_SCREEN     equ 0 << S_SGB_ICON_EN_CONTR_SCREEN
+    def SGB_ICON_EN_DISABLE_CONTR_SCREEN    equ 1 << S_SGB_ICON_EN_CONTR_SCREEN
+def S_SGB_ICON_EN_PACKET_TRANSFER equ 2
+    def SGB_ICON_EN_ENABLE_PACKET_TRANSFER  equ 0 << S_SGB_ICON_EN_PACKET_TRANSFER
+    def SGB_ICON_EN_DISABLE_PACKET_TRANSFER equ 1 << S_SGB_ICON_EN_PACKET_TRANSFER
+
+
 ; -- SGB_MLT_REQ ($11) --------------------------------------------------------
 
 def A_SGB_MLT_REQ_PLAYERS equ $01
 
 ; A_SGB_MLT_REQ_PLAYERS values
-def SGB_MLT_REQ_PLAYERS_ONE  equ $00
-def SGB_MLT_REQ_PLAYERS_TWO  equ $01
-def SGB_MLT_REQ_PLAYERS_FOUR equ $11
+def SGB_MLT_REQ_PLAYERS_ONE  equ %00
+def SGB_MLT_REQ_PLAYERS_TWO  equ %01
+def SGB_MLT_REQ_PLAYERS_FOUR equ %11
 
 
 ; -- SGB_CHR_TRN ($13) --------------------------------------------------------
@@ -238,10 +331,32 @@ def SGB_MLT_REQ_PLAYERS_FOUR equ $11
 def A_SGB_CHR_TRN_DEST equ $01
 
 ; A_SGB_CHR_TRN_DEST values
-def SGB_CHR_TRN_DEST_BG_0  equ $00
-def SGB_CHR_TRN_DEST_BG_1  equ $01
-def SGB_CHR_TRN_DEST_OBJ_0 equ $02
-def SGB_CHR_TRN_DEST_OBJ_1 equ $03
+def SGB_CHR_TRN_DEST_BG_0  equ %00
+def SGB_CHR_TRN_DEST_BG_1  equ %01
+def SGB_CHR_TRN_DEST_OBJ_0 equ %10
+def SGB_CHR_TRN_DEST_OBJ_1 equ %11
+
+
+; -- SGB_PCT_TRN ($14) --------------------------------------------------------
+
+; SGB border: BG map entry high byte values
+def S_SGB_BORDER_PALETTE equ 2
+    def SGB_BORDER_PAL4  equ 4 << S_SGB_BORDER_PALETTE
+    def SGB_BORDER_PAL5  equ 5 << S_SGB_BORDER_PALETTE
+    def SGB_BORDER_PAL6  equ 6 << S_SGB_BORDER_PALETTE
+def S_SGB_BORDER_XFLIP   equ 6
+    def SGB_BORDER_XFLIP equ 1 << S_SGB_BORDER_XFLIP
+def S_SGB_BORDER_YFLIP   equ 7
+    def SGB_BORDER_YFLIP equ 1 << S_SGB_BORDER_YFLIP
+
+
+; -- SGB_ATTR_SET ($16) -------------------------------------------------------
+
+def A_SGB_ATTR_SET_FILE_NUMBER equ $01
+
+; A_SGB_ATTR_SET_FILE_NUMBER values
+def S_SGB_ATTR_SET_MASK_EN equ 6
+    def SGB_ATTR_SET_CANCEL_MASK_EN equ 1 << S_SGB_ATTR_SET_MASK_EN
 
 
 ; -- SGB_MASK_EN ($17) --------------------------------------------------------
