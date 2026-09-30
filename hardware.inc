@@ -495,13 +495,13 @@ def B_STAT_LYC    equ 6 ; 1 = LY match triggers the STAT interrupt [r/w]
 def B_STAT_MODE_2 equ 5 ; 1 = OAM Scan triggers the PPU interrupt  [r/w]
 def B_STAT_MODE_1 equ 4 ; 1 = VBlank triggers the PPU interrupt    [r/w]
 def B_STAT_MODE_0 equ 3 ; 1 = HBlank triggers the PPU interrupt    [r/w]
-def B_STAT_LYCF   equ 2 ; 1 = LY is currently equal to LYC         [ro]
+def B_STAT_LYC_EQ equ 2 ; 1 = LY is currently equal to LYC         [ro]
 def B_STAT_BUSY   equ 1 ; 1 = the PPU is currently accessing VRAM  [ro]
     def STAT_LYC    equ 1 << B_STAT_LYC
     def STAT_MODE_2 equ 1 << B_STAT_MODE_2
     def STAT_MODE_1 equ 1 << B_STAT_MODE_1
     def STAT_MODE_0 equ 1 << B_STAT_MODE_0
-    def STAT_LYCF   equ 1 << B_STAT_LYCF
+    def STAT_LYC_EQ equ 1 << B_STAT_LYC_EQ
     def STAT_BUSY   equ 1 << B_STAT_BUSY
 
 def STAT_MODE equ %000000_11 ; PPU's current status [ro]
