@@ -84,6 +84,13 @@ def B_JOYP_SGB_ZERO equ 4 ; 0 = sending 0 bit
     def JOYP_SGB_ZERO   equ %00_10_0000 ; send 0 bit
     def JOYP_SGB_FINISH equ %00_11_0000 ; finish SGB packet transfer
 
+; SGB multiplayer controllers
+def JOYP_SGB_MLT_MASK equ %000000_11
+    def JOYP_SGB_MLT_P1 equ %000000_11
+    def JOYP_SGB_MLT_P2 equ %000000_10
+    def JOYP_SGB_MLT_P3 equ %000000_01
+    def JOYP_SGB_MLT_P4 equ %000000_00
+
 ; Combined input byte, with Control Pad in high nybble (conventional packed order in software)
 def B_PAD_DOWN   equ 7
 def B_PAD_UP     equ 6
