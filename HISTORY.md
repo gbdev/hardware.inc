@@ -113,8 +113,10 @@
   - Added `JOYP_SGB_*` constants
   - Added more `BOOTUP_*` value constants
   - Corrected comments on some audio registers
-- **Rev 6.0.0-rc1** - 2026-08-28 *(Rangi42, mattcurrie)*
+- **Rev 6.0.0** - 2026-10-06 *(Rangi42, mattcurrie, ISSOtm)*
   - Renamed `VDMA_LEN_YES/NO` to `VDMA_LEN_ACTIVE/INACTIVE` and fixed their swapped values
+  - Renamed `STAT_LYCF` to `STAT_LYC_EQ`
+  - Renamed `_AUD3WAVERAM` to `AUD3WAVERAM`
   - Added `rPSW`, `rPSWX`, `rPSWY`, and `rPSM` registers for CGB boot ROM
   - Added `ROM_HEADER` and `ROM_HEADER_SIZE` constants
   - Added `TILEBLOCK0/1/2` and `ATTRMAP0/1` constants
