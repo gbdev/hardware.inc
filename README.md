@@ -11,12 +11,7 @@ This repository has become the official reference for `hardware.inc`, using [@An
 
 ## Contributing
 
-This repository's `master` branch should be considered the production version.
-Each commit represents a new release, so each one should update the embedded version number in `hardware.inc` and the change log in `HISTORY.md`.
-
-We follow [semantic versioning](https://semver.org).
-Breaking changes increase the major version, backwards-compatible changes (typically new additions) only increase the minor version, and bug fixes (including changes to the comments) only increase the patch level.
-(An example of a breaking change is when `hardware.inc` 4.0 updated its syntax for compatibility with RGBDS 0.5.0, breaking compatibility with older RGBDS versions.)
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute changes and how releases are made.
 
 ## Contributors
 
